@@ -30,9 +30,13 @@ build: ## Build
 test: ## Run unit tests
 	@npm test
 
-.PHONY: test-and-publish-results
-test-and-publish-results: ## Run unit tests and publish test results
+.PHONY: test-ci
+test-ci: ## Run unit tests in CI mode
 	@npm run test:ci
+
+.PHONY: test-and-publish-results
+test-and-publish-results: ## Run unit tests in CI mode and publish test results
+	@npm run test:ci:publish
 
 .PHONY: list
 list: ## List all make targets
