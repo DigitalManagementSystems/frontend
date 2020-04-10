@@ -13,6 +13,8 @@ trigger:
       - README.md
       - helm-charts/*
 
+name: $(GitVersion.SemVer)
+
 pool:
   vmImage: 'ubuntu-latest'
 
