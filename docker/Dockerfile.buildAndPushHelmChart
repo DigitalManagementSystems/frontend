@@ -12,11 +12,11 @@ RUN git config --global user.name "CI-Pipeline"
 
 RUN helm package helm-charts
 
-RUN git clone https://$GITHUB_ACCESS_CREDENTIAL@github.com/decentralized-cloud/helm.git
+RUN git clone https://$GITHUB_ACCESS_CREDENTIAL@github.com/digital-management-system/helm.git
 RUN export VERSION=$(awk '/version: /{print $NF}' helm-charts/Chart.yaml);mv -f frontend-$VERSION.tgz helm;
 
 WORKDIR /src/helm
-RUN helm repo index . --url https://decentralized-cloud.github.io/helm/
+RUN helm repo index . --url https://digital-management-system.github.io/helm/
 RUN git add .
 RUN git commit -am "CI: frontend - $VERSION"
 RUN git push
