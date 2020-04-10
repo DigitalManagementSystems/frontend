@@ -13,16 +13,18 @@ trigger:
       - README.md
       - helm-charts/*
 
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+  DOCKER_CONTAINER_REGISTRY: 'Digital Management System Docker Hub'
+  DOCKER_REPOSITORY_NAME: 'digitalmanagementsystem/frontend'
+
 stages:
 - stage: Build
   jobs:
   - job: DockerBuild
     displayName: Build independently using Docker
-    pool:
-      vmImage: 'ubuntu-latest'
-    variables:
-      DOCKER_CONTAINER_REGISTRY: 'Digital Management System Docker Hub'
-      DOCKER_REPOSITORY_NAME: 'digitalmanagementsystem/frontend'
 
     steps:
     - task: GitVersion@5
@@ -71,11 +73,6 @@ stages:
 
   - job: AzureDevOpsBuild
     displayName: Build made for Azure DevOps Release Pipeline use only
-    pool:
-      vmImage: 'ubuntu-latest'
-    variables:
-      DOCKER_CONTAINER_REGISTRY: 'Digital Management System Docker Hub'
-      DOCKER_REPOSITORY_NAME: 'digitalmanagementsystem/frontend'
 
     steps:
     - task: GitVersion@5
