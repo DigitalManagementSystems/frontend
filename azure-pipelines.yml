@@ -14,9 +14,10 @@ trigger:
       - helm-charts/*
 
 stages:
-- stage: Independent Build using Docker
+- stage: Build
   jobs:
-  - job: BuildTestPublish
+  - job: Build
+    displayName: Build independently using Docker
     pool:
       vmImage: 'ubuntu-latest'
     variables:
@@ -68,11 +69,13 @@ stages:
         containerRegistry: $(DOCKER_CONTAINER_REGISTRY)
         command: 'logout'
 
-- stage: Build made for use in Azure DevOps Release Pipeline
-  jobs:
-  - job: BuildTestPublish
+  - job: Build
+    displayName: Build made for Azure DevOps Release Pipeline use only
     pool:
       vmImage: 'ubuntu-latest'
+    variables:
+      DOCKER_CONTAINER_REGISTRY: 'Digital Management System Docker Hub'
+      DOCKER_REPOSITORY_NAME: 'digitalmanagementsystem/frontend'
 
     steps:
     - task: GitVersion@5
