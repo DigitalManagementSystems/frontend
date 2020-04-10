@@ -12,8 +12,7 @@
     "relay:watch": "npm run relay -- --watch",
     "flow": "flow",
     "lint": "eslint src",
-    "fixlint": "eslint --fix --ext .jsx --ext .js src",
-    "precommit": "lint-staged"
+    "fixlint": "eslint --fix --ext .jsx --ext .js src"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -95,5 +94,10 @@
       "text"
     ]
   },
-  "proxy": "https://api.edge-cloud.com"
+  "proxy": "https://api.dms.com",
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  }
 }
