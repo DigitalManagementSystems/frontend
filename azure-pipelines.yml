@@ -22,6 +22,7 @@ variables:
 
 steps:
 - task: GitVersion@5
+  displayName: "Extracting versioning details"
   inputs:
     runtime: 'core'
     configFilePath: './GitVersion.yml'
