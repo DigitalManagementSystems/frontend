@@ -1,2 +1,2 @@
-export { default as Profile } from './profile';
-export { default as SidebarNav } from './sidebar-nav';
+export { default as ProfileContainer } from './profile';
+export { default as SidebarNavContainer } from './sidebar-nav';

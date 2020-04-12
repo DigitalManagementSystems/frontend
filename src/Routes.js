@@ -3,20 +3,36 @@ import { connect } from 'react-redux';
 import { Switch, Redirect } from 'react-router-dom';
 
 import { RouteWithLayout } from './components';
-import {  MinimalContainer } from './layouts';
-import { NotFound } from './views';
+import { PublicMainContainer, MainContainer } from './layouts';
+import { UserLoadingContainer, NotFoundContainer, PublicHomeContainer, SignUpContainer, SignInContainer, DashboardContainer } from './app';
 
-const Routes = () => {
+const Routes = ({ isLoaded, userFound }) => {
+  if (!isLoaded) {
+    return <UserLoadingContainer />;
+  }
+
   return (
     <Switch>
-      <RouteWithLayout component={NotFound} exact layout={MinimalContainer} path="/not-found" />
-      <Redirect to="/not-found" />
+      {userFound ? (
+        <RouteWithLayout exact component={DashboardContainer} layout={MainContainer} path="/" />
+      ) : (
+        <RouteWithLayout exact component={PublicHomeContainer} layout={PublicMainContainer} path="/" />
+      )}
+
+      <RouteWithLayout exact component={SignUpContainer} layout={PublicMainContainer} path="/signup" />
+      <RouteWithLayout exact component={SignInContainer} layout={PublicMainContainer} path="/signin" />
+      <RouteWithLayout exact component={DashboardContainer} layout={MainContainer} path="/dashboard" />
+      <RouteWithLayout exact component={NotFoundContainer} layout={userFound ? MainContainer : PublicMainContainer} path="/notfound" />
+      <Redirect to="/notfound" />
     </Switch>
   );
 };
 
-const mapStateToProps = state => ({ });
+const mapStateToProps = (state) => {
+  return {
+    isLoaded: state.firebase.auth.isLoaded,
+    userFound: !!state.firebase.auth.uid,
+  };
+};
 
-const mapDispatchToProps = () => ({});
-
-export default connect(mapStateToProps, mapDispatchToProps)(Routes);
+export default connect(mapStateToProps)(Routes);

@@ -1,6 +1,6 @@
 import { makeStyles } from '@material-ui/styles';
 
-const styles = makeStyles(theme => ({
+const styles = makeStyles((theme) => ({
   drawer: {
     width: 240,
     [theme.breakpoints.up('lg')]: {
