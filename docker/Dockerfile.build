@@ -1,5 +1,5 @@
 # => Build container
-FROM node:12.16.1-alpine as react-build
+FROM node:12.16.2-alpine as react-build
 LABEL maintainer="morteza.alizadeh@gmail.com"
 
 ADD . /src
