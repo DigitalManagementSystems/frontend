@@ -1,6 +1,7 @@
 import firebase from 'firebase/app';
-import 'firebase/firestore';
 import 'firebase/auth';
+import 'firebase/firestore';
+import 'firebase/analytics';
 
 const firebaseConfig = {
   apiKey: window._env_.FIREBASE_API_KEY,
@@ -16,3 +17,7 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 firebase.auth();
 firebase.firestore();
+
+if (!!firebaseConfig.measurementId) {
+  firebase.analytics();
+}

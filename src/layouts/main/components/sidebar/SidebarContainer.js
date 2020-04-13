@@ -1,7 +1,8 @@
 import React from 'react';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
-import { Divider, Drawer } from '@material-ui/core';
+import Divider from '@material-ui/core/Divider';
+import Drawer from '@material-ui/core/Drawer';
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import InputIcon from '@material-ui/icons/Input';
 import firebase from 'firebase/app';

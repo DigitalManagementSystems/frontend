@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { Link as RouterLink } from 'react-router-dom';
 import clsx from 'clsx';
-import { AppBar, Toolbar } from '@material-ui/core';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
 import Button from '@material-ui/core/Button';
 import Avatar from '@material-ui/core/Avatar';
 

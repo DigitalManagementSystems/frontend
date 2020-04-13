@@ -2,7 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
-import { Avatar, Typography } from '@material-ui/core';
+import Avatar from '@material-ui/core/Avatar';
+import Typography from '@material-ui/core/Typography';
 
 import styles from './Styles';
 
