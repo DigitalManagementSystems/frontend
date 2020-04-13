@@ -1,6 +1,6 @@
 import { makeStyles } from '@material-ui/styles';
 
-const styles = makeStyles(theme => ({
+const styles = makeStyles((theme) => ({
   root: {
     display: 'flex',
     flexDirection: 'column',

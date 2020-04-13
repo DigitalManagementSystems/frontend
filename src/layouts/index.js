@@ -1,3 +1,3 @@
 export { default as MainContainer } from './main';
-export { default as MinimalContainer } from './minimal';
-export { default as PublicMinimalContainer } from './public-minimal';
+export { default as PublicMainContainer } from './public-main';
+export { default as FooterContainer } from './footer';

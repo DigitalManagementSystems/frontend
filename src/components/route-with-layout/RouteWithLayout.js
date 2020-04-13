@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 const RouteWithLayout = ({ layout: Layout, component: Component, ...rest }) => (
   <Route
     {...rest}
-    render={matchProps => (
+    render={(matchProps) => (
       <Layout>
         <Component {...matchProps} />
       </Layout>

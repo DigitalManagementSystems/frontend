@@ -3,16 +3,14 @@ import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { useMediaQuery } from '@material-ui/core';
 import { useTheme } from '@material-ui/styles';
-import { useReactOidc } from '@axa-fr/react-oidc-context';
 
-import { Sidebar, Topbar, Footer } from './components';
+import { SidebarContainer, TopbarContainer } from './components';
+import { FooterContainer } from '../';
 import styles from './Styles';
 
-const MainContainer = props => {
-  const { children } = props;
+const MainContainer = ({ children }) => {
   const classes = styles();
   const theme = useTheme();
-  const { logout } = useReactOidc();
   const isDesktop = useMediaQuery(theme.breakpoints.up('lg'), {
     defaultMatches: true,
   });
@@ -30,18 +28,13 @@ const MainContainer = props => {
   const shouldOpenSidebar = isDesktop ? true : openSidebar;
 
   return (
-    <div
-      className={clsx({
-        [classes.root]: true,
-        [classes.shiftContent]: isDesktop,
-      })}
-    >
-      <Topbar onSidebarOpen={handleSidebarOpen} onSignOutClick={logout} />
-      <Sidebar onClose={handleSidebarClose} open={shouldOpenSidebar} variant={isDesktop ? 'persistent' : 'temporary'} />
-      <main className={classes.content}>
-        {children}
-        <Footer />
-      </main>
+    <div className={clsx({ [classes.root]: true, [classes.shiftContent]: isDesktop })}>
+      <div>
+        <TopbarContainer onSidebarOpen={handleSidebarOpen} />
+        <SidebarContainer onClose={handleSidebarClose} open={shouldOpenSidebar} variant={isDesktop ? 'persistent' : 'temporary'} />
+        <main className={classes.content}>{children}</main>
+      </div>
+      <FooterContainer />
     </div>
   );
 };
