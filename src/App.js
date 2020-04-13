@@ -1,5 +1,5 @@
 import React from 'react';
-import { ThemeProvider } from '@material-ui/styles';
+import ThemeProvider from '@material-ui/styles/ThemeProvider';
 import { createBrowserHistory } from 'history';
 import { Router } from 'react-router-dom';
 import { Provider } from 'react-redux';
