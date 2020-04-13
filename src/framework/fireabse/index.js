@@ -10,6 +10,7 @@ const firebaseConfig = {
   storageBucket: window._env_.FIREBASE_STORAGE_BUCKET,
   messagingSenderId: window._env_.FIREBASE_MESSAGING_SENDER_ID,
   appId: window._env_.FIREBASE_APP_ID,
+  measurementId: window._env_.FIREBASE_MEASUREMENT_ID,
 };
 
 firebase.initializeApp(firebaseConfig);
