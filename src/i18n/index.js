@@ -8,7 +8,8 @@ i18next.init({
   resources: {
     en_NZ: {
       translation: {
-        signup: { title: 'Sign Up', label: 'Sign Up', button: 'Sign Up' },
+        manufacturerSignUp: { title: 'Sign Up as Manufacturer', label: 'Sign Up', button: 'Sign Up' },
+        employeeSignUp: { title: 'Sign Up as Employee', label: 'Sign Up', button: 'Sign Up' },
         signin: { title: 'Sign In', label: 'Sign In', button: 'Sign In' },
         signout: { title: 'Sign Out', label: 'Sign Out', button: 'Sign Out' },
         email: { label: 'Email' },
