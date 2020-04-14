@@ -13,7 +13,7 @@ import styles from './Styles';
 import { renderTextField } from '../../components';
 import validate from './Validation';
 
-const SignUp = ({ t, handleSubmit, pristine, submitting }) => {
+const ManufacturerSignUp = ({ t, handleSubmit, pristine, submitting }) => {
   const classes = styles();
 
   return (
@@ -24,7 +24,7 @@ const SignUp = ({ t, handleSubmit, pristine, submitting }) => {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          {t('signup.title')}
+          {t('manufacturerSignUp.title')}
         </Typography>
         <form className={classes.form} noValidate onSubmit={handleSubmit}>
           <Field
@@ -62,7 +62,7 @@ const SignUp = ({ t, handleSubmit, pristine, submitting }) => {
             component={renderTextField}
           />
           <Button type="submit" fullWidth variant="contained" color="primary" className={classes.submit} disabled={pristine || submitting}>
-            {t('signup.button')}
+            {t('manufacturerSignUp.button')}
           </Button>
         </form>
       </div>
@@ -70,11 +70,11 @@ const SignUp = ({ t, handleSubmit, pristine, submitting }) => {
   );
 };
 
-SignUp.propTypes = {
+ManufacturerSignUp.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
 };
 
 export default reduxForm({
-  form: 'SignUpForm',
+  form: 'ManufacturerSignUpForm',
   validate,
-})(withTranslation()(SignUp));
+})(withTranslation()(ManufacturerSignUp));

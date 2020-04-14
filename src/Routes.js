@@ -4,7 +4,14 @@ import { Switch, Redirect } from 'react-router-dom';
 
 import { RouteWithLayout } from './components';
 import { PublicMainContainer, MainContainer } from './layouts';
-import { UserLoadingContainer, NotFoundContainer, PublicHomeContainer, SignUpContainer, SignInContainer, DashboardContainer } from './application';
+import {
+  UserLoadingContainer,
+  NotFoundContainer,
+  PublicHomeContainer,
+  ManufacturerSignUpContainer,
+  SignInContainer,
+  DashboardContainer,
+} from './application';
 
 const Routes = ({ isLoaded, userFound }) => {
   if (!isLoaded) {
@@ -19,7 +26,7 @@ const Routes = ({ isLoaded, userFound }) => {
         <RouteWithLayout exact component={PublicHomeContainer} layout={PublicMainContainer} path="/" />
       )}
 
-      <RouteWithLayout exact component={SignUpContainer} layout={PublicMainContainer} path="/signup" />
+      <RouteWithLayout exact component={ManufacturerSignUpContainer} layout={PublicMainContainer} path="/manufacturer-signup" />
       <RouteWithLayout exact component={SignInContainer} layout={PublicMainContainer} path="/signin" />
       <RouteWithLayout exact component={DashboardContainer} layout={MainContainer} path="/dashboard" />
       <RouteWithLayout exact component={NotFoundContainer} layout={userFound ? MainContainer : PublicMainContainer} path="/notfound" />

@@ -10,7 +10,7 @@ import { withTranslation } from 'react-i18next';
 
 import styles from './Styles';
 
-const Topbar = ({ t, className, onSignUpClick, onSignInClick }) => {
+const Topbar = ({ t, className, onManufacturerSignUpClick, onSignInClick }) => {
   const classes = styles();
 
   return (
@@ -20,8 +20,8 @@ const Topbar = ({ t, className, onSignUpClick, onSignInClick }) => {
           <Avatar alt="Logo" src="/images/logos/logo-white.png" />
         </RouterLink>
         <div className={classes.flexGrow} />
-        <Button color="inherit" onClick={onSignUpClick}>
-          {t('signup.button')}
+        <Button color="inherit" onClick={onManufacturerSignUpClick}>
+          {t('manufacturerSignUp.title')}
         </Button>
         <Button color="inherit" onClick={onSignInClick}>
           {t('signin.button')}
@@ -33,7 +33,7 @@ const Topbar = ({ t, className, onSignUpClick, onSignInClick }) => {
 
 Topbar.propTypes = {
   className: PropTypes.string,
-  onSignUpClick: PropTypes.func.isRequired,
+  onManufacturerSignUpClick: PropTypes.func.isRequired,
   onSignInClick: PropTypes.func.isRequired,
 };
 
