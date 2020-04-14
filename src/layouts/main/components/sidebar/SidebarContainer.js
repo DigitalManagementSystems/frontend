@@ -7,11 +7,12 @@ import DashboardIcon from '@material-ui/icons/Dashboard';
 import InputIcon from '@material-ui/icons/Input';
 import firebase from 'firebase/app';
 import { withRouter } from 'react-router-dom';
+import { withTranslation } from 'react-i18next';
 
 import { ProfileContainer, SidebarNavContainer } from './components';
 import styles from './Styles';
 
-const SidebarContainer = ({ history, open, variant, onClose, className }) => {
+const SidebarContainer = ({ t, history, open, variant, onClose, className }) => {
   const classes = styles();
 
   const dashboard = () => {
@@ -25,13 +26,13 @@ const SidebarContainer = ({ history, open, variant, onClose, className }) => {
   const pages = [
     {
       key: 'dashboard',
-      title: 'Dashboard',
+      title: t('dashboard.label'),
       onClick: dashboard,
       icon: <DashboardIcon />,
     },
     {
       key: 'signout',
-      title: 'Sign Out',
+      title: t('signout.label'),
       onClick: signOut,
       icon: <InputIcon />,
     },
@@ -55,4 +56,4 @@ SidebarContainer.propTypes = {
   variant: PropTypes.string.isRequired,
 };
 
-export default withRouter(SidebarContainer);
+export default withRouter(withTranslation()(SidebarContainer));
