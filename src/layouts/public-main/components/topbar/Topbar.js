@@ -10,7 +10,7 @@ import { withTranslation } from 'react-i18next';
 
 import styles from './Styles';
 
-const Topbar = ({ t, className, onManufacturerSignUpClick, onSignInClick }) => {
+const Topbar = ({ t, className, onManufacturerSignUpClick, onEmployeeSignUpClick, onSignInClick }) => {
   const classes = styles();
 
   return (
@@ -23,6 +23,9 @@ const Topbar = ({ t, className, onManufacturerSignUpClick, onSignInClick }) => {
         <Button color="inherit" onClick={onManufacturerSignUpClick}>
           {t('manufacturerSignUp.title')}
         </Button>
+        <Button color="inherit" onClick={onEmployeeSignUpClick}>
+          {t('employeeSignUp.title')}
+        </Button>
         <Button color="inherit" onClick={onSignInClick}>
           {t('signin.button')}
         </Button>
@@ -34,6 +37,7 @@ const Topbar = ({ t, className, onManufacturerSignUpClick, onSignInClick }) => {
 Topbar.propTypes = {
   className: PropTypes.string,
   onManufacturerSignUpClick: PropTypes.func.isRequired,
+  onEmployeeSignUpClick: PropTypes.func.isRequired,
   onSignInClick: PropTypes.func.isRequired,
 };
 

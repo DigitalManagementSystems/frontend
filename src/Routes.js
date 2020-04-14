@@ -9,6 +9,7 @@ import {
   NotFoundContainer,
   PublicHomeContainer,
   ManufacturerSignUpContainer,
+  EmployeeSignUpContainer,
   SignInContainer,
   DashboardContainer,
 } from './application';
@@ -27,6 +28,7 @@ const Routes = ({ isLoaded, userFound }) => {
       )}
 
       <RouteWithLayout exact component={ManufacturerSignUpContainer} layout={PublicMainContainer} path="/manufacturer-signup" />
+      <RouteWithLayout exact component={EmployeeSignUpContainer} layout={PublicMainContainer} path="/employee-signup" />
       <RouteWithLayout exact component={SignInContainer} layout={PublicMainContainer} path="/signin" />
       <RouteWithLayout exact component={DashboardContainer} layout={MainContainer} path="/dashboard" />
       <RouteWithLayout exact component={NotFoundContainer} layout={userFound ? MainContainer : PublicMainContainer} path="/notfound" />
