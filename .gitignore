@@ -27,3 +27,6 @@ __generated__/
 env-config.js
 
 .firebase/
+
+package-lock.json
+
