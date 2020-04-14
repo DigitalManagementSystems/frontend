@@ -6,6 +6,8 @@ if (Test-Path ./env-config.js) {
 
 echo "window._env_ = {" >> ./env-config.js
 
+echo "FRONTEND_VERSION: ""0.1.0""," >> ./env-config.js
+
 Get-Content ./.env | ForEach-Object {
 	$name = $_.substring(0, $_.IndexOf('='))
 	$value = [System.Environment]::GetEnvironmentVariable($name,'machine')

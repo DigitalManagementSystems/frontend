@@ -5,6 +5,8 @@ LABEL maintainer="morteza.alizadeh@gmail.com"
 
 FROM microbusiness/firebase-toolset:0.1.1
 
+ARG FRONTEND_VERSION
+
 ARG FIREBASE_TOKEN
 ARG FIREBASE_API_KEY
 ARG FIREBASE_AUTH_DOMAIN
@@ -18,6 +20,9 @@ ARG FIREBASE_MEASUREMENT_ID
 COPY --from=build_output /usr/share/nginx/html ./build
 
 RUN echo "window._env_ = {" > ./build/env-config.js
+
+RUN echo "FRONTEND_VERSION: \"$FRONTEND_VERSION\"," >> ./build/env-config.js
+
 RUN echo "FIREBASE_API_KEY: \"$FIREBASE_API_KEY\"," >> ./build/env-config.js
 RUN echo "FIREBASE_AUTH_DOMAIN: \"$FIREBASE_AUTH_DOMAIN\"," >> ./build/env-config.js
 RUN echo "FIREBASE_DATABASE_URL: \"$FIREBASE_DATABASE_URL\"," >> ./build/env-config.js
