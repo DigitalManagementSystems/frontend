@@ -7,12 +7,13 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
+import { withTranslation } from 'react-i18next';
 
 import styles from './Styles';
 import { renderTextField } from '../../components';
 import validate from './Validation';
 
-const SignUp = ({ handleSubmit, pristine, submitting }) => {
+const SignUp = ({ t, handleSubmit, pristine, submitting }) => {
   const classes = styles();
 
   return (
@@ -23,7 +24,7 @@ const SignUp = ({ handleSubmit, pristine, submitting }) => {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Sign up
+          {t('signup.title')}
         </Typography>
         <form className={classes.form} noValidate onSubmit={handleSubmit}>
           <Field
@@ -32,7 +33,7 @@ const SignUp = ({ handleSubmit, pristine, submitting }) => {
             required
             fullWidth
             id="email"
-            label="Email Address"
+            label={t('email.label')}
             name="email"
             autoComplete="email"
             autoFocus
@@ -44,7 +45,7 @@ const SignUp = ({ handleSubmit, pristine, submitting }) => {
             required
             fullWidth
             name="password"
-            label="Password"
+            label={t('password.label')}
             type="password"
             autoComplete="new-password"
             component={renderTextField}
@@ -55,13 +56,13 @@ const SignUp = ({ handleSubmit, pristine, submitting }) => {
             required
             fullWidth
             name="retype-password"
-            label="Re-type Password"
+            label={t('retypePassword.label')}
             type="password"
             autoComplete="new-password"
             component={renderTextField}
           />
           <Button type="submit" fullWidth variant="contained" color="primary" className={classes.submit} disabled={pristine || submitting}>
-            Sign Up
+            {t('signup.button')}
           </Button>
         </form>
       </div>
@@ -76,4 +77,4 @@ SignUp.propTypes = {
 export default reduxForm({
   form: 'SignUpForm',
   validate,
-})(SignUp);
+})(withTranslation()(SignUp));

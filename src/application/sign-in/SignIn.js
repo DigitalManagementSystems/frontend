@@ -7,12 +7,13 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
+import { withTranslation } from 'react-i18next';
 
 import styles from './Styles';
 import { renderTextField } from '../../components';
 import validate from './Validation';
 
-const SignIn = ({ handleSubmit, pristine, submitting }) => {
+const SignIn = ({ t, handleSubmit, pristine, submitting }) => {
   const classes = styles();
 
   return (
@@ -23,7 +24,7 @@ const SignIn = ({ handleSubmit, pristine, submitting }) => {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Sign up
+          {t('signin.title')}
         </Typography>
         <form className={classes.form} noValidate onSubmit={handleSubmit}>
           <Field
@@ -32,7 +33,7 @@ const SignIn = ({ handleSubmit, pristine, submitting }) => {
             required
             fullWidth
             id="email"
-            label="Email Address"
+            label={t('email.label')}
             name="email"
             autoComplete="email"
             autoFocus
@@ -44,13 +45,13 @@ const SignIn = ({ handleSubmit, pristine, submitting }) => {
             required
             fullWidth
             name="password"
-            label="Password"
+            label={t('password.label')}
             type="password"
             autoComplete="current-password"
             component={renderTextField}
           />
           <Button type="submit" fullWidth variant="contained" color="primary" className={classes.submit} disabled={pristine || submitting}>
-            Sign Up
+            {t('signin.button')}
           </Button>
         </form>
       </div>
@@ -65,4 +66,4 @@ SignIn.propTypes = {
 export default reduxForm({
   form: 'SignInForm',
   validate,
-})(SignIn);
+})(withTranslation()(SignIn));

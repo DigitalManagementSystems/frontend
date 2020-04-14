@@ -1,18 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
-import { Link as RouterLink } from 'react-router-dom';
-import clsx from 'clsx';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Button from '@material-ui/core/Button';
-import Avatar from '@material-ui/core/Avatar';
 
-import styles from './Styles';
+import Topbar from './Topbar';
 
 const TopbarContainer = ({ className, history }) => {
-  const classes = styles();
-
   const signUp = () => {
     history.push('/signup');
   };
@@ -21,22 +13,7 @@ const TopbarContainer = ({ className, history }) => {
     history.push('/signin');
   };
 
-  return (
-    <AppBar className={clsx(classes.root, className)}>
-      <Toolbar>
-        <RouterLink to="/">
-          <Avatar alt="Logo" src="/images/logos/logo-white.png" />
-        </RouterLink>
-        <div className={classes.flexGrow} />
-        <Button color="inherit" onClick={signUp}>
-          Sign Up
-        </Button>
-        <Button color="inherit" onClick={signIn}>
-          Sign In
-        </Button>
-      </Toolbar>
-    </AppBar>
-  );
+  return <Topbar onSignUpClick={signUp} onSignInClick={signIn} />;
 };
 
 TopbarContainer.propTypes = {

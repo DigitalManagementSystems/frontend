@@ -5,7 +5,9 @@ import { Router } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import firebase from 'firebase/app';
 import { createFirestoreInstance, ReactReduxFirebaseProvider } from 'react-redux-firebase';
+import { I18nextProvider } from 'react-i18next';
 
+import i18n from './i18n';
 import theme from './theme';
 import './App.css';
 import { reduxStore } from './framework/redux';
@@ -27,15 +29,17 @@ const rrfProps = {
 
 const App = () => {
   return (
-    <Provider store={reduxStore}>
-      <ReactReduxFirebaseProvider {...rrfProps}>
-        <ThemeProvider theme={theme}>
-          <Router history={browserHistory}>
-            <Routes />
-          </Router>
-        </ThemeProvider>
-      </ReactReduxFirebaseProvider>
-    </Provider>
+    <I18nextProvider i18n={i18n}>
+      <Provider store={reduxStore}>
+        <ReactReduxFirebaseProvider {...rrfProps}>
+          <ThemeProvider theme={theme}>
+            <Router history={browserHistory}>
+              <Routes />
+            </Router>
+          </ThemeProvider>
+        </ReactReduxFirebaseProvider>
+      </Provider>
+    </I18nextProvider>
   );
 };
 
