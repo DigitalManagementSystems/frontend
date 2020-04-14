@@ -4,7 +4,7 @@ import { Switch, Redirect } from 'react-router-dom';
 
 import { RouteWithLayout } from './components';
 import { PublicMainContainer, MainContainer } from './layouts';
-import { UserLoadingContainer, NotFoundContainer, PublicHomeContainer, SignUpContainer, SignInContainer, DashboardContainer } from './app';
+import { UserLoadingContainer, NotFoundContainer, PublicHomeContainer, SignUpContainer, SignInContainer, DashboardContainer } from './application';
 
 const Routes = ({ isLoaded, userFound }) => {
   if (!isLoaded) {
