@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Switch, Redirect } from 'react-router-dom';
 
-import { RouteWithLayout } from './components';
+import { RouteWithLayout } from './components/common';
 import { PublicMainContainer, MainContainer } from './layouts';
 import {
   UserLoadingContainer,
@@ -12,7 +12,7 @@ import {
   EmployeeSignUpContainer,
   SignInContainer,
   DashboardContainer,
-} from './application';
+} from './components/app';
 
 const Routes = ({ isLoaded, userFound }) => {
   if (!isLoaded) {

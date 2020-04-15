@@ -10,7 +10,7 @@ import Container from '@material-ui/core/Container';
 import { withTranslation } from 'react-i18next';
 
 import styles from './Styles';
-import { renderTextField } from '../../components';
+import { TextField } from '../../common';
 import validate from './Validation';
 
 const ManufacturerSignUp = ({ t, handleSubmit, pristine, submitting }) => {
@@ -37,7 +37,7 @@ const ManufacturerSignUp = ({ t, handleSubmit, pristine, submitting }) => {
             name="email"
             autoComplete="email"
             autoFocus
-            component={renderTextField}
+            component={TextField}
           />
           <Field
             variant="outlined"
@@ -48,7 +48,7 @@ const ManufacturerSignUp = ({ t, handleSubmit, pristine, submitting }) => {
             label={t('password.label')}
             type="password"
             autoComplete="new-password"
-            component={renderTextField}
+            component={TextField}
           />
           <Field
             variant="outlined"
@@ -59,7 +59,7 @@ const ManufacturerSignUp = ({ t, handleSubmit, pristine, submitting }) => {
             label={t('retypePassword.label')}
             type="password"
             autoComplete="new-password"
-            component={renderTextField}
+            component={TextField}
           />
           <Button type="submit" fullWidth variant="contained" color="primary" className={classes.submit} disabled={pristine || submitting}>
             {t('manufacturerSignUp.button')}
