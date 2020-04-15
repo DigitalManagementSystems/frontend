@@ -14,6 +14,7 @@ import {
   DashboardContainer,
   EmployeeManagementContainer,
 } from './components/app';
+import { ErrorHandlerContainer } from './components/common';
 
 const Routes = ({ isLoaded, userFound }) => {
   if (!isLoaded) {
@@ -21,27 +22,36 @@ const Routes = ({ isLoaded, userFound }) => {
   }
 
   return (
-    <Switch>
-      {userFound ? (
-        <RouteWithLayout isSecureRoute={true} exact component={DashboardContainer} layout={MainContainer} path="/" />
-      ) : (
-        <RouteWithLayout isSecureRoute={false} exact component={PublicHomeContainer} layout={PublicMainContainer} path="/" />
-      )}
+    <div>
+      <Switch>
+        {userFound ? (
+          <RouteWithLayout isSecureRoute={true} exact component={DashboardContainer} layout={MainContainer} path="/" />
+        ) : (
+          <RouteWithLayout isSecureRoute={false} exact component={PublicHomeContainer} layout={PublicMainContainer} path="/" />
+        )}
 
-      <RouteWithLayout isSecureRoute={false} exact component={ManufacturerSignUpContainer} layout={PublicMainContainer} path="/manufacturer-signup" />
-      <RouteWithLayout isSecureRoute={false} exact component={EmployeeSignUpContainer} layout={PublicMainContainer} path="/employee-signup" />
-      <RouteWithLayout isSecureRoute={false} exact component={SignInContainer} layout={PublicMainContainer} path="/signin" />
-      <RouteWithLayout
-        isSecureRoute={false}
-        exact
-        component={NotFoundContainer}
-        layout={userFound ? MainContainer : PublicMainContainer}
-        path="/notfound"
-      />
-      <RouteWithLayout isSecureRoute={true} exact component={EmployeeManagementContainer} layout={MainContainer} path="/employee-management" />
-      <RouteWithLayout isSecureRoute={true} exact component={DashboardContainer} layout={MainContainer} path="/dashboard" />
-      <Redirect to="/notfound" />
-    </Switch>
+        <RouteWithLayout
+          isSecureRoute={false}
+          exact
+          component={ManufacturerSignUpContainer}
+          layout={PublicMainContainer}
+          path="/manufacturer-signup"
+        />
+        <RouteWithLayout isSecureRoute={false} exact component={EmployeeSignUpContainer} layout={PublicMainContainer} path="/employee-signup" />
+        <RouteWithLayout isSecureRoute={false} exact component={SignInContainer} layout={PublicMainContainer} path="/signin" />
+        <RouteWithLayout
+          isSecureRoute={false}
+          exact
+          component={NotFoundContainer}
+          layout={userFound ? MainContainer : PublicMainContainer}
+          path="/notfound"
+        />
+        <RouteWithLayout isSecureRoute={true} exact component={EmployeeManagementContainer} layout={MainContainer} path="/employee-management" />
+        <RouteWithLayout isSecureRoute={true} exact component={DashboardContainer} layout={MainContainer} path="/dashboard" />
+        <Redirect to="/notfound" />
+      </Switch>
+      <ErrorHandlerContainer />
+    </div>
   );
 };
 

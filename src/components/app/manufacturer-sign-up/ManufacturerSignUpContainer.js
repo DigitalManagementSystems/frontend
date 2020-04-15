@@ -6,6 +6,8 @@ import firebase from 'firebase/app';
 import ManufacturerSignUp from './ManufacturerSignUp';
 
 export class ManufacturerSignUpContainer extends Component {
+  state = {};
+
   signUp = ({ email, password }) => {
     firebase.createUser({ email, password }, { username: email, userType: 'Manufacturer' });
   };
