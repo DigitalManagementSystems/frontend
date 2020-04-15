@@ -10,10 +10,10 @@ import Container from '@material-ui/core/Container';
 import { withTranslation } from 'react-i18next';
 
 import styles from './Styles';
-import { renderTextField } from '../../components';
+import { TextField } from '../../common';
 import validate from './Validation';
 
-const SignIn = ({ t, handleSubmit, pristine, submitting }) => {
+const EmployeeSignUp = ({ t, handleSubmit, pristine, submitting }) => {
   const classes = styles();
 
   return (
@@ -24,7 +24,7 @@ const SignIn = ({ t, handleSubmit, pristine, submitting }) => {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          {t('signin.title')}
+          {t('employeeSignUp.title')}
         </Typography>
         <form className={classes.form} noValidate onSubmit={handleSubmit}>
           <Field
@@ -37,7 +37,7 @@ const SignIn = ({ t, handleSubmit, pristine, submitting }) => {
             name="email"
             autoComplete="email"
             autoFocus
-            component={renderTextField}
+            component={TextField}
           />
           <Field
             variant="outlined"
@@ -47,11 +47,22 @@ const SignIn = ({ t, handleSubmit, pristine, submitting }) => {
             name="password"
             label={t('password.label')}
             type="password"
-            autoComplete="current-password"
-            component={renderTextField}
+            autoComplete="new-password"
+            component={TextField}
+          />
+          <Field
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            name="retype-password"
+            label={t('retypePassword.label')}
+            type="password"
+            autoComplete="new-password"
+            component={TextField}
           />
           <Button type="submit" fullWidth variant="contained" color="primary" className={classes.submit} disabled={pristine || submitting}>
-            {t('signin.button')}
+            {t('employeeSignUp.button')}
           </Button>
         </form>
       </div>
@@ -59,11 +70,11 @@ const SignIn = ({ t, handleSubmit, pristine, submitting }) => {
   );
 };
 
-SignIn.propTypes = {
+EmployeeSignUp.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
 };
 
 export default reduxForm({
-  form: 'SignInForm',
+  form: 'EmployeeSignUpForm',
   validate,
-})(withTranslation()(SignIn));
+})(withTranslation()(EmployeeSignUp));
