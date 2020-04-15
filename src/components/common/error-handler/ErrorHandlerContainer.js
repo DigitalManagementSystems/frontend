@@ -47,7 +47,7 @@ ErrorHandlerContainer.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  errorMessage: state.firebase.errors.filter((error) => error !== null).reduce((errorMessage, error) => error.message, ''),
+  errorMessage: state.firebase.errors.filter((error) => error !== null).reduce((errorMessage, error) => errorMessage + '\n' + error.message, ''),
 });
 
 const clearFirebaseErrors = () => ({
