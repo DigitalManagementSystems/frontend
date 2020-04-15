@@ -22,16 +22,22 @@ const Routes = ({ isLoaded, userFound }) => {
   return (
     <Switch>
       {userFound ? (
-        <RouteWithLayout exact component={DashboardContainer} layout={MainContainer} path="/" />
+        <RouteWithLayout isSecureRoute={true} exact component={DashboardContainer} layout={MainContainer} path="/" />
       ) : (
-        <RouteWithLayout exact component={PublicHomeContainer} layout={PublicMainContainer} path="/" />
+        <RouteWithLayout isSecureRoute={false} exact component={PublicHomeContainer} layout={PublicMainContainer} path="/" />
       )}
 
-      <RouteWithLayout exact component={ManufacturerSignUpContainer} layout={PublicMainContainer} path="/manufacturer-signup" />
-      <RouteWithLayout exact component={EmployeeSignUpContainer} layout={PublicMainContainer} path="/employee-signup" />
-      <RouteWithLayout exact component={SignInContainer} layout={PublicMainContainer} path="/signin" />
-      <RouteWithLayout exact component={DashboardContainer} layout={MainContainer} path="/dashboard" />
-      <RouteWithLayout exact component={NotFoundContainer} layout={userFound ? MainContainer : PublicMainContainer} path="/notfound" />
+      <RouteWithLayout isSecureRoute={false} exact component={ManufacturerSignUpContainer} layout={PublicMainContainer} path="/manufacturer-signup" />
+      <RouteWithLayout isSecureRoute={false} exact component={EmployeeSignUpContainer} layout={PublicMainContainer} path="/employee-signup" />
+      <RouteWithLayout isSecureRoute={false} exact component={SignInContainer} layout={PublicMainContainer} path="/signin" />
+      <RouteWithLayout
+        isSecureRoute={false}
+        exact
+        component={NotFoundContainer}
+        layout={userFound ? MainContainer : PublicMainContainer}
+        path="/notfound"
+      />
+      <RouteWithLayout isSecureRoute={true} exact component={DashboardContainer} layout={MainContainer} path="/dashboard" />
       <Redirect to="/notfound" />
     </Switch>
   );

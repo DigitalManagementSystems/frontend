@@ -10,17 +10,15 @@ export class EmployeeSignUpContainer extends Component {
     firebase.createUser({ email, password }, { username: email, userType: 'Employee' });
   };
 
-  componentDidUpdate = () => {
-    const { userFound, history } = this.props;
-
+  static getDerivedStateFromProps = ({ userFound, history }) => {
     if (userFound) {
       history.push('/');
     }
+
+    return null;
   };
 
-  render = () => {
-    return <EmployeeSignUp onSubmit={this.signUp} />;
-  };
+  render = () => <EmployeeSignUp onSubmit={this.signUp} />;
 }
 
 const mapStateToProps = (state) => ({
