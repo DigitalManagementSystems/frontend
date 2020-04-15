@@ -6,21 +6,23 @@ import firebase from 'firebase/app';
 import SignIn from './SignIn';
 
 export class SignInContainer extends Component {
+  state = {};
+
   signIn = ({ email, password }) => {
     firebase.login({ email, password });
   };
 
-  componentDidUpdate = () => {
-    const { userFound, history } = this.props;
-
+  static getDerivedStateFromProps = ({ userFound, location, history }) => {
     if (userFound) {
-      history.push('/');
+      const { from } = location.state || { from: { pathname: '/' } };
+
+      history.replace(from);
     }
+
+    return null;
   };
 
-  render = () => {
-    return <SignIn onSubmit={this.signIn} />;
-  };
+  render = () => <SignIn onSubmit={this.signIn} />;
 }
 
 const mapStateToProps = (state) => {
