@@ -12,6 +12,7 @@ import {
   EmployeeSignUpContainer,
   SignInContainer,
   DashboardContainer,
+  EmployeeManagementContainer,
 } from './components/app';
 
 const Routes = ({ isLoaded, userFound }) => {
@@ -37,6 +38,7 @@ const Routes = ({ isLoaded, userFound }) => {
         layout={userFound ? MainContainer : PublicMainContainer}
         path="/notfound"
       />
+      <RouteWithLayout isSecureRoute={true} exact component={EmployeeManagementContainer} layout={MainContainer} path="/employee-management" />
       <RouteWithLayout isSecureRoute={true} exact component={DashboardContainer} layout={MainContainer} path="/dashboard" />
       <Redirect to="/notfound" />
     </Switch>
