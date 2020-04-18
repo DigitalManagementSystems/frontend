@@ -1,18 +1,35 @@
-import React from 'react';
-import Container from '@material-ui/core/Container';
-import CssBaseline from '@material-ui/core/CssBaseline';
+import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
 
-import Styles from './Styles';
+import { userDepartments } from './PropTypes';
+import DepartmentsView from './DepartmentsView';
 
-const DepartmentManagementContainer = () => {
-  const classes = Styles();
+export class DepartmentsContainer extends Component {
+  createDepartment = () => {
+    const { history } = this.props;
 
-  return (
-    <Container component="main" maxWidth="xs">
-      <CssBaseline />
-      <div className={classes.paper}>Department Management</div>
-    </Container>
-  );
+    history.push('/hr/create-department');
+  };
+
+  handleDepartmentClick = (id) => {
+    const { history } = this.props;
+    const linkToDepartment = `/hr/departments/${id}`;
+
+    history.push(linkToDepartment);
+  };
+
+  render = () => {
+    const { user } = this.props;
+    const departments = user.departments.edges.map((edge) => edge.node);
+
+    return (
+      <DepartmentsView departments={departments} onCreateDepartmentClick={this.createDepartment} onDepartmentClick={this.handleDepartmentClick} />
+    );
+  };
+}
+
+DepartmentsContainer.propTypes = {
+  user: userDepartments.isRequired,
 };
 
-export default DepartmentManagementContainer;
+export default withRouter(DepartmentsContainer);
