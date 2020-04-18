@@ -4,15 +4,9 @@ import { Switch, Redirect } from 'react-router-dom';
 
 import { RouteWithLayout } from './components/common';
 import { PublicMainContainer, MainContainer } from './layouts';
-import {
-  UserLoadingContainer,
-  NotFoundContainer,
-  PublicHomeContainer,
-  SignUpContainer,
-  SignInContainer,
-  DashboardContainer,
-  EmployeeManagementContainer,
-} from './components/app';
+import { UserLoadingContainer, NotFoundContainer } from './components/common';
+import { PublicHomeContainer, SignUpContainer, SignInContainer, DashboardContainer } from './components/app';
+import { DepartmentManagementContainer, EmployeeManagementContainer } from './components/app/hr';
 import { ErrorHandlerContainer } from './components/common';
 
 const Routes = ({ isLoaded, userFound }) => {
@@ -32,13 +26,20 @@ const Routes = ({ isLoaded, userFound }) => {
         <RouteWithLayout isSecureRoute={false} exact component={SignUpContainer} layout={PublicMainContainer} path="/signup" />
         <RouteWithLayout isSecureRoute={false} exact component={SignInContainer} layout={PublicMainContainer} path="/signin" />
         <RouteWithLayout
+          isSecureRoute={true}
+          exact
+          component={DepartmentManagementContainer}
+          layout={MainContainer}
+          path="/hr/department-management"
+        />
+        <RouteWithLayout isSecureRoute={true} exact component={EmployeeManagementContainer} layout={MainContainer} path="/hr/employee-management" />
+        <RouteWithLayout
           isSecureRoute={false}
           exact
           component={NotFoundContainer}
           layout={userFound ? MainContainer : PublicMainContainer}
           path="/notfound"
         />
-        <RouteWithLayout isSecureRoute={true} exact component={EmployeeManagementContainer} layout={MainContainer} path="/employee-management" />
         <RouteWithLayout isSecureRoute={true} exact component={DashboardContainer} layout={MainContainer} path="/dashboard" />
         <Redirect to="/notfound" />
       </Switch>
