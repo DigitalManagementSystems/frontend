@@ -8,15 +8,17 @@ i18next.init({
   resources: {
     en_NZ: {
       translation: {
-        manufacturerSignUp: { title: 'Sign Up as Manufacturer', label: 'Sign Up', button: 'Sign Up' },
-        employeeSignUp: { title: 'Sign Up as Employee', label: 'Sign Up', button: 'Sign Up' },
-        signin: { title: 'Sign In', label: 'Sign In', button: 'Sign In' },
-        signout: { title: 'Sign Out', label: 'Sign Out', button: 'Sign Out' },
-        employeeManagement: { title: 'Employee Management', label: 'Employee Mgmt.', button: 'Employee Mgmt.' },
+        signUp: { title: 'Sign up', label: 'Sign up', button: 'Sign up' },
+        signUpAs: { label: 'Sign up as' },
         email: { label: 'Email' },
         password: { label: 'Password' },
         retypePassword: { label: 'Re-type Password' },
+        employee: { label: 'Employee' },
+        manufacturer: { label: 'Manufacturer' },
+        signIn: { title: 'Sign in', label: 'Sign in', button: 'Sign in' },
+        signOut: { title: 'Sign out', label: 'Sign out', button: 'Sign out' },
         dashboard: { title: 'Dashboard', label: 'Dashboard' },
+        employeeManagement: { title: 'Employee Management', label: 'Employee Management', button: 'Employee Management' },
       },
     },
   },

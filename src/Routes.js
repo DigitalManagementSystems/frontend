@@ -8,8 +8,7 @@ import {
   UserLoadingContainer,
   NotFoundContainer,
   PublicHomeContainer,
-  ManufacturerSignUpContainer,
-  EmployeeSignUpContainer,
+  SignUpContainer,
   SignInContainer,
   DashboardContainer,
   EmployeeManagementContainer,
@@ -30,14 +29,7 @@ const Routes = ({ isLoaded, userFound }) => {
           <RouteWithLayout isSecureRoute={false} exact component={PublicHomeContainer} layout={PublicMainContainer} path="/" />
         )}
 
-        <RouteWithLayout
-          isSecureRoute={false}
-          exact
-          component={ManufacturerSignUpContainer}
-          layout={PublicMainContainer}
-          path="/manufacturer-signup"
-        />
-        <RouteWithLayout isSecureRoute={false} exact component={EmployeeSignUpContainer} layout={PublicMainContainer} path="/employee-signup" />
+        <RouteWithLayout isSecureRoute={false} exact component={SignUpContainer} layout={PublicMainContainer} path="/signup" />
         <RouteWithLayout isSecureRoute={false} exact component={SignInContainer} layout={PublicMainContainer} path="/signin" />
         <RouteWithLayout
           isSecureRoute={false}

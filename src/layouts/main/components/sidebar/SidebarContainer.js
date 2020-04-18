@@ -43,7 +43,7 @@ const SidebarContainer = ({ t, history, open, variant, onClose, className }) => 
     },
     {
       key: 'signout',
-      title: t('signout.label'),
+      title: t('signOut.label'),
       onClick: signOut,
       icon: <InputIcon />,
     },

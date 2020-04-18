@@ -7,13 +7,15 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
+import Radio from '@material-ui/core/Radio';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
 import { withTranslation } from 'react-i18next';
 
 import styles from './Styles';
-import { TextField } from '../../common';
+import { renderTextField, renderRadioGroup } from '../../common/redux-form';
 import validate from './Validation';
 
-const ManufacturerSignUp = ({ t, handleSubmit, pristine, submitting }) => {
+const SignUp = ({ t, handleSubmit, pristine, submitting }) => {
   const classes = styles();
 
   return (
@@ -24,7 +26,7 @@ const ManufacturerSignUp = ({ t, handleSubmit, pristine, submitting }) => {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          {t('manufacturerSignUp.title')}
+          {t('signUp.title')}
         </Typography>
         <form className={classes.form} noValidate onSubmit={handleSubmit}>
           <Field
@@ -37,7 +39,7 @@ const ManufacturerSignUp = ({ t, handleSubmit, pristine, submitting }) => {
             name="email"
             autoComplete="email"
             autoFocus
-            component={TextField}
+            component={renderTextField}
           />
           <Field
             variant="outlined"
@@ -48,7 +50,7 @@ const ManufacturerSignUp = ({ t, handleSubmit, pristine, submitting }) => {
             label={t('password.label')}
             type="password"
             autoComplete="new-password"
-            component={TextField}
+            component={renderTextField}
           />
           <Field
             variant="outlined"
@@ -59,10 +61,16 @@ const ManufacturerSignUp = ({ t, handleSubmit, pristine, submitting }) => {
             label={t('retypePassword.label')}
             type="password"
             autoComplete="new-password"
-            component={TextField}
+            component={renderTextField}
           />
+
+          <Field variant="outlined" margin="normal" required name="userType" label={t('signUpAs.label')} component={renderRadioGroup}>
+            <FormControlLabel value="manufacturer" control={<Radio />} label={t('manufacturer.label')} />
+            <FormControlLabel value="employee" control={<Radio />} label={t('employee.label')} />
+          </Field>
+
           <Button type="submit" fullWidth variant="contained" color="primary" className={classes.submit} disabled={pristine || submitting}>
-            {t('manufacturerSignUp.button')}
+            {t('signUp.button')}
           </Button>
         </form>
       </div>
@@ -70,11 +78,11 @@ const ManufacturerSignUp = ({ t, handleSubmit, pristine, submitting }) => {
   );
 };
 
-ManufacturerSignUp.propTypes = {
+SignUp.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
 };
 
 export default reduxForm({
-  form: 'ManufacturerSignUpForm',
+  form: 'SignUpForm',
   validate,
-})(withTranslation()(ManufacturerSignUp));
+})(withTranslation()(SignUp));

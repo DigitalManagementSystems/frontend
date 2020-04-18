@@ -3,13 +3,13 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import firebase from 'firebase/app';
 
-import EmployeeSignUp from './EmployeeSignUp';
+import SignUp from './SignUp';
 
-export class EmployeeSignUpContainer extends Component {
+export class SignUpContainer extends Component {
   state = {};
 
-  signUp = ({ email, password }) => {
-    firebase.createUser({ email, password }, { username: email, userType: 'Employee' });
+  signUp = ({ email, password, userType }) => {
+    firebase.createUser({ email, password }, { username: email, userType });
   };
 
   static getDerivedStateFromProps = ({ userFound, history }) => {
@@ -20,11 +20,11 @@ export class EmployeeSignUpContainer extends Component {
     return null;
   };
 
-  render = () => <EmployeeSignUp onSubmit={this.signUp} />;
+  render = () => <SignUp onSubmit={this.signUp} />;
 }
 
 const mapStateToProps = (state) => ({
   userFound: !!state.firebase.auth.uid,
 });
 
-export default withRouter(connect(mapStateToProps)(EmployeeSignUpContainer));
+export default withRouter(connect(mapStateToProps)(SignUpContainer));
