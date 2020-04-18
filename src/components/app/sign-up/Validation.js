@@ -2,7 +2,7 @@ import { Set, Map } from 'immutable';
 import emailValidator from 'email-validator';
 
 const validate = (values) => {
-  const requiredFields = Set(['email', 'password', 'retype-password']);
+  const requiredFields = Set(['email', 'password', 'retype-password', 'userType']);
   var errors = requiredFields.reduce((currentErrors, fieldName) => {
     if (!values[fieldName]) {
       return currentErrors.set(fieldName, 'Required');

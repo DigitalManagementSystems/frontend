@@ -10,7 +10,7 @@ import Container from '@material-ui/core/Container';
 import { withTranslation } from 'react-i18next';
 
 import styles from './Styles';
-import { TextField } from '../../common';
+import { renderTextField } from '../../common/redux-form';
 import validate from './Validation';
 
 const SignIn = ({ t, handleSubmit, pristine, submitting }) => {
@@ -24,7 +24,7 @@ const SignIn = ({ t, handleSubmit, pristine, submitting }) => {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          {t('signin.title')}
+          {t('signIn.title')}
         </Typography>
         <form className={classes.form} noValidate onSubmit={handleSubmit}>
           <Field
@@ -37,7 +37,7 @@ const SignIn = ({ t, handleSubmit, pristine, submitting }) => {
             name="email"
             autoComplete="email"
             autoFocus
-            component={TextField}
+            component={renderTextField}
           />
           <Field
             variant="outlined"
@@ -48,10 +48,10 @@ const SignIn = ({ t, handleSubmit, pristine, submitting }) => {
             label={t('password.label')}
             type="password"
             autoComplete="current-password"
-            component={TextField}
+            component={renderTextField}
           />
           <Button type="submit" fullWidth variant="contained" color="primary" className={classes.submit} disabled={pristine || submitting}>
-            {t('signin.button')}
+            {t('signIn.button')}
           </Button>
         </form>
       </div>

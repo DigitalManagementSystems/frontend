@@ -10,7 +10,7 @@ import { withTranslation } from 'react-i18next';
 
 import styles from './Styles';
 
-const Topbar = ({ t, className, onManufacturerSignUpClick, onEmployeeSignUpClick, onSignInClick }) => {
+const Topbar = ({ t, className, onSignUpClick, onSignInClick }) => {
   const classes = styles();
 
   return (
@@ -20,14 +20,11 @@ const Topbar = ({ t, className, onManufacturerSignUpClick, onEmployeeSignUpClick
           <Avatar alt="Logo" src="/images/logos/logo-white.png" />
         </RouterLink>
         <div className={classes.flexGrow} />
-        <Button color="inherit" onClick={onManufacturerSignUpClick}>
-          {t('manufacturerSignUp.title')}
-        </Button>
-        <Button color="inherit" onClick={onEmployeeSignUpClick}>
-          {t('employeeSignUp.title')}
+        <Button color="inherit" onClick={onSignUpClick}>
+          {t('signUp.title')}
         </Button>
         <Button color="inherit" onClick={onSignInClick}>
-          {t('signin.button')}
+          {t('signIn.button')}
         </Button>
       </Toolbar>
     </AppBar>
@@ -36,8 +33,7 @@ const Topbar = ({ t, className, onManufacturerSignUpClick, onEmployeeSignUpClick
 
 Topbar.propTypes = {
   className: PropTypes.string,
-  onManufacturerSignUpClick: PropTypes.func.isRequired,
-  onEmployeeSignUpClick: PropTypes.func.isRequired,
+  onSignUpClick: PropTypes.func.isRequired,
   onSignInClick: PropTypes.func.isRequired,
 };
 
