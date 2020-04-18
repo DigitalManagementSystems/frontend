@@ -8,6 +8,7 @@ FROM microbusiness/firebase-toolset:0.1.1
 ARG FRONTEND_VERSION
 
 ARG FIREBASE_TOKEN
+ARG API_GATEWAY_PUBLIC_URL
 ARG FIREBASE_API_KEY
 ARG FIREBASE_AUTH_DOMAIN
 ARG FIREBASE_DATABASE_URL
@@ -23,6 +24,7 @@ RUN echo "window._env_ = {" > ./build/env-config.js
 
 RUN echo "FRONTEND_VERSION: \"$FRONTEND_VERSION\"," >> ./build/env-config.js
 
+RUN echo "API_GATEWAY_PUBLIC_URL: \"$API_GATEWAY_PUBLIC_URL\"," >> ./build/env-config.js
 RUN echo "FIREBASE_API_KEY: \"$FIREBASE_API_KEY\"," >> ./build/env-config.js
 RUN echo "FIREBASE_AUTH_DOMAIN: \"$FIREBASE_AUTH_DOMAIN\"," >> ./build/env-config.js
 RUN echo "FIREBASE_DATABASE_URL: \"$FIREBASE_DATABASE_URL\"," >> ./build/env-config.js

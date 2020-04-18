@@ -99,7 +99,7 @@
       "text"
     ]
   },
-  "proxy": "https://api.dms.com",
+  "proxy": "http://localhost:5001/dms-morteza/us-central1/graphql",
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged"

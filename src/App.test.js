@@ -4,7 +4,7 @@ import App from './App';
 
 const window = global;
 window._env_ = {
-  API_GATEWAY_PUBLIC_URL: '/graphql',
+  API_GATEWAY_PUBLIC_URL: 'http://localhost:5001/dms-morteza/us-central1/graphql',
   FIREBASE_API_KEY: 'AIzaSyC4LqA-1IdxNSoeX67N8PFvwKCVyKjtiCs',
   FIREBASE_AUTH_DOMAIN: 'dms-frontend-morteza.firebaseapp.com',
   FIREBASE_DATABASE_URL: 'https://dms-frontend-morteza.firebaseio.com',
