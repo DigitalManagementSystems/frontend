@@ -18,6 +18,7 @@ i18next.init({
         signIn: { title: 'Sign in', label: 'Sign in', button: 'Sign in' },
         signOut: { title: 'Sign out', label: 'Sign out', button: 'Sign out' },
         dashboard: { title: 'Dashboard', label: 'Dashboard' },
+        departmentManagement: { title: 'Department Management', label: 'Department Management', button: 'Department Management' },
         employeeManagement: { title: 'Employee Management', label: 'Employee Management', button: 'Employee Management' },
       },
     },

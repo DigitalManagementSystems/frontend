@@ -5,6 +5,7 @@ import Divider from '@material-ui/core/Divider';
 import Drawer from '@material-ui/core/Drawer';
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import PermIdentityIcon from '@material-ui/icons/PermIdentity';
+import ApartmentIcon from '@material-ui/icons/Apartment';
 import InputIcon from '@material-ui/icons/Input';
 import firebase from 'firebase/app';
 import { withRouter } from 'react-router-dom';
@@ -20,8 +21,12 @@ const SidebarContainer = ({ t, history, open, variant, onClose, className }) => 
     history.push('/dashboard');
   };
 
+  const departmentManagement = () => {
+    history.push('/hr/department-management');
+  };
+
   const employeeManagement = () => {
-    history.push('/employee-management');
+    history.push('/hr/employee-management');
   };
 
   const signOut = () => {
@@ -34,6 +39,12 @@ const SidebarContainer = ({ t, history, open, variant, onClose, className }) => 
       title: t('dashboard.label'),
       onClick: dashboard,
       icon: <DashboardIcon />,
+    },
+    {
+      key: 'departmentManagement',
+      title: t('departmentManagement.label'),
+      onClick: departmentManagement,
+      icon: <ApartmentIcon />,
     },
     {
       key: 'employeeManagement',
