@@ -28,7 +28,7 @@ class Departments extends Component {
           }
         `}
         variables={{
-          departmentIds: ['ID1', 'ID2', 'ID3'],
+          departmentIds: [],
         }}
         render={this.renderRelayComponent}
       />
