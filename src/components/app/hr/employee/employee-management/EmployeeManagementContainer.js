@@ -1,18 +1,33 @@
-import React from 'react';
-import Container from '@material-ui/core/Container';
-import CssBaseline from '@material-ui/core/CssBaseline';
+import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
 
-import Styles from './Styles';
+import { userEmployees } from './PropTypes';
+import EmployeesView from './EmployeesView';
 
-const EmployeeManagementContainer = () => {
-  const classes = Styles();
+export class EmployeesContainer extends Component {
+  createEmployees = () => {
+    const { history } = this.props;
 
-  return (
-    <Container component="main" maxWidth="xs">
-      <CssBaseline />
-      <div className={classes.paper}>Employee Mgmt.</div>
-    </Container>
-  );
+    history.push('/hr/create-employee');
+  };
+
+  handleEmployeeClick = (id) => {
+    const { history } = this.props;
+    const linkToEmployee = `/hr/employees/${id}`;
+
+    history.push(linkToEmployee);
+  };
+
+  render = () => {
+    const { user } = this.props;
+    const employees = user.employees.edges.map((edge) => edge.node);
+
+    return <EmployeesView employees={employees} onCreateEmployeeClick={this.createEmployee} onEmployeeClick={this.handleEmployeeClick} />;
+  };
+}
+
+EmployeesContainer.propTypes = {
+  user: userEmployees.isRequired,
 };
 
-export default EmployeeManagementContainer;
+export default withRouter(EmployeesContainer);

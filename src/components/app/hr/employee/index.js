@@ -1,1 +1,1 @@
-export { default as EmployeeManagementContainer } from './employee-management';
+export { default as Employees } from './employee-management';
