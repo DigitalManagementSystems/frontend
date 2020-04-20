@@ -17,7 +17,7 @@ const mutation = graphql`
   }
 `;
 
-const getOptimisticResponse = (id, { name }, user) => {
+const getOptimisticResponse = (id, { name, description }, user) => {
   if (!user) {
     return {};
   }
@@ -30,6 +30,7 @@ const getOptimisticResponse = (id, { name }, user) => {
           node: {
             id,
             name,
+            description,
           },
         },
       },
@@ -37,17 +38,18 @@ const getOptimisticResponse = (id, { name }, user) => {
   };
 };
 
-const commit = (environment, { id, name }, user, { onSuccess, onError } = {}) => {
+const commit = (environment, { id, name, description }, user, { onSuccess, onError } = {}) => {
   return commitMutation(environment, {
     mutation,
     variables: {
       input: {
         id,
         name,
+        description,
         clientMutationId: cuid(),
       },
     },
-    optimisticResponse: getOptimisticResponse(id, { name }, user),
+    optimisticResponse: getOptimisticResponse(id, { name, description }, user),
     onCompleted: (response, errors) => {
       if (errors && errors.length > 0) {
         return;
