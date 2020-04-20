@@ -41,7 +41,6 @@ export const CreateDepartmentView = ({ t, handleSubmit, pristine, submitting, re
             id="description"
             label={t('departmentDescription.label')}
             name="description"
-            autoFocus
             component={renderTextField}
           />
 
