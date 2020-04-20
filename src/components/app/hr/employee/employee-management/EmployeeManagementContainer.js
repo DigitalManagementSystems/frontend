@@ -5,7 +5,7 @@ import { userEmployees } from './PropTypes';
 import EmployeesView from './EmployeesView';
 
 export class EmployeesContainer extends Component {
-  createEmployees = () => {
+  createEmployee = () => {
     const { history } = this.props;
 
     history.push('/hr/create-employee');

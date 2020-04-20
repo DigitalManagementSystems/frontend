@@ -19,7 +19,7 @@ export const CreateEmployeeView = ({ t, handleSubmit, pristine, submitting, rese
       <CssBaseline />
       <div className={classes.paper}>
         <Typography component="h1" variant="h5">
-          {t('signIn.title')}
+          {t('createEmployee.title')}
         </Typography>
         <form className={classes.form} noValidate autoComplete="off" onSubmit={handleSubmit}>
           <Field
@@ -27,9 +27,9 @@ export const CreateEmployeeView = ({ t, handleSubmit, pristine, submitting, rese
             margin="normal"
             required
             fullWidth
-            id="name"
-            label={t('employeeName.label')}
-            name="name"
+            id="firstName"
+            label={t('firstName.label')}
+            name="firstName"
             autoFocus
             component={renderTextField}
           />
@@ -38,10 +38,29 @@ export const CreateEmployeeView = ({ t, handleSubmit, pristine, submitting, rese
             margin="normal"
             required
             fullWidth
-            id="description"
-            label={t('employeeDescription.label')}
-            name="description"
-            autoFocus
+            id="middleName"
+            label={t('middleName.label')}
+            name="middleName"
+            component={renderTextField}
+          />
+          <Field
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            id="lastName"
+            label={t('lastName.label')}
+            name="lastName"
+            component={renderTextField}
+          />
+          <Field
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            id="preferredName"
+            label={t('preferredName.label')}
+            name="preferredName"
             component={renderTextField}
           />
 

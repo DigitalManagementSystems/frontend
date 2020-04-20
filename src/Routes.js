@@ -7,7 +7,7 @@ import { PublicMainContainer, MainContainer } from './layouts';
 import { UserLoadingContainer, NotFoundContainer } from './components/common';
 import { PublicHomeContainer, SignUpContainer, SignInContainer, DashboardContainer } from './components/app';
 import { Departments, CreateDepartmentContainer } from './components/app/hr/department';
-import { Employees } from './components/app/hr/employee';
+import { Employees, CreateEmployeeContainer } from './components/app/hr/employee';
 import { ErrorHandlerContainer } from './components/common';
 
 const Routes = ({ isLoaded, userFound }) => {
@@ -29,6 +29,7 @@ const Routes = ({ isLoaded, userFound }) => {
         <RouteWithLayout isSecureRoute={true} exact component={Departments} layout={MainContainer} path="/hr/department-management" />
         <RouteWithLayout isSecureRoute={true} exact component={CreateDepartmentContainer} layout={MainContainer} path="/hr/create-department" />
         <RouteWithLayout isSecureRoute={true} exact component={Employees} layout={MainContainer} path="/hr/employee-management" />
+        <RouteWithLayout isSecureRoute={true} exact component={CreateEmployeeContainer} layout={MainContainer} path="/hr/create-employee" />
         <RouteWithLayout
           isSecureRoute={false}
           exact
