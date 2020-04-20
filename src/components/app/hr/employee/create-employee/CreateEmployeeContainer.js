@@ -8,19 +8,22 @@ import { CreateEmployee } from '../../../../../framework/relay/mutations';
 
 export class CreateEmployeeContainer extends Component {
   createEmployee = ({ firstName, middleName, lastName, preferredName }) => {
-    const { history, environment, createEmployee } = this.props;
+    const { history, environment, createEmployee, user } = this.props;
 
-    createEmployee(environment, {
-      name: {
-        firstName,
-        middleName,
-        lastName,
-        preferredName,
+    createEmployee(
+      environment,
+      {
+        name: {
+          firstName,
+          middleName,
+          lastName,
+          preferredName,
+        },
+        departmentIds: [],
       },
-      departmentIds: [],
-    });
-
-    history.push('/hr/employee-management');
+      user,
+      { onSuccess: () => history.push('/hr/employee-management') },
+    );
   };
 
   cancel = (values) => {
@@ -29,9 +32,7 @@ export class CreateEmployeeContainer extends Component {
     history.push('/hr/employee-management');
   };
 
-  render = () => {
-    return <CreateEmployeeView onSubmit={this.createEmployee} onCancelButtonClick={this.cancel} />;
-  };
+  render = () => <CreateEmployeeView onSubmit={this.createEmployee} onCancelButtonClick={this.cancel} />;
 }
 
 CreateEmployeeContainer.propTypes = {};

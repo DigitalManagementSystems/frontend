@@ -8,14 +8,17 @@ import { CreateDepartment } from '../../../../../framework/relay/mutations';
 
 export class CreateDepartmentContainer extends Component {
   createDepartment = ({ name, description }) => {
-    const { history, environment, createDepartment } = this.props;
+    const { history, environment, createDepartment, user } = this.props;
 
-    createDepartment(environment, {
-      name,
-      description,
-    });
-
-    history.push('/hr/department-management');
+    createDepartment(
+      environment,
+      {
+        name,
+        description,
+      },
+      user,
+      { onSuccess: () => history.push('/hr/department-management') },
+    );
   };
 
   cancel = (values) => {
@@ -24,9 +27,7 @@ export class CreateDepartmentContainer extends Component {
     history.push('/hr/department-management');
   };
 
-  render = () => {
-    return <CreateDepartmentView onSubmit={this.createDepartment} onCancelButtonClick={this.cancel} />;
-  };
+  render = () => <CreateDepartmentView onSubmit={this.createDepartment} onCancelButtonClick={this.cancel} />;
 }
 
 CreateDepartmentContainer.propTypes = {};
@@ -35,6 +36,5 @@ const mapStateToProps = () => ({
   environment: RelayEnvironment,
   createDepartment: CreateDepartment,
 });
-const mapDispatchToProps = () => ({});
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(CreateDepartmentContainer));
+export default withRouter(connect(mapStateToProps)(CreateDepartmentContainer));

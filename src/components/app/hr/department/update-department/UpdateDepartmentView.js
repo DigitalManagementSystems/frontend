@@ -11,7 +11,7 @@ import styles from './Styles';
 import { renderTextField } from '../../../../common/redux-form';
 import validate from './Validation';
 
-export const CreateDepartmentView = ({ t, handleSubmit, pristine, submitting, reset, onCancelButtonClick }) => {
+export const UpdateDepartmentView = ({ t, handleSubmit, pristine, submitting, reset, onCancelButtonClick, department: { name, description } }) => {
   const classes = styles();
 
   return (
@@ -19,7 +19,7 @@ export const CreateDepartmentView = ({ t, handleSubmit, pristine, submitting, re
       <CssBaseline />
       <div className={classes.paper}>
         <Typography component="h1" variant="h5">
-          {t('createDepartment.title')}
+          {t('updateDepartment.title')}
         </Typography>
         <form className={classes.form} noValidate autoComplete="off" onSubmit={handleSubmit}>
           <Field
@@ -32,6 +32,7 @@ export const CreateDepartmentView = ({ t, handleSubmit, pristine, submitting, re
             name="name"
             autoFocus
             component={renderTextField}
+            defaultValue={name}
           />
           <Field
             variant="outlined"
@@ -41,10 +42,10 @@ export const CreateDepartmentView = ({ t, handleSubmit, pristine, submitting, re
             label={t('departmentDescription.label')}
             name="description"
             component={renderTextField}
+            defaultValue={description}
           />
-
           <Button type="submit" variant="contained" color="primary" className={classes.submit} disabled={pristine || submitting}>
-            {t('create.button')}
+            {t('update.button')}
           </Button>
           <Button type="button" variant="contained" color="secondary" className={classes.submit} disabled={pristine || submitting} onClick={reset}>
             {t('reset.button')}
@@ -65,13 +66,13 @@ export const CreateDepartmentView = ({ t, handleSubmit, pristine, submitting, re
   );
 };
 
-CreateDepartmentView.propTypes = {
+UpdateDepartmentView.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
   reset: PropTypes.func.isRequired,
   onCancelButtonClick: PropTypes.func.isRequired,
 };
 
 export default reduxForm({
-  form: 'CreateDepartmentForm',
+  form: 'UpdateDepartmentForm',
   validate,
-})(withTranslation()(CreateDepartmentView));
+})(withTranslation()(UpdateDepartmentView));

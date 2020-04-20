@@ -19,11 +19,16 @@ export class DepartmentsContainer extends Component {
   };
 
   render = () => {
-    const { user } = this.props;
-    const departments = user.departments.edges.map((edge) => edge.node);
+    const {
+      user: { departments },
+    } = this.props;
 
     return (
-      <DepartmentsView departments={departments} onCreateDepartmentClick={this.createDepartment} onDepartmentClick={this.handleDepartmentClick} />
+      <DepartmentsView
+        departments={departments.edges.map((edge) => edge.node)}
+        onCreateDepartmentClick={this.createDepartment}
+        onDepartmentClick={this.handleDepartmentClick}
+      />
     );
   };
 }
