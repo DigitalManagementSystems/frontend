@@ -21,6 +21,7 @@ i18next.init({
         create: { label: 'Create', button: 'Create' },
         reset: { label: 'Reset', button: 'Reset' },
         cancel: { label: 'Cancel', button: 'Cancel' },
+        createDepartment: { title: 'Create Department' },
         departmentManagement: { title: 'Department Management', label: 'Department Management', button: 'Department Management' },
         departmentName: { title: 'Name', label: 'Name' },
         departmentDescription: { title: 'Description', label: 'Description' },

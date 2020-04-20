@@ -19,7 +19,7 @@ export const CreateDepartmentView = ({ t, handleSubmit, pristine, submitting, re
       <CssBaseline />
       <div className={classes.paper}>
         <Typography component="h1" variant="h5">
-          {t('signIn.title')}
+          {t('createDepartment.title')}
         </Typography>
         <form className={classes.form} noValidate autoComplete="off" onSubmit={handleSubmit}>
           <Field
