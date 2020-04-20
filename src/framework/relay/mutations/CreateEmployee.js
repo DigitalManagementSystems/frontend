@@ -18,21 +18,9 @@ const mutation = graphql`
             preferredName
           }
           departments {
-            pageInfo {
-              hasNextPage
-              hasPreviousPage
-              startCursor
-              endCursor
-            }
-            totalCount
-            edges {
-              cursor
-              node {
-                id
-                name
-                description
-              }
-            }
+            id
+            name
+            description
           }
         }
       }
