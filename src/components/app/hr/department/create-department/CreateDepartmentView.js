@@ -28,7 +28,7 @@ export const CreateDepartmentView = ({ t, handleSubmit, pristine, submitting, re
             required
             fullWidth
             id="name"
-            label={t('departmentName.label')}
+            label={t('name.label')}
             name="name"
             autoFocus
             component={renderTextField}
@@ -38,7 +38,7 @@ export const CreateDepartmentView = ({ t, handleSubmit, pristine, submitting, re
             margin="normal"
             fullWidth
             id="description"
-            label={t('departmentDescription.label')}
+            label={t('description.label')}
             name="description"
             component={renderTextField}
           />

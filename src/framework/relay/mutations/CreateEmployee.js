@@ -11,12 +11,8 @@ const mutation = graphql`
         cursor
         node {
           id
-          name {
-            firstName
-            middleName
-            lastName
-            preferredName
-          }
+          email
+          employeeReference
           departments {
             id
             name
@@ -39,12 +35,13 @@ const sharedUpdater = (store, user, newEdge) => {
   ConnectionHandler.insertEdgeAfter(connection, newEdge);
 };
 
-const commit = (environment, { name, departmentIds }, user, { onSuccess, onError } = {}) => {
+const commit = (environment, { email, employeeReference, departmentIds }, user, { onSuccess, onError } = {}) => {
   return commitMutation(environment, {
     mutation,
     variables: {
       input: {
-        name,
+        email,
+        employeeReference,
         departmentIds,
         clientMutationId: cuid(),
       },
@@ -59,10 +56,10 @@ const commit = (environment, { name, departmentIds }, user, { onSuccess, onError
       // Create a Employee record in our store with a temporary ID
       const id = 'client:newEmployee:' + cuid();
       const node = store.create(id, 'Employee');
-      node.setValue(id, 'id');
 
-      // TODO: mortezaalizadeh: 20200418 - Add name to the optimistic update
-      // node.setValue(name, 'name');
+      node.setValue(id, 'id');
+      node.setValue(email, 'email');
+      node.setValue(employeeReference, 'employeeReference');
 
       // Create a new edge that contains the newly created Employee record
       const newEdge = store.create('client:newEdge:' + cuid(), 'Employee');

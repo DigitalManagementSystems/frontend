@@ -5,16 +5,16 @@ import TableCell from '@material-ui/core/TableCell';
 import Checkbox from '@material-ui/core/Checkbox';
 import { withTranslation } from 'react-i18next';
 
-const DepartmentsTableHeader = ({ t }) => (
+const EmployeesTableHeader = ({ t }) => (
   <TableHead>
     <TableRow>
       <TableCell padding="checkbox">
         <Checkbox checked={false} />
       </TableCell>
-      <TableCell>{t('name.title')}</TableCell>
-      <TableCell>{t('description.title')}</TableCell>
+      <TableCell>{t('email.title')}</TableCell>
+      <TableCell>{t('employeeReference.title')}</TableCell>
     </TableRow>
   </TableHead>
 );
 
-export default withTranslation()(DepartmentsTableHeader);
+export default withTranslation()(EmployeesTableHeader);

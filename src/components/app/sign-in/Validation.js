@@ -3,7 +3,7 @@ import emailValidator from 'email-validator';
 
 const validate = (values) => {
   const requiredFields = Set(['email', 'password']);
-  var errors = requiredFields.reduce((currentErrors, fieldName) => {
+  let errors = requiredFields.reduce((currentErrors, fieldName) => {
     if (!values[fieldName]) {
       return currentErrors.set(fieldName, 'Required');
     }

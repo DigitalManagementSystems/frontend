@@ -14,6 +14,8 @@ import DepartmentView from './DepartmentView';
 const DepartmentsView = ({ departments, onCreateDepartmentClick, onDepartmentClick }) => {
   const classes = Styles();
 
+  console.log(departments);
+
   return (
     <div className={classes.root}>
       <Paper className={classes.paper}>

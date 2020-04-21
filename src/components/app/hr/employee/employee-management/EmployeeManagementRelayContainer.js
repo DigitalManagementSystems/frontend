@@ -10,12 +10,8 @@ export default createFragmentContainer(EmployeeManagementContainer, {
         edges {
           node {
             id
-            name {
-              firstName
-              middleName
-              lastName
-              preferredName
-            }
+            email
+            employeeReference
           }
         }
       }

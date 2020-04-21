@@ -9,7 +9,7 @@ export class SignUpContainer extends Component {
   state = {};
 
   signUp = ({ email, password, userType }) => {
-    firebase.createUser({ email, password }, { username: email, userType });
+    firebase.createUser({ email, password }, { email, userType });
   };
 
   static getDerivedStateFromProps = ({ userFound, history }) => {

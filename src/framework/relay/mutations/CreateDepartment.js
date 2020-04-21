@@ -50,6 +50,7 @@ const commit = (environment, { name, description }, user, { onSuccess, onError }
       // Create a Department record in our store with a temporary ID
       const id = 'client:newDepartment:' + cuid();
       const node = store.create(id, 'Department');
+
       node.setValue(id, 'id');
       node.setValue(name, 'name');
       node.setValue(name, 'description');
