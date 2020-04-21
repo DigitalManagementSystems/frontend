@@ -46,11 +46,9 @@ const Routes = ({ isLoaded, userFound }) => {
   );
 };
 
-const mapStateToProps = (state) => {
-  return {
-    isLoaded: state.firebase.auth.isLoaded,
-    userFound: !!state.firebase.auth.uid,
-  };
-};
+const mapStateToProps = (state) => ({
+  isLoaded: state.firebase.auth.isLoaded,
+  userFound: !!state.firebase.auth.uid,
+});
 
 export default connect(mapStateToProps)(Routes);
