@@ -5,16 +5,17 @@ import { withRouter } from 'react-router-dom';
 
 import { RelayEnvironment } from '../../../../../framework/relay';
 import UpdateDepartmentRelayContainer from './UpdateDepartmentRelayContainer';
+import { LoadingContainer, GenericErrorContainer } from '../../../../common';
 
 class UpdateDepartment extends Component {
   renderRelayComponent = ({ props, error }) => {
     if (props && props.user) {
       return <UpdateDepartmentRelayContainer user={props.user} />;
     } else if (error) {
-      return <div>{error.message}</div>;
+      return <GenericErrorContainer message={error.message} />;
     }
 
-    return <div>Loading</div>;
+    return <LoadingContainer />;
   };
 
   render = () => {

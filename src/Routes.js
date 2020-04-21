@@ -4,7 +4,7 @@ import { Switch, Redirect } from 'react-router-dom';
 
 import { RouteWithLayout } from './components/common';
 import { PublicMainContainer, MainContainer } from './layouts';
-import { UserLoadingContainer, NotFoundContainer } from './components/common';
+import { LoadingContainer, NotFoundContainer } from './components/common';
 import { PublicHomeContainer, SignUpContainer, SignInContainer, DashboardContainer } from './components/app';
 import { Departments, CreateDepartmentContainer, UpdateDepartment } from './components/app/hr/department';
 import { Employees, CreateEmployeeContainer } from './components/app/hr/employee';
@@ -12,7 +12,7 @@ import { ErrorHandlerContainer } from './components/common';
 
 const Routes = ({ isLoaded, userFound }) => {
   if (!isLoaded) {
-    return <UserLoadingContainer />;
+    return <LoadingContainer />;
   }
 
   return (
