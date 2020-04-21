@@ -3,7 +3,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 
 import Styles from './Styles';
 
-const UserLoadingContainer = () => {
+const LoadingContainer = () => {
   const classes = Styles();
 
   return (
@@ -13,4 +13,4 @@ const UserLoadingContainer = () => {
   );
 };
 
-export default UserLoadingContainer;
+export default LoadingContainer;

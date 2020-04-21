@@ -4,16 +4,17 @@ import { QueryRenderer } from 'react-relay';
 
 import { RelayEnvironment } from '../../../../../framework/relay';
 import EmployeeManagementRelayContainer from './EmployeeManagementRelayContainer';
+import { LoadingContainer, GenericErrorContainer } from '../../../../common';
 
 class Employees extends Component {
   renderRelayComponent = ({ props, error }) => {
     if (props && props.user) {
       return <EmployeeManagementRelayContainer user={props.user} />;
     } else if (error) {
-      return <div>{error.message}</div>;
+      return <GenericErrorContainer message={error.message} />;
     }
 
-    return <div>Loading</div>;
+    return <LoadingContainer />;
   };
 
   render = () => {
