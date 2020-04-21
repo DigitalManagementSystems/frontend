@@ -16,7 +16,7 @@ import Routes from './Routes';
 const browserHistory = createBrowserHistory();
 
 const rrfConfig = {
-  userProfile: 'users',
+  userProfile: 'user',
   useFirestoreForProfile: true,
 };
 
