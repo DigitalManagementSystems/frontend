@@ -27,9 +27,10 @@ export const CreateEmployeeView = ({ t, handleSubmit, pristine, submitting, rese
             margin="normal"
             required
             fullWidth
-            id="firstName"
-            label={t('firstName.label')}
-            name="firstName"
+            id="email"
+            label={t('email.label')}
+            name="email"
+            autoComplete="email"
             autoFocus
             component={renderTextField}
           />
@@ -38,29 +39,9 @@ export const CreateEmployeeView = ({ t, handleSubmit, pristine, submitting, rese
             margin="normal"
             required
             fullWidth
-            id="middleName"
-            label={t('middleName.label')}
-            name="middleName"
-            component={renderTextField}
-          />
-          <Field
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            id="lastName"
-            label={t('lastName.label')}
-            name="lastName"
-            component={renderTextField}
-          />
-          <Field
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            id="preferredName"
-            label={t('preferredName.label')}
-            name="preferredName"
+            id="employeeReference"
+            label={t('employeeReference.label')}
+            name="employeeReference"
             component={renderTextField}
           />
 

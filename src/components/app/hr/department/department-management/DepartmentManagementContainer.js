@@ -18,19 +18,13 @@ export class DepartmentsContainer extends Component {
     history.push(linkToDepartment);
   };
 
-  render = () => {
-    const {
-      user: { departments },
-    } = this.props;
-
-    return (
-      <DepartmentsView
-        departments={departments.edges.map((edge) => edge.node)}
-        onCreateDepartmentClick={this.createDepartment}
-        onDepartmentClick={this.handleDepartmentClick}
-      />
-    );
-  };
+  render = () => (
+    <DepartmentsView
+      departments={this.props.user.departments.edges.map((edge) => edge.node)}
+      onCreateDepartmentClick={this.createDepartment}
+      onDepartmentClick={this.handleDepartmentClick}
+    />
+  );
 }
 
 DepartmentsContainer.propTypes = {

@@ -7,18 +7,14 @@ import { RelayEnvironment } from '../../../../../framework/relay';
 import { CreateEmployee } from '../../../../../framework/relay/mutations';
 
 export class CreateEmployeeContainer extends Component {
-  createEmployee = ({ firstName, middleName, lastName, preferredName }) => {
+  createEmployee = ({ email, employeeReference }) => {
     const { history, environment, createEmployee, user } = this.props;
 
     createEmployee(
       environment,
       {
-        name: {
-          firstName,
-          middleName,
-          lastName,
-          preferredName,
-        },
+        email,
+        employeeReference,
         departmentIds: [],
       },
       user,

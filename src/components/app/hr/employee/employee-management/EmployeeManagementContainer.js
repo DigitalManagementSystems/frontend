@@ -18,12 +18,13 @@ export class EmployeesContainer extends Component {
     history.push(linkToEmployee);
   };
 
-  render = () => {
-    const { user } = this.props;
-    const employees = user.employees.edges.map((edge) => edge.node);
-
-    return <EmployeesView employees={employees} onCreateEmployeeClick={this.createEmployee} onEmployeeClick={this.handleEmployeeClick} />;
-  };
+  render = () => (
+    <EmployeesView
+      employees={this.props.user.employees.edges.map((edge) => edge.node)}
+      onCreateEmployeeClick={this.createEmployee}
+      onEmployeeClick={this.handleEmployeeClick}
+    />
+  );
 }
 
 EmployeesContainer.propTypes = {

@@ -2,8 +2,8 @@ import PropTypes from 'prop-types';
 
 export const employeeProp = PropTypes.shape({
   id: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
-  description: PropTypes.string,
+  email: PropTypes.string.isRequired,
+  employeeReference: PropTypes.string,
 });
 
 export const employeesProp = PropTypes.arrayOf(employeeProp);

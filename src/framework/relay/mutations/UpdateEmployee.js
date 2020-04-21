@@ -10,12 +10,8 @@ const mutation = graphql`
         cursor
         node {
           id
-          name {
-            firstName
-            middleName
-            lastName
-            preferredName
-          }
+          email
+          employeeReference
           departments {
             id
             name
@@ -27,7 +23,7 @@ const mutation = graphql`
   }
 `;
 
-const getOptimisticResponse = (id, { name, departmentIds }, user) => {
+const getOptimisticResponse = (id, { email, employeeReference, departmentIds }, user) => {
   if (!user) {
     return {};
   }
@@ -39,7 +35,8 @@ const getOptimisticResponse = (id, { name, departmentIds }, user) => {
         employee: {
           node: {
             id,
-            name,
+            email,
+            employeeReference,
           },
         },
       },
@@ -47,18 +44,19 @@ const getOptimisticResponse = (id, { name, departmentIds }, user) => {
   };
 };
 
-const commit = (environment, { id, name, departmentIds }, user, { onSuccess, onError } = {}) => {
+const commit = (environment, { id, email, employeeReference, departmentIds }, user, { onSuccess, onError } = {}) => {
   return commitMutation(environment, {
     mutation,
     variables: {
       input: {
         id,
-        name,
+        email,
+        employeeReference,
         departmentIds,
         clientMutationId: cuid(),
       },
     },
-    optimisticResponse: getOptimisticResponse(id, { name }, user),
+    optimisticResponse: getOptimisticResponse(id, { email, employeeReference, departmentIds }, user),
     onCompleted: (response, errors) => {
       if (errors && errors.length > 0) {
         return;
