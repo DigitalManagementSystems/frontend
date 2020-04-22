@@ -6,14 +6,15 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import { withTranslation } from 'react-i18next';
-
+import TextField from '@material-ui/core/TextField';
+import { registeredUsersProp } from './PropTypes';
 import styles from './Styles';
-import { renderTextField } from '../../../../common/redux-form';
+import { renderTextField, renderComboBox } from '../../../../common/redux-form';
 import validate from './Validation';
 
-export const CreateEmployeeView = ({ t, handleSubmit, pristine, submitting, reset, onCancelButtonClick }) => {
+export const CreateEmployeeView = ({ t, handleSubmit, pristine, submitting, reset, onCancelButtonClick, registeredUsers }) => {
   const classes = styles();
-
+  console.log(registeredUsers);
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -23,16 +24,13 @@ export const CreateEmployeeView = ({ t, handleSubmit, pristine, submitting, rese
         </Typography>
         <form className={classes.form} noValidate autoComplete="off" onSubmit={handleSubmit}>
           <Field
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
             id="email"
-            label={t('email.label')}
+            margin="normal"
             name="email"
-            autoComplete="email"
-            autoFocus
-            component={renderTextField}
+            options={registeredUsers}
+            getOptionLabel={(registeredUsers) => registeredUsers.email}
+            renderInput={(params) => <TextField required {...params} label={t('email.label')} variant="outlined" />}
+            component={renderComboBox}
           />
           <Field
             variant="outlined"
@@ -71,6 +69,7 @@ CreateEmployeeView.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
   reset: PropTypes.func.isRequired,
   onCancelButtonClick: PropTypes.func.isRequired,
+  registeredUsers: registeredUsersProp.isRequired,
 };
 
 export default reduxForm({

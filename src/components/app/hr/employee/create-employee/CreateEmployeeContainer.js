@@ -28,7 +28,13 @@ export class CreateEmployeeContainer extends Component {
     history.push('/hr/employee-management');
   };
 
-  render = () => <CreateEmployeeView onSubmit={this.createEmployee} onCancelButtonClick={this.cancel} />;
+  render = () => (
+    <CreateEmployeeView
+      registeredUsers={this.props.user.registeredUsers.edges.map((edge) => edge.node)}
+      onSubmit={this.createEmployee}
+      onCancelButtonClick={this.cancel}
+    />
+  );
 }
 
 CreateEmployeeContainer.propTypes = {};
