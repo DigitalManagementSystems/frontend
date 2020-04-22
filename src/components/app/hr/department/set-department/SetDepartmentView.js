@@ -11,15 +11,16 @@ import styles from './Styles';
 import { renderTextField } from '../../../../common/redux-form';
 import validate from './Validation';
 
-export const CreateDepartmentView = ({ t, handleSubmit, pristine, submitting, reset, onCancelButtonClick }) => {
+export const SetDepartmentView = ({ t, handleSubmit, pristine, submitting, reset, onCancelButtonClick, department }) => {
   const classes = styles();
+  const isAddingNewDepartment = department === null;
 
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
         <Typography component="h1" variant="h5">
-          {t('createDepartment.title')}
+          {isAddingNewDepartment ? t('createDepartment.title') : t('updateDepartment.title')}
         </Typography>
         <form className={classes.form} noValidate autoComplete="off" onSubmit={handleSubmit}>
           <Field
@@ -32,6 +33,7 @@ export const CreateDepartmentView = ({ t, handleSubmit, pristine, submitting, re
             name="name"
             autoFocus
             component={renderTextField}
+            defaultValue={isAddingNewDepartment ? null : department.name}
           />
           <Field
             variant="outlined"
@@ -41,22 +43,17 @@ export const CreateDepartmentView = ({ t, handleSubmit, pristine, submitting, re
             label={t('description.label')}
             name="description"
             component={renderTextField}
+            defaultValue={isAddingNewDepartment ? null : department.description}
           />
-
           <Button type="submit" variant="contained" color="primary" className={classes.submit} disabled={pristine || submitting}>
-            {t('create.button')}
+            {isAddingNewDepartment ? t('create.button') : t('update.button')}
           </Button>
-          <Button type="button" variant="contained" color="secondary" className={classes.submit} disabled={pristine || submitting} onClick={reset}>
-            {t('reset.button')}
-          </Button>
-          <Button
-            type="button"
-            variant="contained"
-            color="secondary"
-            className={classes.submit}
-            disabled={pristine || submitting}
-            onClick={onCancelButtonClick}
-          >
+          {isAddingNewDepartment && (
+            <Button type="button" variant="contained" color="secondary" className={classes.submit} disabled={submitting} onClick={reset}>
+              {t('reset.button')}
+            </Button>
+          )}
+          <Button type="button" variant="contained" color="secondary" className={classes.submit} disabled={submitting} onClick={onCancelButtonClick}>
             {t('cancel.button')}
           </Button>
         </form>
@@ -65,13 +62,13 @@ export const CreateDepartmentView = ({ t, handleSubmit, pristine, submitting, re
   );
 };
 
-CreateDepartmentView.propTypes = {
+SetDepartmentView.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
   reset: PropTypes.func.isRequired,
   onCancelButtonClick: PropTypes.func.isRequired,
 };
 
 export default reduxForm({
-  form: 'CreateDepartmentForm',
+  form: 'SetDepartmentForm',
   validate,
-})(withTranslation()(CreateDepartmentView));
+})(withTranslation()(SetDepartmentView));
