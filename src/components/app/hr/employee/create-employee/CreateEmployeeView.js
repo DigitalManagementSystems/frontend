@@ -7,6 +7,7 @@ import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import { withTranslation } from 'react-i18next';
 
+import { registeredUsersProp } from './PropTypes';
 import styles from './Styles';
 import { renderTextField } from '../../../../common/redux-form';
 import validate from './Validation';
@@ -71,6 +72,7 @@ CreateEmployeeView.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
   reset: PropTypes.func.isRequired,
   onCancelButtonClick: PropTypes.func.isRequired,
+  registeredUsers: registeredUsersProp.isRequired,
 };
 
 export default reduxForm({
