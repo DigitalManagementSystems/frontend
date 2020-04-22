@@ -4,13 +4,13 @@ import { QueryRenderer } from 'react-relay';
 import { withRouter } from 'react-router-dom';
 
 import { RelayEnvironment } from '../../../../../framework/relay';
-import UpdateDepartmentRelayContainer from './UpdateDepartmentRelayContainer';
+import SetDepartmentRelayContainer from './SetDepartmentRelayContainer';
 import { LoadingContainer, GenericErrorContainer } from '../../../../common';
 
-class UpdateDepartment extends Component {
+class SetDepartment extends Component {
   renderRelayComponent = ({ props, error }) => {
     if (props && props.user) {
-      return <UpdateDepartmentRelayContainer user={props.user} />;
+      return <SetDepartmentRelayContainer user={props.user} />;
     } else if (error) {
       return <GenericErrorContainer message={error.message} />;
     }
@@ -23,9 +23,9 @@ class UpdateDepartment extends Component {
       <QueryRenderer
         environment={RelayEnvironment}
         query={graphql`
-          query UpdateDepartmentQuery($departmentId: ID!) {
+          query SetDepartmentQuery($departmentId: ID!) {
             user {
-              ...UpdateDepartmentRelayContainer_user
+              ...SetDepartmentRelayContainer_user
             }
           }
         `}
@@ -38,4 +38,4 @@ class UpdateDepartment extends Component {
   };
 }
 
-export default withRouter(UpdateDepartment);
+export default withRouter(SetDepartment);
