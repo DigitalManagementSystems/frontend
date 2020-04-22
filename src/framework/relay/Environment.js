@@ -9,7 +9,7 @@ const fetchQuery = async (operation, variables) => {
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
-      Authorization: `${state.firebase.auth.stsTokenManager.accessToken}`,
+      Authorization: `Bearer ${state.firebase.auth.stsTokenManager.accessToken}`,
     },
     body: JSON.stringify({
       query: operation.text,
