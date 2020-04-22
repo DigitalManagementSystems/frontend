@@ -1,3 +1,2 @@
 export { default as Departments } from './department-management';
-export { default as CreateDepartmentContainer } from './create-department';
-export { default as UpdateDepartment } from './update-department';
+export { CreateDepartment, UpdateDepartment } from './set-department';
