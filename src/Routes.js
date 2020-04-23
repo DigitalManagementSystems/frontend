@@ -26,10 +26,10 @@ const Routes = ({ isLoaded, userFound }) => {
 
         <RouteWithLayout isSecureRoute={false} exact component={SignUpContainer} layout={PublicMainContainer} path="/signup" />
         <RouteWithLayout isSecureRoute={false} exact component={SignInContainer} layout={PublicMainContainer} path="/signin" />
-        <RouteWithLayout isSecureRoute={true} exact component={Departments} layout={MainContainer} path="/hr/department-management" />
+        <RouteWithLayout isSecureRoute={true} exact component={Departments} layout={MainContainer} path="/hr/departments" />
         <RouteWithLayout isSecureRoute={true} exact component={CreateDepartment} layout={MainContainer} path="/hr/create-department" />
         <RouteWithLayout isSecureRoute={true} exact component={UpdateDepartment} layout={MainContainer} path="/hr/departments/:departmentId" />
-        <RouteWithLayout isSecureRoute={true} exact component={Employees} layout={MainContainer} path="/hr/employee-management" />
+        <RouteWithLayout isSecureRoute={true} exact component={Employees} layout={MainContainer} path="/hr/employees" />
         <RouteWithLayout isSecureRoute={true} exact component={CreateEmployee} layout={MainContainer} path="/hr/create-employee" />
         <RouteWithLayout
           isSecureRoute={false}

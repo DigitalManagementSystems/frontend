@@ -14,7 +14,7 @@ import validate from './Validation';
 
 export const CreateEmployeeView = ({ t, handleSubmit, pristine, submitting, reset, onCancelButtonClick, registeredUsers }) => {
   const classes = styles();
-  console.log(registeredUsers);
+
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />

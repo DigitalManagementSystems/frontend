@@ -4,18 +4,17 @@ import { ConnectionHandler } from 'relay-runtime';
 import cuid from 'cuid';
 
 const mutation = graphql`
-  mutation CreateDepartmentMutation($input: CreateDepartmentInput!) {
-    createDepartment(input: $input) {
-      department {
+  mutation CreateManufacturerMutation($input: CreateManufacturerInput!) {
+    createManufacturer(input: $input) {
+      manufacturer {
         __typename
         cursor
         node {
           id
           name
-          description
-          manufacturer {
+          user {
             id
-            name
+            email
           }
         }
       }
@@ -29,42 +28,39 @@ const sharedUpdater = (store, user, newEdge) => {
   }
 
   const userProxy = store.get(user.id);
-  const connection = ConnectionHandler.getConnection(userProxy, 'User_departments');
+  const connection = ConnectionHandler.getConnection(userProxy, 'User_manufacturers');
 
   ConnectionHandler.insertEdgeAfter(connection, newEdge);
 };
 
-const commit = (environment, { name, description, manufacturerId }, user, { onSuccess, onError } = {}) => {
+const commit = (environment, { name }, user, { onSuccess, onError } = {}) => {
   return commitMutation(environment, {
     mutation,
     variables: {
       input: {
         name,
-        description,
-        manufacturerId,
         clientMutationId: cuid(),
       },
     },
     updater: (store) => {
-      const payload = store.getRootField('createDepartment');
-      const newEdge = payload.getLinkedRecord('department');
+      const payload = store.getRootField('createManufacturer');
+      const newEdge = payload.getLinkedRecord('manufacturer');
 
       sharedUpdater(store, user, newEdge);
     },
     optimisticUpdater: (store) => {
-      // Create a Department record in our store with a temporary ID
-      const id = 'client:newDepartment:' + cuid();
-      const node = store.create(id, 'Department');
+      // Create a Manufacturer record in our store with a temporary ID
+      const id = 'client:newManufacturer:' + cuid();
+      const node = store.create(id, 'Manufacturer');
 
       node.setValue(id, 'id');
       node.setValue(name, 'name');
-      node.setValue(name, 'description');
 
-      // Create a new edge that contains the newly created Department record
-      const newEdge = store.create('client:newEdge:' + cuid(), 'Department');
+      // Create a new edge that contains the newly created Manufacturer record
+      const newEdge = store.create('client:newEdge:' + cuid(), 'Manufacturer');
       newEdge.setLinkedRecord(node, 'node');
 
-      // Add it to the user's department list
+      // Add it to the user's manufacturer list
       sharedUpdater(store, user, newEdge);
     },
     onCompleted: (response, errors) => {
@@ -76,7 +72,7 @@ const commit = (environment, { name, description, manufacturerId }, user, { onSu
         return;
       }
 
-      onSuccess(response.createDepartment.department.node);
+      onSuccess(response.createManufacturer.manufacturer.node);
     },
     onError: ({ message: errorMessage }) => {
       if (!onError) {

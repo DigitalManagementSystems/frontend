@@ -3,22 +3,17 @@ import { commitMutation } from 'react-relay';
 import cuid from 'cuid';
 
 const mutation = graphql`
-  mutation UpdateEmployeeMutation($input: UpdateEmployeeInput!) {
-    updateEmployee(input: $input) {
-      employee {
+  mutation UpdateManufacturerMutation($input: UpdateManufacturerInput!) {
+    updateManufacturer(input: $input) {
+      manufacturer {
         __typename
         cursor
         node {
           id
-          employeeReference
+          name
           user {
             id
             email
-          }
-          departments {
-            id
-            name
-            description
           }
         }
       }
@@ -26,19 +21,19 @@ const mutation = graphql`
   }
 `;
 
-const getOptimisticResponse = (id, { employeeReference }, user) => {
+const getOptimisticResponse = (id, { name }, user) => {
   if (!user) {
     return {};
   }
 
   return {
-    updateEmployee: {
+    updateManufacturer: {
       user: {
         id: user.id,
-        employee: {
+        manufacturer: {
           node: {
             id,
-            employeeReference,
+            name,
           },
         },
       },
@@ -46,19 +41,17 @@ const getOptimisticResponse = (id, { employeeReference }, user) => {
   };
 };
 
-const commit = (environment, { id, userId, employeeReference, departmentIds }, user, { onSuccess, onError } = {}) => {
+const commit = (environment, { id, name }, user, { onSuccess, onError } = {}) => {
   return commitMutation(environment, {
     mutation,
     variables: {
       input: {
         id,
-        userId,
-        employeeReference,
-        departmentIds,
+        name,
         clientMutationId: cuid(),
       },
     },
-    optimisticResponse: getOptimisticResponse(id, { userId, employeeReference }, user),
+    optimisticResponse: getOptimisticResponse(id, { name }, user),
     onCompleted: (response, errors) => {
       if (errors && errors.length > 0) {
         return;
@@ -68,7 +61,7 @@ const commit = (environment, { id, userId, employeeReference, departmentIds }, u
         return;
       }
 
-      onSuccess(response.updateEmployee.employee.node);
+      onSuccess(response.updateManufacturer.manufacturer.node);
     },
     onError: ({ message: errorMessage }) => {
       if (!onError) {

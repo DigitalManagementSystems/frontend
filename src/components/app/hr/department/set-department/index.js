@@ -1,2 +1,2 @@
-export { default as CreateDepartment } from './SetDepartmentContainer';
-export { default as UpdateDepartment } from './SetDepartment';
+export { default as CreateDepartment } from './CreateDepartment';
+export { default as UpdateDepartment } from './UpdateDepartment';

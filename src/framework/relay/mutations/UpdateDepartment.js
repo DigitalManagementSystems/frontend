@@ -11,6 +11,11 @@ const mutation = graphql`
         node {
           id
           name
+          description
+          manufacturer {
+            id
+            name
+          }
         }
       }
     }
@@ -38,7 +43,7 @@ const getOptimisticResponse = (id, { name, description }, user) => {
   };
 };
 
-const commit = (environment, { id, name, description }, user, { onSuccess, onError } = {}) => {
+const commit = (environment, { id, name, description, manufacturerId }, user, { onSuccess, onError } = {}) => {
   return commitMutation(environment, {
     mutation,
     variables: {
@@ -46,6 +51,7 @@ const commit = (environment, { id, name, description }, user, { onSuccess, onErr
         id,
         name,
         description,
+        manufacturerId,
         clientMutationId: cuid(),
       },
     },
