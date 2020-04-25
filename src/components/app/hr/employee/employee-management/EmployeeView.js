@@ -8,7 +8,14 @@ import Link from '@material-ui/core/Link';
 import { employeeProp } from './PropTypes';
 import Styles from './Styles';
 
-const EmployeeView = ({ employee: { id, email, employeeReference }, onEmployeeClick }) => {
+const EmployeeView = ({
+  employee: {
+    id,
+    user: { email },
+    employeeReference,
+  },
+  onEmployeeClick,
+}) => {
   const classes = Styles();
 
   return (

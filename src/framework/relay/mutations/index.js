@@ -1,3 +1,6 @@
+export { default as CreateManufacturer } from './CreateManufacturer';
+export { default as UpdateManufacturer } from './UpdateManufacturer';
+export { default as DeleteManufacturer } from './DeleteManufacturer';
 export { default as CreateDepartment } from './CreateDepartment';
 export { default as UpdateDepartment } from './UpdateDepartment';
 export { default as DeleteDepartment } from './DeleteDepartment';

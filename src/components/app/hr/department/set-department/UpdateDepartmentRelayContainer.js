@@ -4,12 +4,15 @@ import SetDepartmentContainer from './SetDepartmentContainer';
 
 export default createFragmentContainer(SetDepartmentContainer, {
   user: graphql`
-    fragment SetDepartmentRelayContainer_user on User {
+    fragment UpdateDepartmentRelayContainer_user on User {
       id
       department(departmentId: $departmentId) {
         id
         name
         description
+        manufacturer {
+          id
+        }
       }
     }
   `,

@@ -9,23 +9,24 @@ import { CreateEmployee } from '../../../../../framework/relay/mutations';
 export class CreateEmployeeContainer extends Component {
   createEmployee = ({ email, employeeReference }) => {
     const { history, environment, createEmployee, user } = this.props;
+    const userId = user.registeredUsers.edges.map((edge) => edge.node).filter((user) => user.email === email)[0];
 
     createEmployee(
       environment,
       {
-        email,
+        userId,
         employeeReference,
         departmentIds: [],
       },
-      user,
-      { onSuccess: () => history.push('/hr/employee-management') },
+      null,
+      { onSuccess: () => history.push('/hr/employees') },
     );
   };
 
   cancel = (values) => {
     const { history } = this.props;
 
-    history.push('/hr/employee-management');
+    history.push('/hr/employees');
   };
 
   render = () => (

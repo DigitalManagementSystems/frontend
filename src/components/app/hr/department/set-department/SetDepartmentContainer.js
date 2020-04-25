@@ -10,9 +10,12 @@ export class SetDepartmentContainer extends Component {
   setDepartment = ({ name, description }) => {
     const { history, environment, createDepartment, updateDepartment, user } = this.props;
 
-    if (user) {
+    if (user && user.department) {
       const {
-        department: { id },
+        department: {
+          id,
+          manufacturer: { id: manufacturerId },
+        },
       } = user;
 
       updateDepartment(
@@ -21,19 +24,23 @@ export class SetDepartmentContainer extends Component {
           id,
           name,
           description,
+          manufacturerId,
         },
         user,
-        { onSuccess: () => history.push('/hr/department-management') },
+        { onSuccess: () => history.push('/hr/departments') },
       );
     } else {
+      const manufacturerId = user.manufacturers.edges.map((edge) => edge.node)[0].id;
+
       createDepartment(
         environment,
         {
           name,
           description,
+          manufacturerId,
         },
-        user,
-        { onSuccess: () => history.push('/hr/department-management') },
+        null,
+        { onSuccess: () => history.push('/hr/departments') },
       );
     }
   };
@@ -41,13 +48,15 @@ export class SetDepartmentContainer extends Component {
   cancel = (values) => {
     const { history } = this.props;
 
-    history.push('/hr/department-management');
+    history.push('/hr/departments');
   };
 
   render = () => {
+    const { user } = this.props;
+
     return (
       <SetDepartmentView
-        department={this.props.user ? this.props.user.department : null}
+        department={user && user.department ? user.department : null}
         onSubmit={this.setDepartment}
         onCancelButtonClick={this.cancel}
       />

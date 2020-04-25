@@ -22,11 +22,11 @@ const SidebarContainer = ({ t, history, open, variant, onClose, className }) => 
   };
 
   const departmentManagement = () => {
-    history.push('/hr/department-management');
+    history.push('/hr/departments');
   };
 
   const employeeManagement = () => {
-    history.push('/hr/employee-management');
+    history.push('/hr/employees');
   };
 
   const signOut = () => {
