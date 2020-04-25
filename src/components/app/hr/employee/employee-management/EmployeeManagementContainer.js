@@ -8,7 +8,7 @@ export class EmployeesContainer extends Component {
   createEmployee = () => {
     const { history } = this.props;
 
-    history.push('/hr/create-employee');
+    history.push('/hr/employee/create');
   };
 
   handleEmployeeClick = (id) => {

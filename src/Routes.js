@@ -8,7 +8,7 @@ import { LoadingContainer, NotFoundContainer } from './components/common';
 import { PublicHomeContainer, SignUpContainer, SignInContainer, DashboardContainer } from './components/app';
 import { Departments, CreateDepartment, UpdateDepartment } from './components/app/hr/department';
 import { Employees, CreateEmployee } from './components/app/hr/employee';
-import { ErrorHandlerContainer } from './components/common';
+import { NotificationHandlerContainer } from './components/common';
 
 const Routes = ({ isLoaded, userFound }) => {
   if (!isLoaded) {
@@ -27,10 +27,10 @@ const Routes = ({ isLoaded, userFound }) => {
         <RouteWithLayout isSecureRoute={false} exact component={SignUpContainer} layout={PublicMainContainer} path="/signup" />
         <RouteWithLayout isSecureRoute={false} exact component={SignInContainer} layout={PublicMainContainer} path="/signin" />
         <RouteWithLayout isSecureRoute={true} exact component={Departments} layout={MainContainer} path="/hr/departments" />
-        <RouteWithLayout isSecureRoute={true} exact component={CreateDepartment} layout={MainContainer} path="/hr/create-department" />
+        <RouteWithLayout isSecureRoute={true} exact component={CreateDepartment} layout={MainContainer} path="/hr/department/create" />
         <RouteWithLayout isSecureRoute={true} exact component={UpdateDepartment} layout={MainContainer} path="/hr/departments/:departmentId" />
         <RouteWithLayout isSecureRoute={true} exact component={Employees} layout={MainContainer} path="/hr/employees" />
-        <RouteWithLayout isSecureRoute={true} exact component={CreateEmployee} layout={MainContainer} path="/hr/create-employee" />
+        <RouteWithLayout isSecureRoute={true} exact component={CreateEmployee} layout={MainContainer} path="/hr/employee/create" />
         <RouteWithLayout
           isSecureRoute={false}
           exact
@@ -41,7 +41,7 @@ const Routes = ({ isLoaded, userFound }) => {
         <RouteWithLayout isSecureRoute={true} exact component={DashboardContainer} layout={MainContainer} path="/dashboard" />
         <Redirect to="/notfound" />
       </Switch>
-      <ErrorHandlerContainer />
+      <NotificationHandlerContainer />
     </div>
   );
 };

@@ -8,7 +8,7 @@ export class DepartmentsContainer extends Component {
   createDepartment = () => {
     const { history } = this.props;
 
-    history.push('/hr/create-department');
+    history.push('/hr/department/create');
   };
 
   handleDepartmentClick = (id) => {
