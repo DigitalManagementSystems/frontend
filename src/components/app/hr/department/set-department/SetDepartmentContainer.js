@@ -61,7 +61,7 @@ export class SetDepartmentContainer extends Component {
     }
   };
 
-  cancel = (values) => {
+  cancel = () => {
     const { history } = this.props;
 
     history.push('/hr/departments');

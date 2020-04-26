@@ -6,10 +6,10 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import { withTranslation } from 'react-i18next';
-import TextField from '@material-ui/core/TextField';
+
 import { registeredUsersProp } from './PropTypes';
 import styles from './Styles';
-import { renderTextField, renderComboBox } from '../../../../common/redux-form';
+import { renderTextField, renderAutocomplete } from '../../../../common/redux-form';
 import validate from './Validation';
 
 export const CreateEmployeeView = ({ t, handleSubmit, pristine, submitting, reset, onCancelButtonClick, registeredUsers }) => {
@@ -24,25 +24,25 @@ export const CreateEmployeeView = ({ t, handleSubmit, pristine, submitting, rese
         </Typography>
         <form className={classes.form} noValidate autoComplete="off" onSubmit={handleSubmit}>
           <Field
-            id="email"
+            id="userEmail"
             margin="normal"
-            name="email"
+            name="userEmail"
+            label={t('email.label')}
+            required
+            fullWidth
             options={registeredUsers}
-            getOptionLabel={(registeredUsers) => registeredUsers.email}
-            renderInput={(params) => <TextField required {...params} label={t('email.label')} variant="outlined" />}
-            component={renderComboBox}
+            getOptionLabel={(registeredUser) => registeredUser.email}
+            component={renderAutocomplete}
           />
           <Field
             variant="outlined"
             margin="normal"
-            required
             fullWidth
             id="employeeReference"
             label={t('employeeReference.label')}
             name="employeeReference"
             component={renderTextField}
           />
-
           <Button type="submit" variant="contained" color="primary" className={classes.submit} disabled={pristine || submitting}>
             {t('create.button')}
           </Button>

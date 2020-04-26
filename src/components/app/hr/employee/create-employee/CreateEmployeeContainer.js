@@ -11,9 +11,9 @@ import { NotificationType } from '../../../../../framework/redux/notification';
 import * as notificationActions from '../../../../../framework/redux/notification/Actions';
 
 export class CreateEmployeeContainer extends Component {
-  createEmployee = ({ email, employeeReference }) => {
+  createEmployee = ({ userEmail, employeeReference }) => {
     const { history, environment, createEmployee, user, notificationActions } = this.props;
-    const userId = user.registeredUsers.edges.map((edge) => edge.node).filter((user) => user.email === email)[0];
+    const userId = user.registeredUsers.edges.map((edge) => edge.node).filter((user) => user.email === userEmail)[0].id;
 
     createEmployee(
       environment,
@@ -33,7 +33,7 @@ export class CreateEmployeeContainer extends Component {
     );
   };
 
-  cancel = (values) => {
+  cancel = () => {
     const { history } = this.props;
 
     history.push('/hr/employees');
