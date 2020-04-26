@@ -34,6 +34,7 @@ export const SetEmployeeView = ({ t, handleSubmit, pristine, submitting, reset, 
             options={registeredUsers}
             getOptionLabel={(registeredUser) => registeredUser.email}
             component={renderAutocomplete}
+            defaultValue={isAdding ? null : employee.user}
           />
           <Field
             variant="outlined"

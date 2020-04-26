@@ -19,6 +19,7 @@ export default createFragmentContainer(SetEmployeeContainer, {
         employeeReference
         user {
           id
+          email
         }
       }
     }
