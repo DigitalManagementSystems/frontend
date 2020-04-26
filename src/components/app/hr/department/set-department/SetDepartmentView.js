@@ -11,7 +11,7 @@ import styles from './Styles';
 import { renderTextField } from '../../../../common/redux-form';
 import validate from './Validation';
 
-export const SetDepartmentView = ({ t, handleSubmit, pristine, submitting, reset, onCancelButtonClick, department }) => {
+export const SetDepartmentView = ({ t, handleSubmit, pristine, submitting, onCancelButtonClick, department }) => {
   const classes = styles();
   const isAdding = department === null;
 
@@ -45,14 +45,9 @@ export const SetDepartmentView = ({ t, handleSubmit, pristine, submitting, reset
             component={renderTextField}
             defaultValue={isAdding ? null : department.description}
           />
-          <Button type="submit" variant="contained" color="primary" className={classes.submit} disabled={pristine || submitting}>
+          <Button type="submit" variant="contained" color="primary" className={classes.submit} disabled={submitting}>
             {isAdding ? t('create.button') : t('update.button')}
           </Button>
-          {isAdding && (
-            <Button type="button" variant="contained" color="secondary" className={classes.submit} disabled={submitting} onClick={reset}>
-              {t('reset.button')}
-            </Button>
-          )}
           <Button type="button" variant="contained" color="secondary" className={classes.submit} disabled={submitting} onClick={onCancelButtonClick}>
             {t('cancel.button')}
           </Button>
@@ -64,7 +59,6 @@ export const SetDepartmentView = ({ t, handleSubmit, pristine, submitting, reset
 
 SetDepartmentView.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
-  reset: PropTypes.func.isRequired,
   onCancelButtonClick: PropTypes.func.isRequired,
 };
 

@@ -11,9 +11,27 @@ import { NotificationType } from '../../../../../framework/redux/notification';
 import * as notificationActions from '../../../../../framework/redux/notification/Actions';
 
 export class SetEmployeeContainer extends Component {
-  createEmployee = ({ userEmail, employeeReference }) => {
+  state = {};
+
+  static getDerivedStateFromProps = ({ user }, state) => {
+    if (user && user.employee && !state.user && !state.departments) {
+      const {
+        employee: { user: registeredUser, departments },
+      } = user;
+
+      return {
+        user: registeredUser,
+        departments,
+      };
+    }
+
+    return null;
+  };
+
+  createEmployee = ({ employeeReference }) => {
     const { history, environment, createEmployee, updateEmployee, user, notificationActions } = this.props;
-    const userId = user.registeredUsers.edges.map((edge) => edge.node).filter((user) => user.email === userEmail)[0].id;
+    const userId = this.state.user.id;
+    const departmentIds = this.state.departments.map((department) => department.id);
 
     if (user && user.employee) {
       const {
@@ -26,7 +44,7 @@ export class SetEmployeeContainer extends Component {
           id,
           userId,
           employeeReference,
-          departmentIds: [],
+          departmentIds,
         },
         user,
         {
@@ -43,7 +61,7 @@ export class SetEmployeeContainer extends Component {
         {
           userId,
           employeeReference,
-          departmentIds: [],
+          departmentIds,
         },
         null,
         {
@@ -63,15 +81,26 @@ export class SetEmployeeContainer extends Component {
     history.push('/hr/employees');
   };
 
+  handleUserSelect = (event, user) => {
+    this.setState({ user });
+  };
+
+  handleDepartmentsSelect = (event, departments) => {
+    this.setState({ departments });
+  };
+
   render = () => {
     const { user } = this.props;
 
     return (
       <SetEmployeeView
         registeredUsers={this.props.user.registeredUsers.edges.map((edge) => edge.node)}
+        departments={this.props.user.departments.edges.map((edge) => edge.node)}
         employee={user && user.employee ? user.employee : null}
         onSubmit={this.createEmployee}
         onCancelButtonClick={this.cancel}
+        onUserSelect={this.handleUserSelect}
+        onDepartmentsSelect={this.handleDepartmentsSelect}
       />
     );
   };

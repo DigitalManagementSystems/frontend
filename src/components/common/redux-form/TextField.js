@@ -1,12 +1,11 @@
 import React from 'react';
 import TextField from '@material-ui/core/TextField';
 
-const renderTextField = ({ label, input, meta: { touched, invalid, error }, ...custom }) => {
+const renderTextField = ({ label, input, meta: { touched, invalid, error, dirty }, ...custom }) => {
   const { defaultValue } = custom;
-  const { value, ...restInput } = input;
 
-  if (defaultValue) {
-    return <TextField label={label} placeholder={label} error={touched && invalid} helperText={touched && error} {...restInput} {...custom} />;
+  if (defaultValue && !dirty) {
+    input.onChange(defaultValue);
   }
 
   return <TextField label={label} placeholder={label} error={touched && invalid} helperText={touched && error} {...input} {...custom} />;

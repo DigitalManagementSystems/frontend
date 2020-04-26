@@ -14,12 +14,24 @@ export default createFragmentContainer(SetEmployeeContainer, {
           }
         }
       }
+      departments(first: 1000) @connection(key: "User_departments") {
+        edges {
+          node {
+            id
+            name
+          }
+        }
+      }
       employee(employeeId: $employeeId) {
         id
         employeeReference
         user {
           id
           email
+        }
+        departments {
+          id
+          name
         }
       }
     }
