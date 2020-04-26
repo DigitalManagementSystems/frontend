@@ -4,13 +4,13 @@ import { QueryRenderer } from 'react-relay';
 import { withRouter } from 'react-router-dom';
 
 import { RelayEnvironment } from '../../../../../framework/relay';
-import CreateEmployeeRelayContainer from './CreateEmployeeRelayContainer';
+import UpdateEmployeeRelayContainer from './UpdateEmployeeRelayContainer';
 import { LoadingContainer, GenericErrorContainer } from '../../../../common';
 
-class CreateEmployee extends Component {
+class UpdateEmployee extends Component {
   renderRelayComponent = ({ props, error }) => {
     if (props && props.user) {
-      return <CreateEmployeeRelayContainer user={props.user} />;
+      return <UpdateEmployeeRelayContainer user={props.user} />;
     } else if (error) {
       return <GenericErrorContainer message={error.message} />;
     }
@@ -23,17 +23,19 @@ class CreateEmployee extends Component {
       <QueryRenderer
         environment={RelayEnvironment}
         query={graphql`
-          query CreateEmployeeQuery {
+          query UpdateEmployeeQuery($employeeId: ID!) {
             user {
-              ...CreateEmployeeRelayContainer_user
+              ...UpdateEmployeeRelayContainer_user
             }
           }
         `}
-        variables={{}}
+        variables={{
+          employeeId: this.props.match.params.employeeId,
+        }}
         render={this.renderRelayComponent}
       />
     );
   };
 }
 
-export default withRouter(CreateEmployee);
+export default withRouter(UpdateEmployee);

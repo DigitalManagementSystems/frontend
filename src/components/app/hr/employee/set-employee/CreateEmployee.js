@@ -3,13 +3,13 @@ import graphql from 'babel-plugin-relay/macro';
 import { QueryRenderer } from 'react-relay';
 
 import { RelayEnvironment } from '../../../../../framework/relay';
-import CreateDepartmentRelayContainer from './CreateDepartmentRelayContainer';
+import CreateEmployeeRelayContainer from './CreateEmployeeRelayContainer';
 import { LoadingContainer, GenericErrorContainer } from '../../../../common';
 
-class CreateDepartment extends Component {
+class CreateEmployee extends Component {
   renderRelayComponent = ({ props, error }) => {
     if (props && props.user) {
-      return <CreateDepartmentRelayContainer user={props.user} />;
+      return <CreateEmployeeRelayContainer user={props.user} />;
     } else if (error) {
       return <GenericErrorContainer message={error.message} />;
     }
@@ -22,9 +22,9 @@ class CreateDepartment extends Component {
       <QueryRenderer
         environment={RelayEnvironment}
         query={graphql`
-          query CreateDepartmentQuery {
+          query CreateEmployeeQuery {
             user {
-              ...CreateDepartmentRelayContainer_user
+              ...CreateEmployeeRelayContainer_user
             }
           }
         `}
@@ -35,4 +35,4 @@ class CreateDepartment extends Component {
   };
 }
 
-export default CreateDepartment;
+export default CreateEmployee;

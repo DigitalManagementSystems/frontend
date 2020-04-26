@@ -13,14 +13,14 @@ import validate from './Validation';
 
 export const SetDepartmentView = ({ t, handleSubmit, pristine, submitting, reset, onCancelButtonClick, department }) => {
   const classes = styles();
-  const isAddingNewDepartment = department === null;
+  const isAdding = department === null;
 
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
         <Typography component="h1" variant="h5">
-          {isAddingNewDepartment ? t('createDepartment.title') : t('updateDepartment.title')}
+          {isAdding ? t('createDepartment.title') : t('updateDepartment.title')}
         </Typography>
         <form className={classes.form} noValidate autoComplete="off" onSubmit={handleSubmit}>
           <Field
@@ -33,7 +33,7 @@ export const SetDepartmentView = ({ t, handleSubmit, pristine, submitting, reset
             name="name"
             autoFocus
             component={renderTextField}
-            defaultValue={isAddingNewDepartment ? null : department.name}
+            defaultValue={isAdding ? null : department.name}
           />
           <Field
             variant="outlined"
@@ -43,12 +43,12 @@ export const SetDepartmentView = ({ t, handleSubmit, pristine, submitting, reset
             label={t('description.label')}
             name="description"
             component={renderTextField}
-            defaultValue={isAddingNewDepartment ? null : department.description}
+            defaultValue={isAdding ? null : department.description}
           />
           <Button type="submit" variant="contained" color="primary" className={classes.submit} disabled={pristine || submitting}>
-            {isAddingNewDepartment ? t('create.button') : t('update.button')}
+            {isAdding ? t('create.button') : t('update.button')}
           </Button>
-          {isAddingNewDepartment && (
+          {isAdding && (
             <Button type="button" variant="contained" color="secondary" className={classes.submit} disabled={submitting} onClick={reset}>
               {t('reset.button')}
             </Button>
