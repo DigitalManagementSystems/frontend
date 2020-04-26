@@ -25,6 +25,7 @@ i18next.init({
         updateDepartment: { title: 'Update Department' },
         departmentManagement: { title: 'Department Management', label: 'Department Management', button: 'Department Management' },
         createEmployee: { title: 'Create Employee' },
+        updateEmployee: { title: 'Update Employee' },
         employeeManagement: { title: 'Employee Management', label: 'Employee Management', button: 'Employee Management' },
         name: { title: 'Name', label: 'Name' },
         description: { title: 'Description', label: 'Description' },

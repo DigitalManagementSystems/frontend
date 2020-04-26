@@ -12,15 +12,16 @@ import styles from './Styles';
 import { renderTextField, renderAutocomplete } from '../../../../common/redux-form';
 import validate from './Validation';
 
-export const CreateEmployeeView = ({ t, handleSubmit, pristine, submitting, reset, onCancelButtonClick, registeredUsers }) => {
+export const SetEmployeeView = ({ t, handleSubmit, pristine, submitting, reset, onCancelButtonClick, registeredUsers, employee }) => {
   const classes = styles();
+  const isAdding = employee === null;
 
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
         <Typography component="h1" variant="h5">
-          {t('createEmployee.title')}
+          {isAdding ? t('createEmployee.title') : t('updateEmployee.title')}
         </Typography>
         <form className={classes.form} noValidate autoComplete="off" onSubmit={handleSubmit}>
           <Field
@@ -42,21 +43,17 @@ export const CreateEmployeeView = ({ t, handleSubmit, pristine, submitting, rese
             label={t('employeeReference.label')}
             name="employeeReference"
             component={renderTextField}
+            defaultValue={isAdding ? null : employee.employeeReference}
           />
           <Button type="submit" variant="contained" color="primary" className={classes.submit} disabled={pristine || submitting}>
-            {t('create.button')}
+            {isAdding ? t('create.button') : t('update.button')}
           </Button>
-          <Button type="button" variant="contained" color="secondary" className={classes.submit} disabled={pristine || submitting} onClick={reset}>
-            {t('reset.button')}
-          </Button>
-          <Button
-            type="button"
-            variant="contained"
-            color="secondary"
-            className={classes.submit}
-            disabled={pristine || submitting}
-            onClick={onCancelButtonClick}
-          >
+          {isAdding && (
+            <Button type="button" variant="contained" color="secondary" className={classes.submit} disabled={submitting} onClick={reset}>
+              {t('reset.button')}
+            </Button>
+          )}
+          <Button type="button" variant="contained" color="secondary" className={classes.submit} disabled={submitting} onClick={onCancelButtonClick}>
             {t('cancel.button')}
           </Button>
         </form>
@@ -65,7 +62,7 @@ export const CreateEmployeeView = ({ t, handleSubmit, pristine, submitting, rese
   );
 };
 
-CreateEmployeeView.propTypes = {
+SetEmployeeView.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
   reset: PropTypes.func.isRequired,
   onCancelButtonClick: PropTypes.func.isRequired,
@@ -73,6 +70,6 @@ CreateEmployeeView.propTypes = {
 };
 
 export default reduxForm({
-  form: 'CreateEmployeeForm',
+  form: 'SetEmployeeForm',
   validate,
-})(withTranslation()(CreateEmployeeView));
+})(withTranslation()(SetEmployeeView));

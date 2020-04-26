@@ -17,7 +17,7 @@ export const employeeProp = PropTypes.shape({
   id: PropTypes.string.isRequired,
   employeeReference: PropTypes.string,
   user: userProp.isRequired,
-  department: departmentsProp.isRequired,
+  departments: departmentsProp.isRequired,
 });
 
 export const employeesProp = PropTypes.arrayOf(employeeProp);
