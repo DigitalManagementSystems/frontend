@@ -1,3 +1,3 @@
 export { default as renderTextField } from './TextField';
 export { default as renderRadioGroup } from './RadioGroup';
-export { default as renderComboBox } from './ComboBox';
+export { default as renderAutocomplete } from './Autocomplete';

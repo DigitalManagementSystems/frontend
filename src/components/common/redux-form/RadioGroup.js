@@ -4,7 +4,7 @@ import FormControl from '@material-ui/core/FormControl';
 import FormLabel from '@material-ui/core/FormLabel';
 import FormHelperText from '@material-ui/core/FormHelperText';
 
-const renderRadioGroup = ({ input, label, defaultValue, meta: { touched, invalid, error, dirty }, ...custom }) => (
+const renderRadioGroup = ({ input, label, defaultValue, meta: { touched, invalid, error }, ...custom }) => (
   <FormControl>
     <FormLabel>{label}</FormLabel>
     <RadioGroup {...input} {...custom} />
