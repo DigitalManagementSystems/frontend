@@ -5,14 +5,27 @@ import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
+import Autocomplete from '@material-ui/lab/Autocomplete';
+import TextField from '@material-ui/core/TextField';
 import { withTranslation } from 'react-i18next';
 
-import { registeredUsersProp } from './PropTypes';
+import { registeredUsersProp, departmentsProp } from './PropTypes';
 import styles from './Styles';
-import { renderTextField, renderAutocomplete } from '../../../../common/redux-form';
+import { renderTextField } from '../../../../common/redux-form';
 import validate from './Validation';
 
-export const SetEmployeeView = ({ t, handleSubmit, pristine, submitting, reset, onCancelButtonClick, registeredUsers, employee }) => {
+export const SetEmployeeView = ({
+  t,
+  handleSubmit,
+  pristine,
+  submitting,
+  onCancelButtonClick,
+  registeredUsers,
+  departments,
+  employee,
+  onUserSelect,
+  onDepartmentsSelect,
+}) => {
   const classes = styles();
   const isAdding = employee === null;
 
@@ -24,17 +37,27 @@ export const SetEmployeeView = ({ t, handleSubmit, pristine, submitting, reset, 
           {isAdding ? t('createEmployee.title') : t('updateEmployee.title')}
         </Typography>
         <form className={classes.form} noValidate autoComplete="off" onSubmit={handleSubmit}>
-          <Field
+          <Autocomplete
             id="userEmail"
-            margin="normal"
-            name="userEmail"
-            label={t('email.label')}
-            required
-            fullWidth
             options={registeredUsers}
             getOptionLabel={(registeredUser) => registeredUser.email}
-            component={renderAutocomplete}
             defaultValue={isAdding ? null : employee.user}
+            renderInput={(params) => (
+              <TextField margin="normal" {...params} variant="outlined" label={t('email.label')} placeholder={t('email.label')} />
+            )}
+            onChange={onUserSelect}
+          />
+          <Autocomplete
+            id="userDepartments"
+            multiple
+            limitTags={2}
+            options={departments}
+            getOptionLabel={(department) => department.name}
+            defaultValue={isAdding ? [] : employee.departments}
+            renderInput={(params) => (
+              <TextField margin="normal" {...params} variant="outlined" label={t('departments.label')} placeholder={t('departments.label')} />
+            )}
+            onChange={onDepartmentsSelect}
           />
           <Field
             variant="outlined"
@@ -46,14 +69,9 @@ export const SetEmployeeView = ({ t, handleSubmit, pristine, submitting, reset, 
             component={renderTextField}
             defaultValue={isAdding ? null : employee.employeeReference}
           />
-          <Button type="submit" variant="contained" color="primary" className={classes.submit} disabled={pristine || submitting}>
+          <Button type="submit" variant="contained" color="primary" className={classes.submit} disabled={submitting}>
             {isAdding ? t('create.button') : t('update.button')}
           </Button>
-          {isAdding && (
-            <Button type="button" variant="contained" color="secondary" className={classes.submit} disabled={submitting} onClick={reset}>
-              {t('reset.button')}
-            </Button>
-          )}
           <Button type="button" variant="contained" color="secondary" className={classes.submit} disabled={submitting} onClick={onCancelButtonClick}>
             {t('cancel.button')}
           </Button>
@@ -65,9 +83,11 @@ export const SetEmployeeView = ({ t, handleSubmit, pristine, submitting, reset, 
 
 SetEmployeeView.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
-  reset: PropTypes.func.isRequired,
   onCancelButtonClick: PropTypes.func.isRequired,
   registeredUsers: registeredUsersProp.isRequired,
+  departments: departmentsProp.isRequired,
+  onUserSelect: PropTypes.func.isRequired,
+  onDepartmentsSelect: PropTypes.func.isRequired,
 };
 
 export default reduxForm({

@@ -15,6 +15,7 @@ const renderAutocomplete = ({ input, label, meta: { touched, invalid, error }, .
       {...custom}
       renderInput={(params) => (
         <TextField
+          margin="normal"
           label={label}
           placeholder={label}
           error={touched && invalid}
