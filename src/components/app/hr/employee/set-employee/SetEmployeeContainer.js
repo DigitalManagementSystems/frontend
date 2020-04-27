@@ -11,7 +11,7 @@ import { NotificationType } from '../../../../../framework/redux/notification';
 import * as notificationActions from '../../../../../framework/redux/notification/Actions';
 
 export class SetEmployeeContainer extends Component {
-  createEmployee = ({ userId, departmentIds, employeeReference }) => {
+  createEmployee = ({ userId, departmentIds, employeeReference, position, mobile }) => {
     const { history, environment, createEmployee, updateEmployee, user, notificationActions } = this.props;
 
     if (user && user.employee) {
@@ -26,6 +26,8 @@ export class SetEmployeeContainer extends Component {
           userId,
           employeeReference,
           departmentIds,
+          position,
+          mobile,
         },
         user,
         {
