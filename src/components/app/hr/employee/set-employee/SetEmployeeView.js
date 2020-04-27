@@ -5,27 +5,14 @@ import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
-import Autocomplete from '@material-ui/lab/Autocomplete';
-import TextField from '@material-ui/core/TextField';
 import { withTranslation } from 'react-i18next';
 
 import { registeredUsersProp, departmentsProp } from './PropTypes';
 import styles from './Styles';
-import { renderTextField } from '../../../../common/redux-form';
+import { renderTextField, renderAutocomplete } from '../../../../common/redux-form';
 import validate from './Validation';
 
-export const SetEmployeeView = ({
-  t,
-  handleSubmit,
-  pristine,
-  submitting,
-  onCancelButtonClick,
-  registeredUsers,
-  departments,
-  employee,
-  onUserSelect,
-  onDepartmentsSelect,
-}) => {
+export const SetEmployeeView = ({ t, handleSubmit, submitting, onCancelButtonClick, registeredUsers, departments, employee }) => {
   const classes = styles();
   const isAdding = employee === null;
 
@@ -37,35 +24,36 @@ export const SetEmployeeView = ({
           {isAdding ? t('createEmployee.title') : t('updateEmployee.title')}
         </Typography>
         <form className={classes.form} noValidate autoComplete="off" onSubmit={handleSubmit}>
-          <Autocomplete
-            id="userEmail"
-            options={registeredUsers}
-            getOptionLabel={(registeredUser) => registeredUser.email}
-            defaultValue={isAdding ? null : employee.user}
-            renderInput={(params) => (
-              <TextField margin="normal" {...params} variant="outlined" label={t('email.label')} placeholder={t('email.label')} />
-            )}
-            onChange={onUserSelect}
-          />
-          <Autocomplete
-            id="userDepartments"
-            multiple
-            limitTags={2}
-            options={departments}
-            getOptionLabel={(department) => department.name}
-            defaultValue={isAdding ? [] : employee.departments}
-            renderInput={(params) => (
-              <TextField margin="normal" {...params} variant="outlined" label={t('departments.label')} placeholder={t('departments.label')} />
-            )}
-            onChange={onDepartmentsSelect}
+          <Field
+            id="userId"
+            name="userId"
+            label={t('email.label')}
+            required
+            fullWidth
+            options={registeredUsers.map((registeredUser) => registeredUser.id)}
+            getOptionLabel={(id) => registeredUsers.find((registeredUser) => registeredUser.id === id).email}
+            component={renderAutocomplete}
+            defaultValue={isAdding ? null : employee.user.id}
           />
           <Field
+            id="departmentIds"
+            name="departmentIds"
+            label={t('departments.label')}
+            fullWidth
+            options={departments.map((department) => department.id)}
+            getOptionLabel={(id) => departments.find((department) => department.id === id).name}
+            component={renderAutocomplete}
+            defaultValue={isAdding ? [] : employee.departments.map((department) => department.id)}
+            multiple
+            limitTags={2}
+          />
+          <Field
+            id="employeeReference"
+            name="employeeReference"
+            label={t('employeeReference.label')}
             variant="outlined"
             margin="normal"
             fullWidth
-            id="employeeReference"
-            label={t('employeeReference.label')}
-            name="employeeReference"
             component={renderTextField}
             defaultValue={isAdding ? null : employee.employeeReference}
           />
@@ -86,8 +74,6 @@ SetEmployeeView.propTypes = {
   onCancelButtonClick: PropTypes.func.isRequired,
   registeredUsers: registeredUsersProp.isRequired,
   departments: departmentsProp.isRequired,
-  onUserSelect: PropTypes.func.isRequired,
-  onDepartmentsSelect: PropTypes.func.isRequired,
 };
 
 export default reduxForm({

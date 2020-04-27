@@ -2,7 +2,21 @@ import React from 'react';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import TextField from '@material-ui/core/TextField';
 
-const renderAutocomplete = ({ input, label, meta: { touched, invalid, error }, ...custom }) => {
+const renderAutocomplete = ({ input, label, meta: { touched, invalid, error, dirty }, ...custom }) => {
+  const { defaultValue } = custom;
+
+  if (defaultValue && !dirty) {
+    input.onChange(defaultValue);
+  }
+
+  const onChange = (event, value) => {
+    input.onChange(value);
+  };
+
+  const onBlur = (event) => {
+    input.onBlur();
+  };
+
   const { value, ...restInput } = input;
 
   return (
@@ -12,6 +26,8 @@ const renderAutocomplete = ({ input, label, meta: { touched, invalid, error }, .
       includeInputInList
       autoHighlight
       {...restInput}
+      onChange={onChange}
+      onBlur={onBlur}
       {...custom}
       renderInput={(params) => (
         <TextField
