@@ -11,7 +11,7 @@ import styles from './Styles';
 import { renderTextField } from '../../../../common/redux-form';
 import validate from './Validation';
 
-export const SetDepartmentView = ({ t, handleSubmit, pristine, submitting, onCancelButtonClick, department }) => {
+export const SetDepartmentView = ({ t, handleSubmit, submitting, onCancelButtonClick, department }) => {
   const classes = styles();
   const isAdding = department === null;
 

@@ -11,27 +11,8 @@ import { NotificationType } from '../../../../../framework/redux/notification';
 import * as notificationActions from '../../../../../framework/redux/notification/Actions';
 
 export class SetEmployeeContainer extends Component {
-  state = {};
-
-  static getDerivedStateFromProps = ({ user }, state) => {
-    if (user && user.employee && !state.user && !state.departments) {
-      const {
-        employee: { user: registeredUser, departments },
-      } = user;
-
-      return {
-        user: registeredUser,
-        departments,
-      };
-    }
-
-    return null;
-  };
-
-  createEmployee = ({ employeeReference }) => {
+  createEmployee = ({ userId, departmentIds, employeeReference }) => {
     const { history, environment, createEmployee, updateEmployee, user, notificationActions } = this.props;
-    const userId = this.state.user.id;
-    const departmentIds = this.state.departments.map((department) => department.id);
 
     if (user && user.employee) {
       const {
@@ -81,14 +62,6 @@ export class SetEmployeeContainer extends Component {
     history.push('/hr/employees');
   };
 
-  handleUserSelect = (event, user) => {
-    this.setState({ user });
-  };
-
-  handleDepartmentsSelect = (event, departments) => {
-    this.setState({ departments });
-  };
-
   render = () => {
     const { user } = this.props;
 
@@ -99,8 +72,6 @@ export class SetEmployeeContainer extends Component {
         employee={user && user.employee ? user.employee : null}
         onSubmit={this.createEmployee}
         onCancelButtonClick={this.cancel}
-        onUserSelect={this.handleUserSelect}
-        onDepartmentsSelect={this.handleDepartmentsSelect}
       />
     );
   };

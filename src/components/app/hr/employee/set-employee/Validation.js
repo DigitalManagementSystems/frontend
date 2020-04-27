@@ -1,7 +1,7 @@
 import { Set, Map } from 'immutable';
 
 const validate = (values) => {
-  const requiredFields = Set([]);
+  const requiredFields = Set(['userId']);
 
   let errors = requiredFields.reduce((currentErrors, fieldName) => {
     if (!values[fieldName]) {
