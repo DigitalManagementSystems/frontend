@@ -30,7 +30,7 @@ export class SetEmployeeContainer extends Component {
         user,
         {
           onSuccess: () => {
-            notificationActions.add('Successfully created the employee', NotificationType.SUCCESS);
+            notificationActions.add('Successfully updated the employee', NotificationType.SUCCESS);
             history.push('/hr/employees');
           },
           onError: (errorMessage) => notificationActions.add(errorMessage, NotificationType.ERROR),
