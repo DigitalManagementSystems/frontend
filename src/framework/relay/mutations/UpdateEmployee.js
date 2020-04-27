@@ -30,7 +30,12 @@ const getOptimisticResponse = (id, { employeeReference }, user) => {
   };
 };
 
-const commit = (environment, { id, userId, employeeReference, departmentIds }, user, { onSuccess, onError } = {}) => {
+const commit = (
+  environment,
+  { id, employeeReference, position, mobile, userId, departmentIds, reportingToEmployeeId },
+  user,
+  { onSuccess, onError } = {},
+) => {
   return commitMutation(environment, {
     mutation,
     variables: {
@@ -38,7 +43,10 @@ const commit = (environment, { id, userId, employeeReference, departmentIds }, u
         id,
         userId,
         employeeReference,
+        position,
+        mobile,
         departmentIds,
+        reportingToEmployeeId,
         clientMutationId: cuid(),
       },
     },

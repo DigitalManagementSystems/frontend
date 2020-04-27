@@ -22,14 +22,22 @@ const sharedUpdater = (store, user, newEdge) => {
   ConnectionHandler.insertEdgeAfter(connection, newEdge);
 };
 
-const commit = (environment, { userId, employeeReference, departmentIds }, user, { onSuccess, onError } = {}) => {
+const commit = (
+  environment,
+  { employeeReference, position, mobile, userId, departmentIds, reportingToEmployeeId },
+  user,
+  { onSuccess, onError } = {},
+) => {
   return commitMutation(environment, {
     mutation,
     variables: {
       input: {
         userId,
         employeeReference,
+        position,
+        mobile,
         departmentIds,
+        reportingToEmployeeId,
         clientMutationId: cuid(),
       },
     },
