@@ -57,6 +57,26 @@ export const SetEmployeeView = ({ t, handleSubmit, submitting, onCancelButtonCli
             component={renderTextField}
             defaultValue={isAdding ? null : employee.employeeReference}
           />
+          <Field
+            id="position"
+            name="position"
+            label={t('position.label')}
+            variant="outlined"
+            margin="normal"
+            fullWidth
+            component={renderTextField}
+            defaultValue={isAdding ? null : employee.position}
+          />
+          <Field
+            id="mobile"
+            name="mobile"
+            label={t('mobile.label')}
+            variant="outlined"
+            margin="normal"
+            fullWidth
+            component={renderTextField}
+            defaultValue={isAdding ? null : employee.mobile}
+          />
           <Button type="submit" variant="contained" color="primary" className={classes.submit} disabled={submitting}>
             {isAdding ? t('create.button') : t('update.button')}
           </Button>
