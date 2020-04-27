@@ -6,18 +6,7 @@ import cuid from 'cuid';
 const mutation = graphql`
   mutation CreateManufacturerMutation($input: CreateManufacturerInput!) {
     createManufacturer(input: $input) {
-      manufacturer {
-        __typename
-        cursor
-        node {
-          id
-          name
-          user {
-            id
-            email
-          }
-        }
-      }
+      clientMutationId
     }
   }
 `;
@@ -46,6 +35,10 @@ const commit = (environment, { name }, user, { onSuccess, onError } = {}) => {
       const payload = store.getRootField('createManufacturer');
       const newEdge = payload.getLinkedRecord('manufacturer');
 
+      if (!newEdge) {
+        return;
+      }
+
       sharedUpdater(store, user, newEdge);
     },
     optimisticUpdater: (store) => {
@@ -72,7 +65,7 @@ const commit = (environment, { name }, user, { onSuccess, onError } = {}) => {
         return;
       }
 
-      onSuccess(response.createManufacturer.manufacturer.node);
+      onSuccess(response.createManufacturer.manufacturer ? response.createManufacturer.manufacturer.node : null);
     },
     onError: ({ message: errorMessage }) => {
       if (!onError) {
