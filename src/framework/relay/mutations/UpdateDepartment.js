@@ -5,19 +5,7 @@ import cuid from 'cuid';
 const mutation = graphql`
   mutation UpdateDepartmentMutation($input: UpdateDepartmentInput!) {
     updateDepartment(input: $input) {
-      department {
-        __typename
-        cursor
-        node {
-          id
-          name
-          description
-          manufacturer {
-            id
-            name
-          }
-        }
-      }
+      clientMutationId
     }
   }
 `;
@@ -65,7 +53,7 @@ const commit = (environment, { id, name, description, manufacturerId }, user, { 
         return;
       }
 
-      onSuccess(response.updateDepartment.department.node);
+      onSuccess(response.updateDepartment.department ? response.updateDepartment.department.node : null);
     },
     onError: ({ message: errorMessage }) => {
       if (!onError) {

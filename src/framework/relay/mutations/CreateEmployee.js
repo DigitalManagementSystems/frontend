@@ -6,23 +6,7 @@ import cuid from 'cuid';
 const mutation = graphql`
   mutation CreateEmployeeMutation($input: CreateEmployeeInput!) {
     createEmployee(input: $input) {
-      employee {
-        __typename
-        cursor
-        node {
-          id
-          employeeReference
-          user {
-            id
-            email
-          }
-          departments {
-            id
-            name
-            description
-          }
-        }
-      }
+      clientMutationId
     }
   }
 `;
@@ -53,6 +37,10 @@ const commit = (environment, { userId, employeeReference, departmentIds }, user,
       const payload = store.getRootField('createEmployee');
       const newEdge = payload.getLinkedRecord('employee');
 
+      if (!newEdge) {
+        return;
+      }
+
       sharedUpdater(store, user, newEdge);
     },
     optimisticUpdater: (store) => {
@@ -79,7 +67,7 @@ const commit = (environment, { userId, employeeReference, departmentIds }, user,
         return;
       }
 
-      onSuccess(response.createEmployee.employee.node);
+      onSuccess(response.createEmployee.employee ? response.createEmployee.employee.node : null);
     },
     onError: ({ message: errorMessage }) => {
       if (!onError) {
