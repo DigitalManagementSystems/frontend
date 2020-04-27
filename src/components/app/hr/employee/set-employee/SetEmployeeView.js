@@ -12,7 +12,7 @@ import styles from './Styles';
 import { renderTextField, renderAutocomplete } from '../../../../common/redux-form';
 import validate from './Validation';
 
-export const SetEmployeeView = ({ t, handleSubmit, submitting, onCancelButtonClick, registeredUsers, departments, employee }) => {
+export const SetEmployeeView = ({ t, handleSubmit, submitting, onCancelButtonClick, registeredUsers, departments, employee, employees }) => {
   const classes = styles();
   const isAdding = employee === null;
 
@@ -76,6 +76,16 @@ export const SetEmployeeView = ({ t, handleSubmit, submitting, onCancelButtonCli
             fullWidth
             component={renderTextField}
             defaultValue={isAdding ? null : employee.mobile}
+          />
+          <Field
+            id="reportingToEmployeeId"
+            name="reportingToEmployeeId"
+            label={t('reportingTo.label')}
+            options={employees.map((employees) => employees.id)}
+            getOptionLabel={(id) => employees.find((employee) => employee.id === id).user.email}
+            fullWidth
+            component={renderAutocomplete}
+            defaultValue={isAdding || !employee.reportingToEmployee ? null : employee.reportingToEmployee.id}
           />
           <Button type="submit" variant="contained" color="primary" className={classes.submit} disabled={submitting}>
             {isAdding ? t('create.button') : t('update.button')}

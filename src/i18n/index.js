@@ -31,6 +31,7 @@ i18next.init({
         email: { title: 'Email', label: 'Email' },
         position: { title: 'Position', label: 'Position' },
         mobile: { title: 'Mobile', label: 'Mobile' },
+        reportingTo: { title: 'Reporting To', label: 'Reporting To' },
         employeeReference: { title: 'Employee Reference', label: 'Employee Reference' },
         departments: { label: 'Departments' },
       },
