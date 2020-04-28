@@ -59,6 +59,8 @@ const commit = (
 
       node.setValue(id, 'id');
       node.setValue(employeeReference, 'employeeReference');
+      node.setValue(position, 'position');
+      node.setValue(mobile, 'mobile');
 
       // Create a new edge that contains the newly created Employee record
       const newEdge = store.create('client:newEdge:' + cuid(), 'Employee');

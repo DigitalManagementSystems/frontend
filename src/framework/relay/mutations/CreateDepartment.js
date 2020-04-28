@@ -50,7 +50,7 @@ const commit = (environment, { name, description, manufacturerId }, user, { onSu
 
       node.setValue(id, 'id');
       node.setValue(name, 'name');
-      node.setValue(name, 'description');
+      node.setValue(description, 'description');
 
       // Create a new edge that contains the newly created Department record
       const newEdge = store.create('client:newEdge:' + cuid(), 'Department');
