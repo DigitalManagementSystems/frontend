@@ -15,14 +15,19 @@ export default createFragmentContainer(EmployeeManagementContainer, {
                 node {
                   id
                   employeeReference
+                  position
+                  mobile
                   user {
-                    id
                     email
                   }
-                  departments {
+                  reportingToEmployee {
                     id
+                    user {
+                      email
+                    }
+                  }
+                  departments {
                     name
-                    description
                   }
                 }
               }

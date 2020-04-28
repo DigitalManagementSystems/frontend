@@ -19,7 +19,25 @@ export const relayDepartments = PropTypes.shape({
   edges: departmentEdgesProp.isRequired,
 });
 
-export const userDepartments = PropTypes.shape({
+export const manufacturerProp = PropTypes.shape({
   id: PropTypes.string.isRequired,
   departments: relayDepartments.isRequired,
+});
+
+export const manufacturersProp = PropTypes.arrayOf(manufacturerProp);
+
+export const manufacturerEdgeProp = PropTypes.shape({
+  cursor: PropTypes.string.isRequired,
+  node: manufacturerProp.isRequired,
+});
+
+export const manufacturerEdgesProp = PropTypes.arrayOf(manufacturerEdgeProp);
+
+export const relayManufacturers = PropTypes.shape({
+  edges: manufacturerEdgesProp.isRequired,
+});
+
+export const rootUserProp = PropTypes.shape({
+  id: PropTypes.string.isRequired,
+  manufacturers: relayManufacturers.isRequired,
 });
