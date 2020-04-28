@@ -6,7 +6,7 @@ export default createFragmentContainer(SetDepartmentContainer, {
   user: graphql`
     fragment CreateDepartmentRelayContainer_user on User {
       id
-      manufacturers(first: 1000) @connection(key: "User_manufacturers") {
+      manufacturers(first: 1) @connection(key: "User_manufacturers") {
         edges {
           node {
             id

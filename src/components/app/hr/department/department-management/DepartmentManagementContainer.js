@@ -18,9 +18,11 @@ export class DepartmentsContainer extends Component {
     history.push(linkToDepartment);
   };
 
+  getManufacturer = () => this.props.user.manufacturers.edges[0].node;
+
   render = () => (
     <DepartmentsView
-      departments={this.props.user.departments.edges.map((edge) => edge.node)}
+      departments={this.getManufacturer().departments.edges.map((edge) => edge.node)}
       onCreateDepartmentClick={this.createDepartment}
       onDepartmentClick={this.handleDepartmentClick}
     />

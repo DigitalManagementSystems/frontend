@@ -18,9 +18,11 @@ export class EmployeesContainer extends Component {
     history.push(linkToEmployee);
   };
 
+  getManufacturer = () => this.props.user.manufacturers.edges[0].node;
+
   render = () => (
     <EmployeesView
-      employees={this.props.user.employees.edges.map((edge) => edge.node)}
+      employees={this.getManufacturer().employees.edges.map((edge) => edge.node)}
       onCreateEmployeeClick={this.createEmployee}
       onEmployeeClick={this.handleEmployeeClick}
     />
