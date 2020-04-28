@@ -10,7 +10,7 @@ export default createFragmentContainer(SetDepartmentContainer, {
         edges {
           node {
             id
-            department(departmentId: $departmentId) {
+            department(id: $departmentId) {
               id
               name
               description

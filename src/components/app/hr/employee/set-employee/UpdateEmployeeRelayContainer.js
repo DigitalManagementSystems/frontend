@@ -36,7 +36,7 @@ export default createFragmentContainer(SetEmployeeContainer, {
                 }
               }
             }
-            employee(employeeId: $employeeId) {
+            employee(id: $employeeId) {
               id
               employeeReference
               position

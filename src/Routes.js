@@ -6,9 +6,10 @@ import { RouteWithLayout } from './components/common';
 import { PublicMainContainer, MainContainer } from './layouts';
 import { LoadingContainer, NotFoundContainer } from './components/common';
 import { PublicHomeContainer, SignUpContainer, SignInContainer, DashboardContainer } from './components/app';
+import { NotificationHandlerContainer } from './components/common';
 import { Departments, CreateDepartment, UpdateDepartment } from './components/app/hr/department';
 import { Employees, CreateEmployee, UpdateEmployee } from './components/app/hr/employee';
-import { NotificationHandlerContainer } from './components/common';
+import { MSOPs, CreateMSOP, UpdateMSOP } from './components/app/action-management/msop';
 
 const Routes = ({ isLoaded, userFound }) => {
   if (!isLoaded) {
@@ -32,6 +33,9 @@ const Routes = ({ isLoaded, userFound }) => {
         <RouteWithLayout isSecureRoute={true} exact component={Employees} layout={MainContainer} path="/hr/employees" />
         <RouteWithLayout isSecureRoute={true} exact component={UpdateEmployee} layout={MainContainer} path="/hr/employees/:employeeId" />
         <RouteWithLayout isSecureRoute={true} exact component={CreateEmployee} layout={MainContainer} path="/hr/employee/create" />
+        <RouteWithLayout isSecureRoute={true} exact component={MSOPs} layout={MainContainer} path="/action-management/msops" />
+        <RouteWithLayout isSecureRoute={true} exact component={CreateMSOP} layout={MainContainer} path="/action-management/msop/create" />
+        <RouteWithLayout isSecureRoute={true} exact component={UpdateMSOP} layout={MainContainer} path="/action-management/msops/:msopId" />
         <RouteWithLayout
           isSecureRoute={false}
           exact

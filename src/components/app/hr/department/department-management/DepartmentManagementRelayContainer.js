@@ -10,7 +10,7 @@ export default createFragmentContainer(DepartmentManagementContainer, {
         edges {
           node {
             id
-            departments(first: 1000, departmentIds: $departmentIds) @connection(key: "User_departments") {
+            departments(first: 1000) @connection(key: "User_departments") {
               edges {
                 node {
                   id
