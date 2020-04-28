@@ -22,6 +22,16 @@ export default createFragmentContainer(SetEmployeeContainer, {
           }
         }
       }
+      employees(first: 1000) @connection(key: "User_employees") {
+        edges {
+          node {
+            id
+            user {
+              email
+            }
+          }
+        }
+      }
     }
   `,
 });

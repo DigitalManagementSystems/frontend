@@ -11,7 +11,7 @@ import { NotificationType } from '../../../../../framework/redux/notification';
 import * as notificationActions from '../../../../../framework/redux/notification/Actions';
 
 export class SetEmployeeContainer extends Component {
-  createEmployee = ({ userId, departmentIds, employeeReference }) => {
+  createEmployee = ({ userId, departmentIds, employeeReference, position, mobile, reportingToEmployeeId }) => {
     const { history, environment, createEmployee, updateEmployee, user, notificationActions } = this.props;
 
     if (user && user.employee) {
@@ -26,6 +26,9 @@ export class SetEmployeeContainer extends Component {
           userId,
           employeeReference,
           departmentIds,
+          position,
+          mobile,
+          reportingToEmployeeId,
         },
         user,
         {
@@ -43,6 +46,9 @@ export class SetEmployeeContainer extends Component {
           userId,
           employeeReference,
           departmentIds,
+          position,
+          mobile,
+          reportingToEmployeeId,
         },
         null,
         {
@@ -69,6 +75,7 @@ export class SetEmployeeContainer extends Component {
       <SetEmployeeView
         registeredUsers={this.props.user.registeredUsers.edges.map((edge) => edge.node)}
         departments={this.props.user.departments.edges.map((edge) => edge.node)}
+        employees={this.props.user.employees.edges.map((edge) => edge.node)}
         employee={user && user.employee ? user.employee : null}
         onSubmit={this.createEmployee}
         onCancelButtonClick={this.cancel}
