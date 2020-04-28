@@ -13,14 +13,12 @@ import * as notificationActions from '../../../../../framework/redux/notificatio
 export class SetDepartmentContainer extends Component {
   setDepartment = ({ name, description }) => {
     const { history, environment, createDepartment, updateDepartment, notificationActions, user } = this.props;
+    const manufacturer = this.getManufacturer();
 
-    if (user && user.department) {
+    if (manufacturer.department) {
       const {
-        department: {
-          id,
-          manufacturer: { id: manufacturerId },
-        },
-      } = user;
+        department: { id },
+      } = manufacturer;
 
       updateDepartment(
         environment,
@@ -28,7 +26,7 @@ export class SetDepartmentContainer extends Component {
           id,
           name,
           description,
-          manufacturerId,
+          manufacturerId: manufacturer.id,
         },
         user,
         {
@@ -40,14 +38,12 @@ export class SetDepartmentContainer extends Component {
         },
       );
     } else {
-      const manufacturerId = user.manufacturers.edges.map((edge) => edge.node)[0].id;
-
       createDepartment(
         environment,
         {
           name,
           description,
-          manufacturerId,
+          manufacturerId: manufacturer.id,
         },
         null,
         {
@@ -67,12 +63,14 @@ export class SetDepartmentContainer extends Component {
     history.push('/hr/departments');
   };
 
+  getManufacturer = () => this.props.user.manufacturers.edges[0].node;
+
   render = () => {
-    const { user } = this.props;
+    const manufacturer = this.getManufacturer();
 
     return (
       <SetDepartmentView
-        department={user && user.department ? user.department : null}
+        department={manufacturer.department ? manufacturer.department : null}
         onSubmit={this.setDepartment}
         onCancelButtonClick={this.cancel}
       />

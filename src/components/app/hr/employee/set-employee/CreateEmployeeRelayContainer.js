@@ -14,20 +14,27 @@ export default createFragmentContainer(SetEmployeeContainer, {
           }
         }
       }
-      departments(first: 1000) @connection(key: "User_departments") {
+      manufacturers(first: 1) @connection(key: "User_manufacturers") {
         edges {
           node {
             id
-            name
-          }
-        }
-      }
-      employees(first: 1000) @connection(key: "User_employees") {
-        edges {
-          node {
-            id
-            user {
-              email
+            departments(first: 1000) @connection(key: "User_departments") {
+              edges {
+                node {
+                  id
+                  name
+                }
+              }
+            }
+            employees(first: 1000) @connection(key: "User_employees") {
+              edges {
+                node {
+                  id
+                  user {
+                    email
+                  }
+                }
+              }
             }
           }
         }

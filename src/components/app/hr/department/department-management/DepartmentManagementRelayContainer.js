@@ -6,12 +6,19 @@ export default createFragmentContainer(DepartmentManagementContainer, {
   user: graphql`
     fragment DepartmentManagementRelayContainer_user on User {
       id
-      departments(first: 1000, departmentIds: $departmentIds) @connection(key: "User_departments") {
+      manufacturers(first: 1) @connection(key: "User_manufacturers") {
         edges {
           node {
             id
-            name
-            description
+            departments(first: 1000, departmentIds: $departmentIds) @connection(key: "User_departments") {
+              edges {
+                node {
+                  id
+                  name
+                  description
+                }
+              }
+            }
           }
         }
       }

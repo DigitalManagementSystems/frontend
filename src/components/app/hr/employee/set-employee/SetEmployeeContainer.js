@@ -13,11 +13,12 @@ import * as notificationActions from '../../../../../framework/redux/notificatio
 export class SetEmployeeContainer extends Component {
   createEmployee = ({ userId, departmentIds, employeeReference, position, mobile, reportingToEmployeeId }) => {
     const { history, environment, createEmployee, updateEmployee, user, notificationActions } = this.props;
+    const manufacturer = this.getManufacturer();
 
-    if (user && user.employee) {
+    if (manufacturer.employee) {
       const {
         employee: { id },
-      } = user;
+      } = manufacturer;
 
       updateEmployee(
         environment,
@@ -29,6 +30,7 @@ export class SetEmployeeContainer extends Component {
           position,
           mobile,
           reportingToEmployeeId,
+          manufacturerId: manufacturer.id,
         },
         user,
         {
@@ -49,6 +51,7 @@ export class SetEmployeeContainer extends Component {
           position,
           mobile,
           reportingToEmployeeId,
+          manufacturerId: manufacturer.id,
         },
         null,
         {
@@ -68,15 +71,17 @@ export class SetEmployeeContainer extends Component {
     history.push('/hr/employees');
   };
 
+  getManufacturer = () => this.props.user.manufacturers.edges[0].node;
+
   render = () => {
-    const { user } = this.props;
+    const manufacturer = this.getManufacturer();
 
     return (
       <SetEmployeeView
         registeredUsers={this.props.user.registeredUsers.edges.map((edge) => edge.node)}
-        departments={this.props.user.departments.edges.map((edge) => edge.node)}
-        employees={this.props.user.employees.edges.map((edge) => edge.node)}
-        employee={user && user.employee ? user.employee : null}
+        departments={manufacturer.departments.edges.map((edge) => edge.node)}
+        employees={manufacturer.employees.edges.map((edge) => edge.node)}
+        employee={manufacturer.employee ? manufacturer.employee : null}
         onSubmit={this.createEmployee}
         onCancelButtonClick={this.cancel}
       />
