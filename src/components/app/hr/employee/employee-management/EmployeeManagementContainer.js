@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 
-import { userEmployees } from './PropTypes';
+import { rootUserProp } from './PropTypes';
 import EmployeesView from './EmployeesView';
 
-export class EmployeesContainer extends Component {
+export class EmployeeManagementContainer extends Component {
   createEmployee = () => {
     const { history } = this.props;
 
@@ -29,8 +29,8 @@ export class EmployeesContainer extends Component {
   );
 }
 
-EmployeesContainer.propTypes = {
-  user: userEmployees.isRequired,
+EmployeeManagementContainer.propTypes = {
+  user: rootUserProp.isRequired,
 };
 
-export default withRouter(EmployeesContainer);
+export default withRouter(EmployeeManagementContainer);

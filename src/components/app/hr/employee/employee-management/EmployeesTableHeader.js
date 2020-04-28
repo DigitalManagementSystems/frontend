@@ -13,6 +13,10 @@ const EmployeesTableHeader = ({ t }) => (
       </TableCell>
       <TableCell>{t('email.title')}</TableCell>
       <TableCell>{t('employeeReference.title')}</TableCell>
+      <TableCell>{t('position.title')}</TableCell>
+      <TableCell>{t('mobile.title')}</TableCell>
+      <TableCell>{t('departments.title')}</TableCell>
+      <TableCell>{t('reportingTo.title')}</TableCell>
     </TableRow>
   </TableHead>
 );

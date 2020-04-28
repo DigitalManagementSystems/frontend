@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 
-import { userDepartments } from './PropTypes';
+import { rootUserProp } from './PropTypes';
 import DepartmentsView from './DepartmentsView';
 
 export class DepartmentsContainer extends Component {
@@ -30,7 +30,7 @@ export class DepartmentsContainer extends Component {
 }
 
 DepartmentsContainer.propTypes = {
-  user: userDepartments.isRequired,
+  user: rootUserProp.isRequired,
 };
 
 export default withRouter(DepartmentsContainer);

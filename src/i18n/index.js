@@ -33,7 +33,7 @@ i18next.init({
         mobile: { title: 'Mobile', label: 'Mobile' },
         reportingTo: { title: 'Reporting To', label: 'Reporting To' },
         employeeReference: { title: 'Employee Reference', label: 'Employee Reference' },
-        departments: { label: 'Departments' },
+        departments: { title: 'Departments', label: 'Departments' },
       },
     },
   },

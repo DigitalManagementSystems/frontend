@@ -11,8 +11,12 @@ import Styles from './Styles';
 const EmployeeView = ({
   employee: {
     id,
-    user: { email },
     employeeReference,
+    position,
+    mobile,
+    user: { email },
+    departments,
+    reportingToEmployee,
   },
   onEmployeeClick,
 }) => {
@@ -30,6 +34,26 @@ const EmployeeView = ({
       </TableCell>
       <TableCell component="th" scope="row" padding="none">
         {employeeReference}
+      </TableCell>
+      <TableCell component="th" scope="row" padding="none">
+        {position}
+      </TableCell>
+      <TableCell component="th" scope="row" padding="none">
+        {mobile}
+      </TableCell>
+      <TableCell component="th" scope="row" padding="none">
+        {departments
+          .map((department) => department.name)
+          .sort()
+          .reduce((reduction, name) => reduction + ', ' + name, '')
+          .substring(2)}
+      </TableCell>
+      <TableCell component="th" scope="row" padding="none">
+        {reportingToEmployee && (
+          <Link className={classes.link} onClick={() => onEmployeeClick(reportingToEmployee.id)}>
+            {reportingToEmployee.user.email}
+          </Link>
+        )}
       </TableCell>
     </TableRow>
   );
