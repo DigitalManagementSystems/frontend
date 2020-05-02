@@ -1,15 +1,16 @@
 import React, { Component } from 'react';
 import graphql from 'babel-plugin-relay/macro';
 import { QueryRenderer } from 'react-relay';
+import { withRouter } from 'react-router-dom';
 
 import { RelayEnvironment } from '../../../../../framework/relay';
-import DepartmentManagementRelayContainer from './DepartmentManagementRelayContainer';
+import UpdateMSOPRelayContainer from './UpdateMSOPRelayContainer';
 import { LoadingContainer, GenericErrorContainer } from '../../../../common';
 
-class Departments extends Component {
+class UpdateMSOP extends Component {
   renderRelayComponent = ({ props, error }) => {
     if (props && props.user) {
-      return <DepartmentManagementRelayContainer user={props.user} />;
+      return <UpdateMSOPRelayContainer user={props.user} />;
     } else if (error) {
       return <GenericErrorContainer message={error.message} />;
     }
@@ -22,17 +23,19 @@ class Departments extends Component {
       <QueryRenderer
         environment={RelayEnvironment}
         query={graphql`
-          query DepartmentsQuery {
+          query UpdateMSOPQuery($msopId: ID!) {
             user {
-              ...DepartmentManagementRelayContainer_user
+              ...UpdateMSOPRelayContainer_user
             }
           }
         `}
-        variables={{}}
+        variables={{
+          msopId: this.props.match.params.msopId,
+        }}
         render={this.renderRelayComponent}
       />
     );
   };
 }
 
-export default Departments;
+export default withRouter(UpdateMSOP);

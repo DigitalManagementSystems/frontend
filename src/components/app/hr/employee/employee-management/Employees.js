@@ -22,15 +22,13 @@ class Employees extends Component {
       <QueryRenderer
         environment={RelayEnvironment}
         query={graphql`
-          query EmployeesQuery($employeeIds: [ID!]) {
+          query EmployeesQuery {
             user {
               ...EmployeeManagementRelayContainer_user
             }
           }
         `}
-        variables={{
-          employeeIds: [],
-        }}
+        variables={{}}
         render={this.renderRelayComponent}
       />
     );

@@ -81,7 +81,7 @@ export const SetEmployeeView = ({ t, handleSubmit, submitting, onCancelButtonCli
             id="reportingToEmployeeId"
             name="reportingToEmployeeId"
             label={t('reportingTo.label')}
-            options={employees.map((employees) => employees.id)}
+            options={employees.map((employee) => employee.id)}
             getOptionLabel={(id) => employees.find((employee) => employee.id === id).user.email}
             fullWidth
             component={renderAutocomplete}

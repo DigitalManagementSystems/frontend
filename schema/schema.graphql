@@ -5,10 +5,10 @@ type Query {
 type User implements Node {
   id: ID!
   email: ID!
-  manufacturer(manufacturerId: ID!): Manufacturer
-  manufacturers(after: String, first: Int, before: String, last: Int, manufacturerIds: [ID!], sortingOptions: [SortingOptionPair!]): ManufacturerTypeConnection
+  manufacturer(id: ID!): Manufacturer
+  manufacturers(after: String, first: Int, before: String, last: Int, ids: [ID!], name: String, sortingOptions: [SortingOptionPair!]): ManufacturersConnection
   registeredUser(email: String!): RegisteredUser
-  registeredUsers(after: String, first: Int, before: String, last: Int, emails: [String!], sortingOptions: [SortingOptionPair!]): RegisteredUserTypeConnection
+  registeredUsers(after: String, first: Int, before: String, last: Int, emails: [String!], sortingOptions: [SortingOptionPair!]): RegisteredUsersConnection
 }
 
 """An object with an ID"""
@@ -21,14 +21,24 @@ type Manufacturer implements Node {
   id: ID!
   name: String!
   user: RegisteredUser!
-  department(departmentId: ID!): Department
-  departments(after: String, first: Int, before: String, last: Int, departmentIds: [ID!], sortingOptions: [SortingOptionPair!]): DepartmentTypeConnection
-  employee(employeeId: ID!): Employee
-  employees(after: String, first: Int, before: String, last: Int, employeeIds: [ID!], sortingOptions: [SortingOptionPair!]): EmployeeTypeConnection
-  msop(msopId: ID!): MSOP
-  msops(after: String, first: Int, before: String, last: Int, msopIds: [ID!], sortingOptions: [SortingOptionPair!]): MSOPTypeConnection
-  msopMeetingFrequencies: [MSOPMeetingFrequency]
-  msopMeetingDays: [MSOPMeetingDay]
+  department(id: ID!): Department
+  departments(after: String, first: Int, before: String, last: Int, ids: [ID!], name: String, description: String, sortingOptions: [SortingOptionPair!]): DepartmentsConnection
+  employee(id: ID!): Employee
+  employees(after: String, first: Int, before: String, last: Int, ids: [ID!], employeeReference: String, position: String, mobile: String, userId: ID, reportingToEmployeeId: ID, sortingOptions: [SortingOptionPair!]): EmployeesConnection
+  msop(id: ID!): MSOP
+  msops(after: String, first: Int, before: String, last: Int, ids: [ID!], meetingName: String, meetingDuration: String, frequencyId: ID, meetingDayId: ID, departmentId: ID, chairPersonEmployeeId: ID, actionLogSecretaryEmployeeId: ID, attendeeId: ID, sortingOptions: [SortingOptionPair!]): MSOPsConnection
+  actionPointPriority(id: ID!): ActionPointPriority
+  actionPointPriorities(after: String, first: Int, before: String, last: Int, ids: [ID!], name: String, sortingOptions: [SortingOptionPair!]): ActionPointPrioritiesConnection
+  actionPointReference(id: ID!): ActionPointReference
+  actionPointReferences(after: String, first: Int, before: String, last: Int, ids: [ID!], name: String, sortingOptions: [SortingOptionPair!]): ActionPointReferencesConnection
+  actionPointStatus(id: ID!): ActionPointStatus
+  actionPointStatuses(after: String, first: Int, before: String, last: Int, ids: [ID!], name: String, sortingOptions: [SortingOptionPair!]): ActionPointStatusesConnection
+  actionPoint(id: ID!): ActionPoint
+  actionPoints(after: String, first: Int, before: String, last: Int, ids: [ID!], msopId: ID, assigneeId: ID, departmentId: ID, assignedDate: String, dueDate: String, priorityId: ID, statusId: ID, referenceId: ID, sortingOptions: [SortingOptionPair!]): ActionPointsConnection
+  meetingDay(id: ID!): MeetingDay
+  meetingDays(after: String, first: Int, before: String, last: Int, ids: [ID!], name: String, sortingOptions: [SortingOptionPair!]): MeetingDaysConnection
+  meetingFrequency(id: ID!): MeetingFrequency
+  meetingFrequencies(after: String, first: Int, before: String, last: Int, ids: [ID!], name: String, sortingOptions: [SortingOptionPair!]): MeetingFrequenciesConnection
 }
 
 type RegisteredUser implements Node {
@@ -40,17 +50,36 @@ type Department implements Node {
   id: ID!
   name: String!
   description: String
+  employee(id: ID!): EmployeeWithoutDepartment
+  employees(after: String, first: Int, before: String, last: Int, ids: [ID!], employeeReference: String, position: String, mobile: String, userId: ID, reportingToEmployeeId: ID, sortingOptions: [SortingOptionPair!]): EmployeesWithoutDepartmentConnection
+}
+
+type EmployeeWithoutDepartment implements Node {
+  id: ID!
+  employeeReference: String
+  position: String
+  mobile: String
+  user: RegisteredUser!
+  reportingToEmployee: ReportingEmployee
+}
+
+type ReportingEmployee implements Node {
+  id: ID!
+  employeeReference: String
+  position: String
+  mobile: String
+  user: RegisteredUser!
 }
 
 """A connection to a list of items."""
-type DepartmentTypeConnection {
+type EmployeesWithoutDepartmentConnection {
   """Information to aid in pagination."""
   pageInfo: PageInfo!
 
   """A list of edges."""
-  edges: [DepartmentTypeEdge]
+  edges: [EmployeesWithoutDepartmentEdge]
 
-  """Total number of departments"""
+  """Total number of employees"""
   totalCount: Int
 }
 
@@ -70,9 +99,9 @@ type PageInfo {
 }
 
 """An edge in a connection."""
-type DepartmentTypeEdge {
+type EmployeesWithoutDepartmentEdge {
   """The item at the end of the edge"""
-  node: Department
+  node: EmployeeWithoutDepartment
 
   """A cursor for use in pagination"""
   cursor: String!
@@ -88,6 +117,27 @@ enum SortingDirection {
   Descending
 }
 
+"""A connection to a list of items."""
+type DepartmentsConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [DepartmentsEdge]
+
+  """Total number of departments"""
+  totalCount: Int
+}
+
+"""An edge in a connection."""
+type DepartmentsEdge {
+  """The item at the end of the edge"""
+  node: Department
+
+  """A cursor for use in pagination"""
+  cursor: String!
+}
+
 type Employee implements Node {
   id: ID!
   employeeReference: String
@@ -98,29 +148,20 @@ type Employee implements Node {
   reportingToEmployee: ReportingEmployee
 }
 
-type ReportingEmployee implements Node {
-  id: ID!
-  employeeReference: String
-  position: String
-  mobile: String
-  user: RegisteredUser!
-  departments: [Department]!
-}
-
 """A connection to a list of items."""
-type EmployeeTypeConnection {
+type EmployeesConnection {
   """Information to aid in pagination."""
   pageInfo: PageInfo!
 
   """A list of edges."""
-  edges: [EmployeeTypeEdge]
+  edges: [EmployeesEdge]
 
   """Total number of employees"""
   totalCount: Int
 }
 
 """An edge in a connection."""
-type EmployeeTypeEdge {
+type EmployeesEdge {
   """The item at the end of the edge"""
   node: Employee
 
@@ -132,45 +173,89 @@ type MSOP implements Node {
   id: ID!
   meetingName: String!
   meetingDuration: String!
-  frequency: MSOPMeetingFrequency!
-  meetingDays: [MSOPMeetingDay]
+  frequency: MeetingFrequency!
+  meetingDays: [MeetingDay]!
   agendas: String
   department: Department!
   chairPersonEmployee: Employee!
   actionLogSecretaryEmployee: Employee!
   attendees: [Employee]!
+  actionPoint(id: ID!): ActionPointWithoutMSOP
+  actionPoints(after: String, first: Int, before: String, last: Int, ids: [ID!], assigneeId: ID, departmentId: ID, assignedDate: String, dueDate: String, priorityId: ID, statusId: ID, referenceId: ID, sortingOptions: [SortingOptionPair!]): ActionPointsWithoutMSOPConnection
 }
 
-enum MSOPMeetingFrequency {
-  Daily
-  Weekly
-  Monthly
+type MeetingFrequency implements Node {
+  id: ID!
+  name: String!
 }
 
-enum MSOPMeetingDay {
-  Monday
-  Tuesday
-  Wednesday
-  Thursday
-  Friday
-  Saturday
-  Sunday
+type MeetingDay implements Node {
+  id: ID!
+  name: String!
+}
+
+type ActionPointWithoutMSOP implements Node {
+  id: ID!
+  assignee: Employee
+  department: Department!
+  assignedDate: String!
+  dueDate: String
+  priority: ActionPointPriority
+  status: ActionPointStatus
+  references: [ActionPointReference]!
+  comments: String
+}
+
+type ActionPointPriority implements Node {
+  id: ID!
+  name: String!
+}
+
+type ActionPointStatus implements Node {
+  id: ID!
+  name: String!
+}
+
+type ActionPointReference implements Node {
+  id: ID!
+  name: String!
 }
 
 """A connection to a list of items."""
-type MSOPTypeConnection {
+type ActionPointsWithoutMSOPConnection {
   """Information to aid in pagination."""
   pageInfo: PageInfo!
 
   """A list of edges."""
-  edges: [MSOPTypeEdge]
+  edges: [ActionPointsWithoutMSOPEdge]
+
+  """Total number of action points"""
+  totalCount: Int
+}
+
+"""An edge in a connection."""
+type ActionPointsWithoutMSOPEdge {
+  """The item at the end of the edge"""
+  node: ActionPointWithoutMSOP
+
+  """A cursor for use in pagination"""
+  cursor: String!
+}
+
+"""A connection to a list of items."""
+type MSOPsConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [MSOPsEdge]
 
   """Total number of MSOPs"""
   totalCount: Int
 }
 
 """An edge in a connection."""
-type MSOPTypeEdge {
+type MSOPsEdge {
   """The item at the end of the edge"""
   node: MSOP
 
@@ -179,19 +264,158 @@ type MSOPTypeEdge {
 }
 
 """A connection to a list of items."""
-type ManufacturerTypeConnection {
+type ActionPointPrioritiesConnection {
   """Information to aid in pagination."""
   pageInfo: PageInfo!
 
   """A list of edges."""
-  edges: [ManufacturerTypeEdge]
+  edges: [ActionPointPrioritiesEdge]
+
+  """Total number of action point priorities"""
+  totalCount: Int
+}
+
+"""An edge in a connection."""
+type ActionPointPrioritiesEdge {
+  """The item at the end of the edge"""
+  node: ActionPointPriority
+
+  """A cursor for use in pagination"""
+  cursor: String!
+}
+
+"""A connection to a list of items."""
+type ActionPointReferencesConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [ActionPointReferencesEdge]
+
+  """Total number of action point references"""
+  totalCount: Int
+}
+
+"""An edge in a connection."""
+type ActionPointReferencesEdge {
+  """The item at the end of the edge"""
+  node: ActionPointReference
+
+  """A cursor for use in pagination"""
+  cursor: String!
+}
+
+"""A connection to a list of items."""
+type ActionPointStatusesConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [ActionPointStatusesEdge]
+
+  """Total number of action point statuses"""
+  totalCount: Int
+}
+
+"""An edge in a connection."""
+type ActionPointStatusesEdge {
+  """The item at the end of the edge"""
+  node: ActionPointStatus
+
+  """A cursor for use in pagination"""
+  cursor: String!
+}
+
+type ActionPoint implements Node {
+  id: ID!
+  msop: MSOP
+  assignee: Employee
+  department: Department!
+  assignedDate: String!
+  dueDate: String
+  priority: ActionPointPriority
+  status: ActionPointStatus
+  references: [ActionPointReference]!
+  comments: String
+}
+
+"""A connection to a list of items."""
+type ActionPointsConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [ActionPointsEdge]
+
+  """Total number of action points"""
+  totalCount: Int
+}
+
+"""An edge in a connection."""
+type ActionPointsEdge {
+  """The item at the end of the edge"""
+  node: ActionPoint
+
+  """A cursor for use in pagination"""
+  cursor: String!
+}
+
+"""A connection to a list of items."""
+type MeetingDaysConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [MeetingDaysEdge]
+
+  """Total number of meeting days"""
+  totalCount: Int
+}
+
+"""An edge in a connection."""
+type MeetingDaysEdge {
+  """The item at the end of the edge"""
+  node: MeetingDay
+
+  """A cursor for use in pagination"""
+  cursor: String!
+}
+
+"""A connection to a list of items."""
+type MeetingFrequenciesConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [MeetingFrequenciesEdge]
+
+  """Total number of meeting frequencies"""
+  totalCount: Int
+}
+
+"""An edge in a connection."""
+type MeetingFrequenciesEdge {
+  """The item at the end of the edge"""
+  node: MeetingFrequency
+
+  """A cursor for use in pagination"""
+  cursor: String!
+}
+
+"""A connection to a list of items."""
+type ManufacturersConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [ManufacturersEdge]
 
   """Total number of manufacturers"""
   totalCount: Int
 }
 
 """An edge in a connection."""
-type ManufacturerTypeEdge {
+type ManufacturersEdge {
   """The item at the end of the edge"""
   node: Manufacturer
 
@@ -200,19 +424,19 @@ type ManufacturerTypeEdge {
 }
 
 """A connection to a list of items."""
-type RegisteredUserTypeConnection {
+type RegisteredUsersConnection {
   """Information to aid in pagination."""
   pageInfo: PageInfo!
 
   """A list of edges."""
-  edges: [RegisteredUserTypeEdge]
+  edges: [RegisteredUsersEdge]
 
   """Total number of registeredUsers"""
   totalCount: Int
 }
 
 """An edge in a connection."""
-type RegisteredUserTypeEdge {
+type RegisteredUsersEdge {
   """The item at the end of the edge"""
   node: RegisteredUser
 
@@ -233,10 +457,28 @@ type Mutation {
   createMSOP(input: CreateMSOPInput!): CreateMSOPPayload
   updateMSOP(input: UpdateMSOPInput!): UpdateMSOPPayload
   deleteMSOP(input: DeleteMSOPInput!): DeleteMSOPPayload
+  createActionPoint(input: CreateActionPointInput!): CreateActionPointPayload
+  updateActionPoint(input: UpdateActionPointInput!): UpdateActionPointPayload
+  deleteActionPoint(input: DeleteActionPointInput!): DeleteActionPointPayload
+  createActionPointPriority(input: CreateActionPointPriorityInput!): CreateActionPointPriorityPayload
+  updateActionPointPriority(input: UpdateActionPointPriorityInput!): UpdateActionPointPriorityPayload
+  deleteActionPointPriority(input: DeleteActionPointPriorityInput!): DeleteActionPointPriorityPayload
+  createActionPointReference(input: CreateActionPointReferenceInput!): CreateActionPointReferencePayload
+  updateActionPointReference(input: UpdateActionPointReferenceInput!): UpdateActionPointReferencePayload
+  deleteActionPointReference(input: DeleteActionPointReferenceInput!): DeleteActionPointReferencePayload
+  createActionPointStatus(input: CreateActionPointStatusInput!): CreateActionPointStatusPayload
+  updateActionPointStatus(input: UpdateActionPointStatusInput!): UpdateActionPointStatusPayload
+  deleteActionPointStatus(input: DeleteActionPointStatusInput!): DeleteActionPointStatusPayload
+  createMeetingFrequency(input: CreateMeetingFrequencyInput!): CreateMeetingFrequencyPayload
+  updateMeetingFrequency(input: UpdateMeetingFrequencyInput!): UpdateMeetingFrequencyPayload
+  deleteMeetingFrequency(input: DeleteMeetingFrequencyInput!): DeleteMeetingFrequencyPayload
+  createMeetingDay(input: CreateMeetingDayInput!): CreateMeetingDayPayload
+  updateMeetingDay(input: UpdateMeetingDayInput!): UpdateMeetingDayPayload
+  deleteMeetingDay(input: DeleteMeetingDayInput!): DeleteMeetingDayPayload
 }
 
 type CreateManufacturerPayload {
-  manufacturer: ManufacturerTypeEdge
+  manufacturer: ManufacturersEdge
   clientMutationId: String
 }
 
@@ -246,7 +488,7 @@ input CreateManufacturerInput {
 }
 
 type UpdateManufacturerPayload {
-  manufacturer: ManufacturerTypeEdge
+  manufacturer: ManufacturersEdge
   clientMutationId: String
 }
 
@@ -267,7 +509,7 @@ input DeleteManufacturerInput {
 }
 
 type CreateDepartmentPayload {
-  department: DepartmentTypeEdge
+  department: DepartmentsEdge
   clientMutationId: String
 }
 
@@ -279,7 +521,7 @@ input CreateDepartmentInput {
 }
 
 type UpdateDepartmentPayload {
-  department: DepartmentTypeEdge
+  department: DepartmentsEdge
   clientMutationId: String
 }
 
@@ -302,7 +544,7 @@ input DeleteDepartmentInput {
 }
 
 type CreateEmployeePayload {
-  employee: EmployeeTypeEdge
+  employee: EmployeesEdge
   clientMutationId: String
 }
 
@@ -312,13 +554,13 @@ input CreateEmployeeInput {
   position: String
   mobile: String
   userId: ID!
-  departmentIds: [ID!]
+  departmentIds: [ID!]!
   reportingToEmployeeId: ID
   clientMutationId: String
 }
 
 type UpdateEmployeePayload {
-  employee: EmployeeTypeEdge
+  employee: EmployeesEdge
   clientMutationId: String
 }
 
@@ -329,7 +571,7 @@ input UpdateEmployeeInput {
   position: String
   mobile: String
   userId: ID!
-  departmentIds: [ID!]
+  departmentIds: [ID!]!
   reportingToEmployeeId: ID
   clientMutationId: String
 }
@@ -345,7 +587,7 @@ input DeleteEmployeeInput {
 }
 
 type CreateMSOPPayload {
-  msop: MSOPTypeEdge
+  msop: MSOPsEdge
   clientMutationId: String
 }
 
@@ -353,18 +595,18 @@ input CreateMSOPInput {
   manufacturerId: ID!
   meetingName: String!
   meetingDuration: String!
-  frequency: MSOPMeetingFrequency!
-  meetingDays: [MSOPMeetingDay!]
+  frequencyId: ID!
+  meetingDayIds: [ID!]!
   agendas: String
   departmentId: ID!
   chairPersonEmployeeId: ID!
   actionLogSecretaryEmployeeId: ID!
-  attendeeIds: [ID!]
+  attendeeIds: [ID!]!
   clientMutationId: String
 }
 
 type UpdateMSOPPayload {
-  msop: MSOPTypeEdge
+  msop: MSOPsEdge
   clientMutationId: String
 }
 
@@ -373,13 +615,13 @@ input UpdateMSOPInput {
   manufacturerId: ID!
   meetingName: String!
   meetingDuration: String!
-  frequency: MSOPMeetingFrequency!
-  meetingDays: [MSOPMeetingDay!]
+  frequencyId: ID!
+  meetingDayIds: [ID!]!
   agendas: String
   departmentId: ID!
   chairPersonEmployeeId: ID!
   actionLogSecretaryEmployeeId: ID!
-  attendeeIds: [ID!]
+  attendeeIds: [ID!]!
   clientMutationId: String
 }
 
@@ -389,6 +631,220 @@ type DeleteMSOPPayload {
 }
 
 input DeleteMSOPInput {
+  id: ID!
+  clientMutationId: String
+}
+
+type CreateActionPointPayload {
+  actionPoint: ActionPointsEdge
+  clientMutationId: String
+}
+
+input CreateActionPointInput {
+  manufacturerId: ID!
+  msopId: ID!
+  assigneeId: ID!
+  departmentId: ID!
+  assignedDate: String!
+  dueDate: String
+  priorityId: ID!
+  statusId: ID!
+  actionReferenceIds: [ID!]!
+  comments: String
+  clientMutationId: String
+}
+
+type UpdateActionPointPayload {
+  actionPoint: ActionPointsEdge
+  clientMutationId: String
+}
+
+input UpdateActionPointInput {
+  id: ID!
+  manufacturerId: ID!
+  msopId: ID!
+  assigneeId: ID!
+  departmentId: ID!
+  assignedDate: String!
+  dueDate: String
+  priorityId: ID!
+  statusId: ID!
+  actionReferenceIds: [ID!]!
+  comments: String
+  clientMutationId: String
+}
+
+type DeleteActionPointPayload {
+  deletedActionPointId: ID!
+  clientMutationId: String
+}
+
+input DeleteActionPointInput {
+  id: ID!
+  clientMutationId: String
+}
+
+type CreateActionPointPriorityPayload {
+  actionPointPriority: ActionPointPrioritiesEdge
+  clientMutationId: String
+}
+
+input CreateActionPointPriorityInput {
+  manufacturerId: ID!
+  name: String!
+  clientMutationId: String
+}
+
+type UpdateActionPointPriorityPayload {
+  actionPointPriority: ActionPointPrioritiesEdge
+  clientMutationId: String
+}
+
+input UpdateActionPointPriorityInput {
+  id: ID!
+  manufacturerId: ID!
+  name: String!
+  clientMutationId: String
+}
+
+type DeleteActionPointPriorityPayload {
+  deletedActionPointPriorityId: ID!
+  clientMutationId: String
+}
+
+input DeleteActionPointPriorityInput {
+  id: ID!
+  clientMutationId: String
+}
+
+type CreateActionPointReferencePayload {
+  actionPointReference: ActionPointReferencesEdge
+  clientMutationId: String
+}
+
+input CreateActionPointReferenceInput {
+  manufacturerId: ID!
+  name: String!
+  clientMutationId: String
+}
+
+type UpdateActionPointReferencePayload {
+  actionPointReference: ActionPointReferencesEdge
+  clientMutationId: String
+}
+
+input UpdateActionPointReferenceInput {
+  id: ID!
+  manufacturerId: ID!
+  name: String!
+  clientMutationId: String
+}
+
+type DeleteActionPointReferencePayload {
+  deletedActionPointReferenceId: ID!
+  clientMutationId: String
+}
+
+input DeleteActionPointReferenceInput {
+  id: ID!
+  clientMutationId: String
+}
+
+type CreateActionPointStatusPayload {
+  actionPointStatus: ActionPointStatusesEdge
+  clientMutationId: String
+}
+
+input CreateActionPointStatusInput {
+  manufacturerId: ID!
+  name: String!
+  clientMutationId: String
+}
+
+type UpdateActionPointStatusPayload {
+  actionPointStatus: ActionPointStatusesEdge
+  clientMutationId: String
+}
+
+input UpdateActionPointStatusInput {
+  id: ID!
+  manufacturerId: ID!
+  name: String!
+  clientMutationId: String
+}
+
+type DeleteActionPointStatusPayload {
+  deletedActionPointStatusId: ID!
+  clientMutationId: String
+}
+
+input DeleteActionPointStatusInput {
+  id: ID!
+  clientMutationId: String
+}
+
+type CreateMeetingFrequencyPayload {
+  actionPointPriority: ActionPointPrioritiesEdge
+  clientMutationId: String
+}
+
+input CreateMeetingFrequencyInput {
+  manufacturerId: ID!
+  name: String!
+  clientMutationId: String
+}
+
+type UpdateMeetingFrequencyPayload {
+  actionPointPriority: ActionPointPrioritiesEdge
+  clientMutationId: String
+}
+
+input UpdateMeetingFrequencyInput {
+  id: ID!
+  manufacturerId: ID!
+  name: String!
+  clientMutationId: String
+}
+
+type DeleteMeetingFrequencyPayload {
+  deletedMeetingFrequencyId: ID!
+  clientMutationId: String
+}
+
+input DeleteMeetingFrequencyInput {
+  id: ID!
+  clientMutationId: String
+}
+
+type CreateMeetingDayPayload {
+  actionPointPriority: ActionPointPrioritiesEdge
+  clientMutationId: String
+}
+
+input CreateMeetingDayInput {
+  manufacturerId: ID!
+  name: String!
+  clientMutationId: String
+}
+
+type UpdateMeetingDayPayload {
+  actionPointPriority: ActionPointPrioritiesEdge
+  clientMutationId: String
+}
+
+input UpdateMeetingDayInput {
+  id: ID!
+  manufacturerId: ID!
+  name: String!
+  clientMutationId: String
+}
+
+type DeleteMeetingDayPayload {
+  deletedMeetingDayId: ID!
+  clientMutationId: String
+}
+
+input DeleteMeetingDayInput {
   id: ID!
   clientMutationId: String
 }

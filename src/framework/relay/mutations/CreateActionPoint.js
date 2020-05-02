@@ -4,8 +4,8 @@ import { ConnectionHandler } from 'relay-runtime';
 import cuid from 'cuid';
 
 const mutation = graphql`
-  mutation CreateMSOPMutation($input: CreateMSOPInput!) {
-    createMSOP(input: $input) {
+  mutation CreateActionPointMutation($input: CreateActionPointInput!) {
+    createActionPoint(input: $input) {
       clientMutationId
     }
   }
@@ -17,25 +17,14 @@ const sharedUpdater = (store, user, newEdge) => {
   }
 
   const userProxy = store.get(user.id);
-  const connection = ConnectionHandler.getConnection(userProxy, 'User_msops');
+  const connection = ConnectionHandler.getConnection(userProxy, 'User_actionPoints');
 
   ConnectionHandler.insertEdgeAfter(connection, newEdge);
 };
 
 const commit = (
   environment,
-  {
-    manufacturerId,
-    meetingName,
-    meetingDuration,
-    frequencyId,
-    agendas,
-    meetingDayIds,
-    departmentId,
-    chairPersonEmployeeId,
-    actionLogSecretaryEmployeeId,
-    attendeeIds,
-  },
+  { manufacturerId, msopId, assigneeId, departmentId, assignedDate, dueDate, priorityId, statusId, actionReferenceIds, comments },
   user,
   { onSuccess, onError } = {},
 ) => {
@@ -44,21 +33,21 @@ const commit = (
     variables: {
       input: {
         manufacturerId,
-        meetingName,
-        meetingDuration,
-        frequencyId,
-        agendas,
-        meetingDayIds,
+        msopId,
+        assigneeId,
         departmentId,
-        chairPersonEmployeeId,
-        actionLogSecretaryEmployeeId,
-        attendeeIds,
+        assignedDate,
+        dueDate,
+        priorityId,
+        statusId,
+        actionReferenceIds,
+        comments,
         clientMutationId: cuid(),
       },
     },
     updater: (store) => {
-      const payload = store.getRootField('createMSOP');
-      const newEdge = payload.getLinkedRecord('msop');
+      const payload = store.getRootField('createActionPoint');
+      const newEdge = payload.getLinkedRecord('actionPoint');
 
       if (!newEdge) {
         return;
@@ -67,20 +56,20 @@ const commit = (
       sharedUpdater(store, user, newEdge);
     },
     optimisticUpdater: (store) => {
-      // Create a MSOP record in our store with a temporary ID
-      const id = 'client:newMSOP:' + cuid();
-      const node = store.create(id, 'MSOP');
+      // Create a ActionPoint record in our store with a temporary ID
+      const id = 'client:newActionPoint:' + cuid();
+      const node = store.create(id, 'ActionPoint');
 
       node.setValue(id, 'id');
-      node.setValue(meetingName, 'meetingName');
-      node.setValue(meetingDuration, 'meetingDuration');
-      node.setValue(agendas, 'agendas');
+      node.setValue(assignedDate, 'assignedDate');
+      node.setValue(dueDate, 'dueDate');
+      node.setValue(comments, 'comments');
 
-      // Create a new edge that contains the newly created MSOP record
-      const newEdge = store.create('client:newEdge:' + cuid(), 'MSOP');
+      // Create a new edge that contains the newly created ActionPoint record
+      const newEdge = store.create('client:newEdge:' + cuid(), 'ActionPoint');
       newEdge.setLinkedRecord(node, 'node');
 
-      // Add it to the user's msop list
+      // Add it to the user's actionPoint list
       sharedUpdater(store, user, newEdge);
     },
     onCompleted: (response, errors) => {
@@ -92,7 +81,7 @@ const commit = (
         return;
       }
 
-      onSuccess(response.createMSOP.msop ? response.createMSOP.msop.node : null);
+      onSuccess(response.createActionPoint.actionPoint ? response.createActionPoint.actionPoint.node : null);
     },
     onError: ({ message: errorMessage }) => {
       if (!onError) {

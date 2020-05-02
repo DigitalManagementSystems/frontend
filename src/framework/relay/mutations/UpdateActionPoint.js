@@ -3,28 +3,28 @@ import { commitMutation } from 'react-relay';
 import cuid from 'cuid';
 
 const mutation = graphql`
-  mutation UpdateMSOPMutation($input: UpdateMSOPInput!) {
-    updateMSOP(input: $input) {
+  mutation UpdateActionPointMutation($input: UpdateActionPointInput!) {
+    updateActionPoint(input: $input) {
       clientMutationId
     }
   }
 `;
 
-const getOptimisticResponse = (id, { meetingName, meetingDuration, agendas }, user) => {
+const getOptimisticResponse = (id, { assignedDate, dueDate, comments }, user) => {
   if (!user) {
     return {};
   }
 
   return {
-    updateMSOP: {
+    updateActionPoint: {
       user: {
         id: user.id,
-        msop: {
+        actionPoint: {
           node: {
             id,
-            meetingName,
-            meetingDuration,
-            agendas,
+            assignedDate,
+            dueDate,
+            comments,
           },
         },
       },
@@ -34,19 +34,7 @@ const getOptimisticResponse = (id, { meetingName, meetingDuration, agendas }, us
 
 const commit = (
   environment,
-  {
-    id,
-    manufacturerId,
-    meetingName,
-    meetingDuration,
-    frequencyId,
-    agendas,
-    meetingDayIds,
-    departmentId,
-    chairPersonEmployeeId,
-    actionLogSecretaryEmployeeId,
-    attendeeIds,
-  },
+  { id, manufacturerId, msopId, assigneeId, departmentId, assignedDate, dueDate, priorityId, statusId, actionReferenceIds, comments },
   user,
   { onSuccess, onError } = {},
 ) => {
@@ -56,19 +44,19 @@ const commit = (
       input: {
         id,
         manufacturerId,
-        meetingName,
-        meetingDuration,
-        frequencyId,
-        agendas,
-        meetingDayIds,
+        msopId,
+        assigneeId,
         departmentId,
-        chairPersonEmployeeId,
-        actionLogSecretaryEmployeeId,
-        attendeeIds,
+        assignedDate,
+        dueDate,
+        priorityId,
+        statusId,
+        actionReferenceIds,
+        comments,
         clientMutationId: cuid(),
       },
     },
-    optimisticResponse: getOptimisticResponse(id, { meetingName, meetingDuration, agendas }, user),
+    optimisticResponse: getOptimisticResponse(id, { assignedDate, dueDate, comments }, user),
     onCompleted: (response, errors) => {
       if (errors && errors.length > 0) {
         return;
@@ -78,7 +66,7 @@ const commit = (
         return;
       }
 
-      onSuccess(response.updateMSOP.msop ? response.updateMSOP.msop.node : null);
+      onSuccess(response.updateActionPoint.actionPoint ? response.updateActionPoint.actionPoint.node : null);
     },
     onError: ({ message: errorMessage }) => {
       if (!onError) {

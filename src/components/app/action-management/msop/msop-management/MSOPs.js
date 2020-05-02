@@ -3,13 +3,13 @@ import graphql from 'babel-plugin-relay/macro';
 import { QueryRenderer } from 'react-relay';
 
 import { RelayEnvironment } from '../../../../../framework/relay';
-import DepartmentManagementRelayContainer from './DepartmentManagementRelayContainer';
+import MSOPManagementRelayContainer from './MSOPManagementRelayContainer';
 import { LoadingContainer, GenericErrorContainer } from '../../../../common';
 
-class Departments extends Component {
+class MSOPs extends Component {
   renderRelayComponent = ({ props, error }) => {
     if (props && props.user) {
-      return <DepartmentManagementRelayContainer user={props.user} />;
+      return <MSOPManagementRelayContainer user={props.user} />;
     } else if (error) {
       return <GenericErrorContainer message={error.message} />;
     }
@@ -22,9 +22,9 @@ class Departments extends Component {
       <QueryRenderer
         environment={RelayEnvironment}
         query={graphql`
-          query DepartmentsQuery {
+          query MSOPsQuery {
             user {
-              ...DepartmentManagementRelayContainer_user
+              ...MSOPManagementRelayContainer_user
             }
           }
         `}
@@ -35,4 +35,4 @@ class Departments extends Component {
   };
 }
 
-export default Departments;
+export default MSOPs;

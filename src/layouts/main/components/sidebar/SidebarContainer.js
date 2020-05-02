@@ -29,6 +29,10 @@ const SidebarContainer = ({ t, history, open, variant, onClose, className }) => 
     history.push('/hr/employees');
   };
 
+  const msopManagement = () => {
+    history.push('/action-management/msops');
+  };
+
   const signOut = () => {
     firebase.logout();
   };
@@ -50,6 +54,12 @@ const SidebarContainer = ({ t, history, open, variant, onClose, className }) => 
       key: 'employeeManagement',
       title: t('employeeManagement.label'),
       onClick: employeeManagement,
+      icon: <PermIdentityIcon />,
+    },
+    {
+      key: 'msopManagement',
+      title: t('msopManagement.label'),
+      onClick: msopManagement,
       icon: <PermIdentityIcon />,
     },
     {
