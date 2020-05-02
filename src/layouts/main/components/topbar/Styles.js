@@ -1,11 +1,26 @@
 import makeStyles from '@material-ui/styles/makeStyles';
 
 const styles = makeStyles((theme) => ({
-  root: {
+  grow: {
+    flexGrow: 1,
+  },
+  appBar: {
     boxShadow: 'none',
   },
-  flexGrow: {
-    flexGrow: 1,
+  menuButton: {
+    marginRight: theme.spacing(2),
+  },
+  sectionDesktop: {
+    display: 'none',
+    [theme.breakpoints.up('md')]: {
+      display: 'flex',
+    },
+  },
+  sectionMobile: {
+    display: 'flex',
+    [theme.breakpoints.up('md')]: {
+      display: 'none',
+    },
   },
 }));
 

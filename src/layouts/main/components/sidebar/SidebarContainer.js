@@ -6,8 +6,6 @@ import Drawer from '@material-ui/core/Drawer';
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import PermIdentityIcon from '@material-ui/icons/PermIdentity';
 import ApartmentIcon from '@material-ui/icons/Apartment';
-import InputIcon from '@material-ui/icons/Input';
-import firebase from 'firebase/app';
 import { withRouter } from 'react-router-dom';
 import { withTranslation } from 'react-i18next';
 
@@ -31,10 +29,6 @@ const SidebarContainer = ({ t, history, open, variant, onClose, className }) => 
 
   const msopManagement = () => {
     history.push('/action-management/msops');
-  };
-
-  const signOut = () => {
-    firebase.logout();
   };
 
   const pages = [
@@ -61,12 +55,6 @@ const SidebarContainer = ({ t, history, open, variant, onClose, className }) => 
       title: t('msopManagement.label'),
       onClick: msopManagement,
       icon: <PermIdentityIcon />,
-    },
-    {
-      key: 'signout',
-      title: t('signOut.label'),
-      onClick: signOut,
-      icon: <InputIcon />,
     },
   ];
 
