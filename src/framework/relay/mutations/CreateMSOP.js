@@ -27,7 +27,7 @@ const commit = (
   {
     manufacturerId,
     meetingName,
-    meetingDuration,
+    durationId,
     frequencyId,
     agendas,
     meetingDayIds,
@@ -45,7 +45,7 @@ const commit = (
       input: {
         manufacturerId,
         meetingName,
-        meetingDuration,
+        durationId,
         frequencyId,
         agendas,
         meetingDayIds,
@@ -73,7 +73,6 @@ const commit = (
 
       node.setValue(id, 'id');
       node.setValue(meetingName, 'meetingName');
-      node.setValue(meetingDuration, 'meetingDuration');
       node.setValue(agendas, 'agendas');
 
       // Create a new edge that contains the newly created MSOP record

@@ -11,7 +11,18 @@ import styles from './Styles';
 import { renderTextField, renderAutocomplete } from '../../../../common/redux-form';
 import validate from './Validation';
 
-export const SetMSOPView = ({ t, handleSubmit, submitting, onCancelButtonClick, departments, msop, employees, meetingFrequencies, meetingDays }) => {
+export const SetMSOPView = ({
+  t,
+  handleSubmit,
+  submitting,
+  onCancelButtonClick,
+  departments,
+  msop,
+  employees,
+  meetingFrequencies,
+  meetingDays,
+  meetingDurations,
+}) => {
   const classes = styles();
   const isAdding = msop === null;
 
@@ -36,15 +47,14 @@ export const SetMSOPView = ({ t, handleSubmit, submitting, onCancelButtonClick, 
             defaultValue={isAdding ? null : msop.meetingName}
           />
           <Field
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
             id="duration"
-            label={t('meetingDuration.label')}
             name="duration"
-            component={renderTextField}
-            defaultValue={isAdding ? null : msop.meetingDuration}
+            label={t('meetingDuration.label')}
+            options={meetingDurations.map((meetingDuration) => meetingDuration.id)}
+            getOptionLabel={(id) => meetingDurations.find((meetingDuration) => meetingDuration.id === id).name}
+            fullWidth
+            component={renderAutocomplete}
+            defaultValue={isAdding ? null : msop.duration.id}
           />
           <Field
             id="frequency"
