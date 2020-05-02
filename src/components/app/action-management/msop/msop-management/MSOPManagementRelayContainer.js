@@ -15,7 +15,10 @@ export default createFragmentContainer(MSOPManagementContainer, {
                 node {
                   id
                   meetingName
-                  meetingDuration
+                  duration {
+                    id
+                    name
+                  }
                   frequency {
                     id
                     name

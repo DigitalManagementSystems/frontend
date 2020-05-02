@@ -71,6 +71,7 @@ export class SetMSOPContainer extends Component {
         msop={manufacturer.msop ? manufacturer.msop : null}
         meetingFrequencies={manufacturer.meetingFrequencies.edges.map((edge) => edge.node)}
         meetingDays={manufacturer.meetingDays.edges.map((edge) => edge.node)}
+        meetingDurations={manufacturer.meetingDurations.edges.map((edge) => edge.node)}
         departments={manufacturer.departments.edges.map((edge) => edge.node)}
         employees={manufacturer.employees.edges.map((edge) => edge.node)}
         onSubmit={this.setMSOP}

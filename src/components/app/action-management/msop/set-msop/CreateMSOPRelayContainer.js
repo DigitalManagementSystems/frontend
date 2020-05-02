@@ -10,7 +10,7 @@ export default createFragmentContainer(SetMSOPContainer, {
         edges {
           node {
             id
-            meetingFrequencies {
+            meetingFrequencies(first: 1000) @connection(key: "User_meetingFrequencies") {
               edges {
                 node {
                   id
@@ -18,7 +18,15 @@ export default createFragmentContainer(SetMSOPContainer, {
                 }
               }
             }
-            meetingDays {
+            meetingDays(first: 1000) @connection(key: "User_meetingDays") {
+              edges {
+                node {
+                  id
+                  name
+                }
+              }
+            }
+            meetingDurations(first: 1000) @connection(key: "User_meetingDurations") {
               edges {
                 node {
                   id

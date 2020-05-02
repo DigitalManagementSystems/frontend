@@ -10,7 +10,7 @@ const mutation = graphql`
   }
 `;
 
-const getOptimisticResponse = (id, { meetingName, meetingDuration, agendas }, user) => {
+const getOptimisticResponse = (id, { meetingName, agendas }, user) => {
   if (!user) {
     return {};
   }
@@ -23,7 +23,6 @@ const getOptimisticResponse = (id, { meetingName, meetingDuration, agendas }, us
           node: {
             id,
             meetingName,
-            meetingDuration,
             agendas,
           },
         },
@@ -38,7 +37,7 @@ const commit = (
     id,
     manufacturerId,
     meetingName,
-    meetingDuration,
+    durationId,
     frequencyId,
     agendas,
     meetingDayIds,
@@ -57,7 +56,7 @@ const commit = (
         id,
         manufacturerId,
         meetingName,
-        meetingDuration,
+        durationId,
         frequencyId,
         agendas,
         meetingDayIds,
@@ -68,7 +67,7 @@ const commit = (
         clientMutationId: cuid(),
       },
     },
-    optimisticResponse: getOptimisticResponse(id, { meetingName, meetingDuration, agendas }, user),
+    optimisticResponse: getOptimisticResponse(id, { meetingName, agendas }, user),
     onCompleted: (response, errors) => {
       if (errors && errors.length > 0) {
         return;

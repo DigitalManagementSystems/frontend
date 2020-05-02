@@ -8,7 +8,7 @@ import Link from '@material-ui/core/Link';
 import { msopProp } from './PropTypes';
 import Styles from './Styles';
 
-const MSOPView = ({ msop: { id, meetingName, meetingDuration, frequency }, onMSOPClick }) => {
+const MSOPView = ({ msop: { id, meetingName, duration, frequency }, onMSOPClick }) => {
   const classes = Styles();
 
   return (
@@ -22,7 +22,7 @@ const MSOPView = ({ msop: { id, meetingName, meetingDuration, frequency }, onMSO
         </Link>
       </TableCell>
       <TableCell component="th" scope="row" padding="none">
-        {meetingDuration}
+        {duration.name}
       </TableCell>
       <TableCell component="th" scope="row" padding="none">
         {frequency.name}
