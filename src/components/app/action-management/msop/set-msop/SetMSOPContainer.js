@@ -11,7 +11,17 @@ import { NotificationType } from '../../../../../framework/redux/notification';
 import * as notificationActions from '../../../../../framework/redux/notification/Actions';
 
 export class SetMSOPContainer extends Component {
-  setMSOP = ({ meetingName }) => {
+  setMSOP = ({
+    meetingName,
+    durationId,
+    frequencyId,
+    agendas,
+    meetingDayIds,
+    departmentId,
+    chairPersonEmployeeId,
+    actionLogSecretaryEmployeeId,
+    attendeeIds,
+  }) => {
     const { history, environment, createMSOP, updateMSOP, notificationActions, user } = this.props;
     const manufacturer = this.getManufacturer();
 
@@ -24,8 +34,16 @@ export class SetMSOPContainer extends Component {
         environment,
         {
           id,
-          meetingName,
           manufacturerId: manufacturer.id,
+          meetingName,
+          durationId,
+          frequencyId,
+          agendas,
+          meetingDayIds,
+          departmentId,
+          chairPersonEmployeeId,
+          actionLogSecretaryEmployeeId,
+          attendeeIds,
         },
         user,
         {
@@ -40,8 +58,16 @@ export class SetMSOPContainer extends Component {
       createMSOP(
         environment,
         {
-          meetingName,
           manufacturerId: manufacturer.id,
+          meetingName,
+          durationId,
+          frequencyId,
+          agendas,
+          meetingDayIds,
+          departmentId,
+          chairPersonEmployeeId,
+          actionLogSecretaryEmployeeId,
+          attendeeIds,
         },
         null,
         {
