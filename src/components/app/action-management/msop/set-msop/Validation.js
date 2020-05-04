@@ -1,7 +1,15 @@
 import { Set, Map } from 'immutable';
 
 const validate = (values) => {
-  const requiredFields = Set(['meetingName', 'meetingDuration']);
+  const requiredFields = Set([
+    'meetingName',
+    'durationId',
+    'frequencyId',
+    'departmentId',
+    'chairPersonEmployeeId',
+    'actionLogSecretaryEmployeeId',
+    'agendas',
+  ]);
   const errors = requiredFields.reduce((currentErrors, fieldName) => {
     if (!values[fieldName]) {
       return currentErrors.set(fieldName, 'Required');

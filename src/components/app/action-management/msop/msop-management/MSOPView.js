@@ -8,7 +8,10 @@ import Link from '@material-ui/core/Link';
 import { msopProp } from './PropTypes';
 import Styles from './Styles';
 
-const MSOPView = ({ msop: { id, meetingName, duration, frequency }, onMSOPClick }) => {
+const MSOPView = ({
+  msop: { id, meetingName, duration, frequency, meetingDays, department, chairPersonEmployee, actionLogSecretaryEmployee, attendees, agendas },
+  onMSOPClick,
+}) => {
   const classes = Styles();
 
   return (
@@ -26,6 +29,24 @@ const MSOPView = ({ msop: { id, meetingName, duration, frequency }, onMSOPClick 
       </TableCell>
       <TableCell component="th" scope="row" padding="none">
         {frequency.name}
+      </TableCell>
+      <TableCell component="th" scope="row" padding="none">
+        {meetingDays.name}
+      </TableCell>
+      <TableCell component="th" scope="row" padding="none">
+        {department.name}
+      </TableCell>
+      <TableCell component="th" scope="row" padding="none">
+        {chairPersonEmployee.email}
+      </TableCell>
+      <TableCell component="th" scope="row" padding="none">
+        {actionLogSecretaryEmployee.email}
+      </TableCell>
+      <TableCell component="th" scope="row" padding="none">
+        {attendees.email}
+      </TableCell>
+      <TableCell component="th" scope="row" padding="none">
+        {agendas.email}
       </TableCell>
     </TableRow>
   );

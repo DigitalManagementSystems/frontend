@@ -47,8 +47,8 @@ export const SetMSOPView = ({
             defaultValue={isAdding ? null : msop.meetingName}
           />
           <Field
-            id="duration"
-            name="duration"
+            id="durationId"
+            name="durationId"
             label={t('meetingDuration.label')}
             options={meetingDurations.map((meetingDuration) => meetingDuration.id)}
             getOptionLabel={(id) => meetingDurations.find((meetingDuration) => meetingDuration.id === id).name}
@@ -57,8 +57,8 @@ export const SetMSOPView = ({
             defaultValue={isAdding ? null : msop.duration.id}
           />
           <Field
-            id="frequency"
-            name="frequency"
+            id="frequencyId"
+            name="frequencyId"
             label={t('meetingFrequency.label')}
             options={meetingFrequencies.map((meetingFrequency) => meetingFrequency.id)}
             getOptionLabel={(id) => meetingFrequencies.find((meetingFrequency) => meetingFrequency.id === id).name}
@@ -67,14 +67,14 @@ export const SetMSOPView = ({
             defaultValue={isAdding ? null : msop.frequency.id}
           />
           <Field
-            id="meetingDays"
-            name="meetingDays"
+            id="meetingDayIds"
+            name="meetingDayIds"
             label={t('meetingDays.label')}
             options={meetingDays.map((meetingDay) => meetingDay.id)}
             getOptionLabel={(id) => meetingDays.find((meetingDay) => meetingDay.id === id).name}
             fullWidth
             component={renderAutocomplete}
-            defaultValue={isAdding ? [] : msop.msopMeetingDays.map((msopMeetingDay) => msopMeetingDay.id)}
+            defaultValue={isAdding ? [] : msop.meetingDays.map((meetingDay) => meetingDay.id)}
             multiple
             limitTags={2}
           />
@@ -86,11 +86,11 @@ export const SetMSOPView = ({
             getOptionLabel={(id) => departments.find((department) => department.id === id).name}
             fullWidth
             component={renderAutocomplete}
-            defaultValue={isAdding ? null : msop.chairPersonEmployee.id}
+            defaultValue={isAdding ? null : msop.department.id}
           />
           <Field
-            id="chairPersonId"
-            name="chairPersonId"
+            id="chairPersonEmployeeId"
+            name="chairPersonEmployeeId"
             label={t('chairPerson.label')}
             options={employees.map((employee) => employee.id)}
             getOptionLabel={(id) => employees.find((employee) => employee.id === id).user.email}
@@ -99,8 +99,8 @@ export const SetMSOPView = ({
             defaultValue={isAdding ? null : msop.chairPersonEmployee.id}
           />
           <Field
-            id="secretaryId"
-            name="secretaryId"
+            id="actionLogSecretaryEmployeeId"
+            name="actionLogSecretaryEmployeeId"
             label={t('secretary.label')}
             options={employees.map((employee) => employee.id)}
             getOptionLabel={(id) => employees.find((employee) => employee.id === id).user.email}
