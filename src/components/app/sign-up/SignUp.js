@@ -63,12 +63,10 @@ const SignUp = ({ t, handleSubmit, pristine, submitting }) => {
             autoComplete="new-password"
             component={renderTextField}
           />
-
           <Field variant="outlined" margin="normal" required name="userType" label={t('signUpAs.label')} component={renderRadioGroup}>
             <FormControlLabel value="manufacturer" control={<Radio />} label={t('manufacturer.label')} />
             <FormControlLabel value="employee" control={<Radio />} label={t('employee.label')} />
           </Field>
-
           <Button type="submit" fullWidth variant="contained" color="primary" className={classes.submit} disabled={pristine || submitting}>
             {t('signUp.button')}
           </Button>

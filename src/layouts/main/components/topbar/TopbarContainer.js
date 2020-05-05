@@ -1,63 +1,103 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import firebase from 'firebase/app';
+import { withRouter } from 'react-router-dom';
+import { formValueSelector } from 'redux-form';
 
 import Topbar from './Topbar';
 
-const TopbarContainer = ({ className, onSidebarOpen }) => {
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
+class TopbarContainer extends Component {
+  state = { anchorEl: null, mobileMoreAnchorEl: null, selectedApplication: null };
 
-  const isMenuOpen = Boolean(anchorEl);
-  const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+  static getDerivedStateFromProps = ({ selectedApplication, history }, state) => {
+    if (!state.selectedApplication) {
+      history.push('/action-management/dashboard');
 
-  const handleProfileMenuOpen = (event) => {
-    setAnchorEl(event.currentTarget);
+      return { selectedApplication: 'actionManagement' };
+    }
+
+    if (selectedApplication !== state.selectedApplication) {
+      switch (selectedApplication) {
+        case 'humanResource':
+          history.push('/hr/dashboard');
+
+          break;
+
+        case 'actionManagement':
+          history.push('/action-management/dashboard');
+
+          break;
+
+        default:
+          break;
+      }
+
+      return { selectedApplication };
+    }
+
+    return null;
   };
 
-  const handleMobileMenuClose = () => {
-    setMobileMoreAnchorEl(null);
+  handleProfileMenuOpen = (event) => {
+    this.setState({ anchorEl: event.currentTarget });
   };
 
-  const handleMenuClose = () => {
-    setAnchorEl(null);
-    handleMobileMenuClose();
+  handleMobileMenuOpen = (event) => {
+    this.setState({ mobileMoreAnchorEl: event.currentTarget });
   };
 
-  const handleMobileMenuOpen = (event) => {
-    setMobileMoreAnchorEl(event.currentTarget);
+  handleMobileMenuClose = () => {
+    this.setState({ mobileMoreAnchorEl: null });
   };
 
-  const handleProfileClick = () => {
-    handleMenuClose();
+  handleMenuClose = () => {
+    this.setState({ anchorEl: null });
+    this.handleMobileMenuClose();
   };
 
-  const handleSignOutClick = () => {
-    handleMenuClose();
+  handleProfileClick = () => {
+    this.handleMenuClose();
+  };
+
+  handleSignOutClick = () => {
+    this.handleMenuClose();
     firebase.logout();
   };
 
-  return (
-    <Topbar
-      className={className}
-      onSidebarOpen={onSidebarOpen}
-      onProfileMenuOpen={handleProfileMenuOpen}
-      onMobileMenuClose={handleMobileMenuClose}
-      onMenuClose={handleMenuClose}
-      onMobileMenuOpen={handleMobileMenuOpen}
-      isMobileMenuOpen={isMobileMenuOpen}
-      isMenuOpen={isMenuOpen}
-      mobileMoreAnchorEl={mobileMoreAnchorEl}
-      anchorEl={anchorEl}
-      onProfileClick={handleProfileClick}
-      onSignOutClick={handleSignOutClick}
-    />
-  );
-};
+  render = () => {
+    const { className, onSidebarOpen } = this.props;
+    const { anchorEl, mobileMoreAnchorEl, selectedApplication } = this.state;
+
+    return (
+      <Topbar
+        className={className}
+        onSidebarOpen={onSidebarOpen}
+        onProfileMenuOpen={this.handleProfileMenuOpen}
+        onMobileMenuClose={this.handleMobileMenuClose}
+        onMenuClose={this.handleMenuClose}
+        onMobileMenuOpen={this.handleMobileMenuOpen}
+        isMobileMenuOpen={mobileMoreAnchorEl !== null}
+        isMenuOpen={anchorEl !== null}
+        mobileMoreAnchorEl={mobileMoreAnchorEl}
+        anchorEl={anchorEl}
+        onProfileClick={this.handleProfileClick}
+        onSignOutClick={this.handleSignOutClick}
+        selectedApplication={selectedApplication}
+      />
+    );
+  };
+}
 
 TopbarContainer.propTypes = {
   className: PropTypes.string,
   onSidebarOpen: PropTypes.func.isRequired,
 };
 
-export default TopbarContainer;
+const selector = formValueSelector('MainTopbarForm');
+
+const mapStateToProps = (state) => ({
+  selectedApplication: selector(state, 'selectedApplication'),
+});
+
+export default withRouter(connect(mapStateToProps)(TopbarContainer));
