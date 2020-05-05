@@ -22,6 +22,12 @@ const styles = makeStyles((theme) => ({
       display: 'none',
     },
   },
+  applicationSelectorText: {
+    color: 'white',
+  },
+  applicationSelectorIcon: {
+    fill: 'white',
+  },
 }));
 
 export default styles;

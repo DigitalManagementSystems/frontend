@@ -8,6 +8,8 @@ i18next.init({
   resources: {
     en_NZ: {
       translation: {
+        humanResource: { label: 'Human Resource' },
+        actionManagement: { label: 'Action Management' },
         signUp: { title: 'Sign up', label: 'Sign up', button: 'Sign up' },
         signUpAs: { label: 'Sign up as' },
         password: { label: 'Password' },
