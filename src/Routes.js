@@ -30,6 +30,7 @@ const Routes = ({ isLoaded, userFound }) => {
         <RouteWithLayout isSecureRoute={false} exact component={SignUpContainer} layout={PublicMainContainer} path="/signup" />
         <RouteWithLayout isSecureRoute={false} exact component={SignInContainer} layout={PublicMainContainer} path="/signin" />
         <RouteWithLayout isSecureRoute={true} exact component={HumanResourceDashboardContainer} layout={MainContainer} path="/hr/dashboard" />
+        <RouteWithLayout isSecureRoute={true} exact component={HumanResourceDashboardContainer} layout={MainContainer} path="/hr" />
         <RouteWithLayout isSecureRoute={true} exact component={Departments} layout={MainContainer} path="/hr/departments" />
         <RouteWithLayout isSecureRoute={true} exact component={CreateDepartment} layout={MainContainer} path="/hr/department/create" />
         <RouteWithLayout isSecureRoute={true} exact component={UpdateDepartment} layout={MainContainer} path="/hr/departments/:departmentId" />
@@ -43,6 +44,7 @@ const Routes = ({ isLoaded, userFound }) => {
           layout={MainContainer}
           path="/action-management/dashboard"
         />
+        <RouteWithLayout isSecureRoute={true} exact component={ActionManagementDashboardContainer} layout={MainContainer} path="/action-management" />
         <RouteWithLayout isSecureRoute={true} exact component={MSOPs} layout={MainContainer} path="/action-management/msops" />
         <RouteWithLayout isSecureRoute={true} exact component={CreateMSOP} layout={MainContainer} path="/action-management/msop/create" />
         <RouteWithLayout isSecureRoute={true} exact component={UpdateMSOP} layout={MainContainer} path="/action-management/msops/:msopId" />
