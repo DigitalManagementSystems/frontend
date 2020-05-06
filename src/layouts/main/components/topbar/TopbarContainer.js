@@ -12,7 +12,7 @@ class TopbarContainer extends Component {
 
   static getDerivedStateFromProps = ({ selectedApplication, history }, state) => {
     if (!state.selectedApplication) {
-      history.push('/action-management/dashboard');
+      history.push('/action-management');
 
       return { selectedApplication: 'actionManagement' };
     }
@@ -20,12 +20,12 @@ class TopbarContainer extends Component {
     if (selectedApplication !== state.selectedApplication) {
       switch (selectedApplication) {
         case 'humanResource':
-          history.push('/hr/dashboard');
+          history.push('/hr');
 
           break;
 
         case 'actionManagement':
-          history.push('/action-management/dashboard');
+          history.push('/action-management');
 
           break;
 
