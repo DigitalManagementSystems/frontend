@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Field, reduxForm } from 'redux-form';
 import { withTranslation } from 'react-i18next';
 import clsx from 'clsx';
 import AppBar from '@material-ui/core/AppBar';
@@ -15,9 +14,8 @@ import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
 
 import styles from './Styles';
-import { renderSelect } from '../../../../components/common/redux-form';
 
-export const Topbar = ({
+const Topbar = ({
   className,
   t,
   onSidebarOpen,
@@ -31,7 +29,6 @@ export const Topbar = ({
   anchorEl,
   onProfileClick,
   onSignOutClick,
-  selectedApplication,
 }) => {
   const classes = styles();
 
@@ -86,26 +83,7 @@ export const Topbar = ({
           <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="open drawer" onClick={onSidebarOpen}>
             <MenuIcon />
           </IconButton>
-          <Field
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            id="selectedApplication"
-            name="selectedApplication"
-            autoFocus
-            component={renderSelect}
-            defaultValue={selectedApplication}
-            className={classes.applicationSelectorText}
-            inputProps={{
-              classes: {
-                icon: classes.applicationSelectorIcon,
-              },
-            }}
-          >
-            <MenuItem value="humanResource">{t('humanResource.label')}</MenuItem>
-            <MenuItem value="actionManagement">{t('actionManagement.label')}</MenuItem>
-          </Field>
+
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
             <IconButton aria-label={t('notifications.label')} color="inherit">
@@ -142,6 +120,4 @@ Topbar.propTypes = {
   onSidebarOpen: PropTypes.func.isRequired,
 };
 
-export default reduxForm({
-  form: 'MainTopbarForm',
-})(withTranslation()(Topbar));
+export default withTranslation()(Topbar);

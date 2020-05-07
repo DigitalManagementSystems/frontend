@@ -4,15 +4,15 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 
 import Styles from './Styles';
 
-const ActionManagementDashboardContainer = () => {
+const DashboardContainer = () => {
   const classes = Styles();
 
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
-      <div className={classes.paper}>Action Management Dashboard</div>
+      <div className={classes.paper}>Dashboard</div>
     </Container>
   );
 };
 
-export default ActionManagementDashboardContainer;
+export default DashboardContainer;
