@@ -1,14 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import graphql from 'babel-plugin-relay/macro';
+import { createFragmentContainer } from 'react-relay';
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
 import Checkbox from '@material-ui/core/Checkbox';
 import Link from '@material-ui/core/Link';
 
-import { msopProp } from './PropTypes';
 import Styles from './Styles';
 
-const MSOPView = ({
+export const MSOPView = ({
   msop: { id, meetingName, duration, frequency, meetingDays, department, chairPersonEmployee, actionLogSecretaryEmployee, attendees, agendas },
   onMSOPClick,
 }) => {
@@ -53,8 +54,45 @@ const MSOPView = ({
 };
 
 MSOPView.propTypes = {
-  msop: msopProp.isRequired,
   onMSOPClick: PropTypes.func.isRequired,
 };
 
-export default MSOPView;
+export default createFragmentContainer(MSOPView, {
+  msop: graphql`
+    fragment MSOPView_msop on MSOP {
+      id
+      meetingName
+      duration {
+        id
+        name
+      }
+      frequency {
+        id
+        name
+      }
+      meetingDays {
+        id
+        name
+      }
+      agendas
+      department {
+        name
+      }
+      chairPersonEmployee {
+        user {
+          email
+        }
+      }
+      actionLogSecretaryEmployee {
+        user {
+          email
+        }
+      }
+      attendees {
+        user {
+          email
+        }
+      }
+    }
+  `,
+});

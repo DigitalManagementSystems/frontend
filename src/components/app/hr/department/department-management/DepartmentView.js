@@ -7,7 +7,6 @@ import TableRow from '@material-ui/core/TableRow';
 import Checkbox from '@material-ui/core/Checkbox';
 import Link from '@material-ui/core/Link';
 
-import { departmentProp } from './PropTypes';
 import Styles from './Styles';
 
 export const DepartmentView = ({ department: { id, name, description }, onDepartmentClick }) => {
@@ -31,7 +30,6 @@ export const DepartmentView = ({ department: { id, name, description }, onDepart
 };
 
 DepartmentView.propTypes = {
-  department: departmentProp.isRequired,
   onDepartmentClick: PropTypes.func.isRequired,
 };
 

@@ -3,7 +3,6 @@ import { withRouter } from 'react-router-dom';
 import graphql from 'babel-plugin-relay/macro';
 import { createFragmentContainer } from 'react-relay';
 
-import { rootUserProp } from './PropTypes';
 import DepartmentsView from './DepartmentsView';
 
 export class DepartmentsContainer extends Component {
@@ -25,9 +24,7 @@ export class DepartmentsContainer extends Component {
   );
 }
 
-DepartmentsContainer.propTypes = {
-  user: rootUserProp.isRequired,
-};
+DepartmentsContainer.propTypes = {};
 
 export default createFragmentContainer(withRouter(DepartmentsContainer), {
   user: graphql`

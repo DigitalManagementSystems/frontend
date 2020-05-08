@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
+import graphql from 'babel-plugin-relay/macro';
+import { createFragmentContainer } from 'react-relay';
 import { withRouter } from 'react-router-dom';
 
-import { rootUserProp } from './PropTypes';
 import EmployeesView from './EmployeesView';
 
 export class EmployeeManagementContainer extends Component {
@@ -18,19 +19,30 @@ export class EmployeeManagementContainer extends Component {
     history.push(linkToEmployee);
   };
 
-  getManufacturer = () => this.props.user.manufacturers.edges[0].node;
-
-  render = () => (
-    <EmployeesView
-      employees={this.getManufacturer().employees.edges.map((edge) => edge.node)}
-      onCreateEmployeeClick={this.createEmployee}
-      onEmployeeClick={this.handleEmployeeClick}
-    />
-  );
+  render = () => <EmployeesView user={this.props.user} onCreateEmployeeClick={this.createEmployee} onEmployeeClick={this.handleEmployeeClick} />;
 }
 
-EmployeeManagementContainer.propTypes = {
-  user: rootUserProp.isRequired,
-};
+EmployeeManagementContainer.propTypes = {};
 
-export default withRouter(EmployeeManagementContainer);
+export default createFragmentContainer(withRouter(EmployeeManagementContainer), {
+  user: graphql`
+    fragment EmployeeManagementContainer_user on User {
+      id
+      manufacturers(first: 1) @connection(key: "User_manufacturers") {
+        edges {
+          node {
+            id
+            employees(first: 1000) @connection(key: "User_employees") {
+              edges {
+                node {
+                  id
+                }
+              }
+            }
+          }
+        }
+      }
+      ...EmployeesView_user
+    }
+  `,
+});
