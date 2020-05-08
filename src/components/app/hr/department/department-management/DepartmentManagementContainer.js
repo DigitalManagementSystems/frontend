@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
+import graphql from 'babel-plugin-relay/macro';
+import { createFragmentContainer } from 'react-relay';
 
 import { rootUserProp } from './PropTypes';
 import DepartmentsView from './DepartmentsView';
@@ -18,14 +20,8 @@ export class DepartmentsContainer extends Component {
     history.push(linkToDepartment);
   };
 
-  getManufacturer = () => this.props.user.manufacturers.edges[0].node;
-
   render = () => (
-    <DepartmentsView
-      departments={this.getManufacturer().departments.edges.map((edge) => edge.node)}
-      onCreateDepartmentClick={this.createDepartment}
-      onDepartmentClick={this.handleDepartmentClick}
-    />
+    <DepartmentsView user={this.props.user} onCreateDepartmentClick={this.createDepartment} onDepartmentClick={this.handleDepartmentClick} />
   );
 }
 
@@ -33,4 +29,25 @@ DepartmentsContainer.propTypes = {
   user: rootUserProp.isRequired,
 };
 
-export default withRouter(DepartmentsContainer);
+export default createFragmentContainer(withRouter(DepartmentsContainer), {
+  user: graphql`
+    fragment DepartmentManagementContainer_user on User {
+      id
+      manufacturers(first: 1) @connection(key: "User_manufacturers") {
+        edges {
+          node {
+            id
+            departments(first: 1000) @connection(key: "User_departments") {
+              edges {
+                node {
+                  id
+                }
+              }
+            }
+          }
+        }
+      }
+      ...DepartmentsView_user
+    }
+  `,
+});
