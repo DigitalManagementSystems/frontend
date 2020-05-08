@@ -1,14 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import graphql from 'babel-plugin-relay/macro';
+import { createFragmentContainer } from 'react-relay';
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
 import Checkbox from '@material-ui/core/Checkbox';
 import Link from '@material-ui/core/Link';
 
-import { employeeProp } from './PropTypes';
 import Styles from './Styles';
 
-const EmployeeView = ({
+export const EmployeeView = ({
   employee: {
     id,
     employeeReference,
@@ -60,8 +61,28 @@ const EmployeeView = ({
 };
 
 EmployeeView.propTypes = {
-  employee: employeeProp.isRequired,
   onEmployeeClick: PropTypes.func.isRequired,
 };
 
-export default EmployeeView;
+export default createFragmentContainer(EmployeeView, {
+  employee: graphql`
+    fragment EmployeeView_employee on Employee {
+      id
+      employeeReference
+      position
+      mobile
+      user {
+        email
+      }
+      reportingToEmployee {
+        id
+        user {
+          email
+        }
+      }
+      departments {
+        name
+      }
+    }
+  `,
+});

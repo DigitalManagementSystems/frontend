@@ -1,18 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import graphql from 'babel-plugin-relay/macro';
+import { createFragmentContainer } from 'react-relay';
 import Paper from '@material-ui/core/Paper';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 
-import { msopsProp } from './PropTypes';
 import Styles from './Styles';
 import MSOPsTableHeader from './MSOPsTableHeader';
 import MSOPView from './MSOPView';
 
-const MSOPsView = ({ msops, onCreateMSOPClick, onMSOPClick }) => {
+export const MSOPsView = ({ user, onCreateMSOPClick, onMSOPClick }) => {
   const classes = Styles();
+  const msops = user.manufacturers.edges[0].node.msops;
 
   return (
     <div className={classes.root}>
@@ -21,8 +23,8 @@ const MSOPsView = ({ msops, onCreateMSOPClick, onMSOPClick }) => {
           <Table className={classes.table} aria-labelledby="tableTitle" size="medium" aria-label="enhanced table">
             <MSOPsTableHeader />
             <TableBody>
-              {msops.map((msop) => (
-                <MSOPView key={msop.id} msop={msop} onMSOPClick={onMSOPClick} />
+              {msops.edges.map(({ node }) => (
+                <MSOPView key={node.id} msop={node} onMSOPClick={onMSOPClick} />
               ))}
             </TableBody>
           </Table>
@@ -37,9 +39,28 @@ const MSOPsView = ({ msops, onCreateMSOPClick, onMSOPClick }) => {
 };
 
 MSOPsView.propTypes = {
-  msops: msopsProp.isRequired,
   onCreateMSOPClick: PropTypes.func.isRequired,
   onMSOPClick: PropTypes.func.isRequired,
 };
 
-export default MSOPsView;
+export default createFragmentContainer(MSOPsView, {
+  user: graphql`
+    fragment MSOPsView_user on User {
+      id
+      manufacturers(first: 1) @connection(key: "User_manufacturers") {
+        edges {
+          node {
+            msops(first: 1000) @connection(key: "User_msops") {
+              edges {
+                node {
+                  id
+                  ...MSOPView_msop
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  `,
+});

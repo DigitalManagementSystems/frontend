@@ -8,7 +8,6 @@ import TableBody from '@material-ui/core/TableBody';
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 
-import { departmentsProp } from './PropTypes';
 import Styles from './Styles';
 import DepartmentsTableHeader from './DepartmentsTableHeader';
 import DepartmentView from './DepartmentView';
@@ -24,11 +23,9 @@ export const DepartmentsView = ({ user, onCreateDepartmentClick, onDepartmentCli
           <Table className={classes.table} aria-labelledby="tableTitle" size="medium" aria-label="enhanced table">
             <DepartmentsTableHeader />
             <TableBody>
-              {departments.edges
-                .map((edge) => edge.node)
-                .map((node) => (
-                  <DepartmentView key={node.id} department={node} onDepartmentClick={onDepartmentClick} />
-                ))}
+              {departments.edges.map(({ node }) => (
+                <DepartmentView key={node.id} department={node} onDepartmentClick={onDepartmentClick} />
+              ))}
             </TableBody>
           </Table>
         </div>
@@ -42,7 +39,6 @@ export const DepartmentsView = ({ user, onCreateDepartmentClick, onDepartmentCli
 };
 
 DepartmentsView.propTypes = {
-  departments: departmentsProp.isRequired,
   onCreateDepartmentClick: PropTypes.func.isRequired,
   onDepartmentClick: PropTypes.func.isRequired,
 };

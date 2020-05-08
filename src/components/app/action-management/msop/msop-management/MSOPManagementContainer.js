@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
+import graphql from 'babel-plugin-relay/macro';
+import { createFragmentContainer } from 'react-relay';
 
-import { rootUserProp } from './PropTypes';
 import MSOPsView from './MSOPsView';
 
 export class MSOPsContainer extends Component {
@@ -18,19 +19,30 @@ export class MSOPsContainer extends Component {
     history.push(linkToMSOP);
   };
 
-  getManufacturer = () => this.props.user.manufacturers.edges[0].node;
-
-  render = () => (
-    <MSOPsView
-      msops={this.getManufacturer().msops.edges.map((edge) => edge.node)}
-      onCreateMSOPClick={this.createMSOP}
-      onMSOPClick={this.handleMSOPClick}
-    />
-  );
+  render = () => <MSOPsView user={this.props.user} onCreateMSOPClick={this.createMSOP} onMSOPClick={this.handleMSOPClick} />;
 }
 
-MSOPsContainer.propTypes = {
-  user: rootUserProp.isRequired,
-};
+MSOPsContainer.propTypes = {};
 
-export default withRouter(MSOPsContainer);
+export default createFragmentContainer(withRouter(MSOPsContainer), {
+  user: graphql`
+    fragment MSOPManagementContainer_user on User {
+      id
+      manufacturers(first: 1) @connection(key: "User_manufacturers") {
+        edges {
+          node {
+            id
+            msops(first: 1000) @connection(key: "User_msops") {
+              edges {
+                node {
+                  id
+                }
+              }
+            }
+          }
+        }
+      }
+      ...MSOPsView_user
+    }
+  `,
+});

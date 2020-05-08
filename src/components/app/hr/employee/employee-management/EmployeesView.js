@@ -1,19 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { employeesProp } from './PropTypes';
+import graphql from 'babel-plugin-relay/macro';
+import { createFragmentContainer } from 'react-relay';
+import { withTranslation } from 'react-i18next';
 import Fab from '@material-ui/core/Fab';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import AddIcon from '@material-ui/icons/Add';
 import Paper from '@material-ui/core/Paper';
-import { withTranslation } from 'react-i18next';
 
 import Styles from './Styles';
 import EmployeesTableHeader from './EmployeesTableHeader';
 import EmployeeView from './EmployeeView';
 
-const EmployeesView = ({ t, employees, onCreateEmployeeClick, onEmployeeClick }) => {
+export const EmployeesView = ({ t, user, onCreateEmployeeClick, onEmployeeClick }) => {
   const classes = Styles();
+  const employees = user.manufacturers.edges[0].node.employees;
 
   return (
     <div className={classes.root}>
@@ -22,8 +24,8 @@ const EmployeesView = ({ t, employees, onCreateEmployeeClick, onEmployeeClick })
           <Table className={classes.table} aria-labelledby="tableTitle" size="medium" aria-label="enhanced table">
             <EmployeesTableHeader />
             <TableBody>
-              {employees.map((employee) => (
-                <EmployeeView key={employee.id} employee={employee} onEmployeeClick={onEmployeeClick} />
+              {employees.edges.map(({ node }) => (
+                <EmployeeView key={node.id} employee={node} onEmployeeClick={onEmployeeClick} />
               ))}
             </TableBody>
           </Table>
@@ -37,9 +39,28 @@ const EmployeesView = ({ t, employees, onCreateEmployeeClick, onEmployeeClick })
 };
 
 EmployeesView.propTypes = {
-  employees: employeesProp.isRequired,
   onCreateEmployeeClick: PropTypes.func.isRequired,
   onEmployeeClick: PropTypes.func.isRequired,
 };
 
-export default withTranslation()(EmployeesView);
+export default createFragmentContainer(withTranslation()(EmployeesView), {
+  user: graphql`
+    fragment EmployeesView_user on User {
+      id
+      manufacturers(first: 1) @connection(key: "User_manufacturers") {
+        edges {
+          node {
+            employees(first: 1000) @connection(key: "User_employees") {
+              edges {
+                node {
+                  id
+                  ...EmployeeView_employee
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  `,
+});
