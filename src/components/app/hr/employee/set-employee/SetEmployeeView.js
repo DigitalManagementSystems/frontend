@@ -1,5 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import graphql from 'babel-plugin-relay/macro';
+import { createFragmentContainer } from 'react-relay';
 import { Field, reduxForm } from 'redux-form';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -7,21 +9,24 @@ import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import { withTranslation } from 'react-i18next';
 
-import { registeredUsersProp, departmentsProp } from './PropTypes';
 import styles from './Styles';
 import { renderTextField, renderAutocomplete } from '../../../../common/redux-form';
 import validate from './Validation';
 
-export const SetEmployeeView = ({ t, handleSubmit, submitting, onCancelButtonClick, registeredUsers, departments, employee, employees }) => {
+export const SetEmployeeView = ({ t, handleSubmit, submitting, onCancelButtonClick, employee, user }) => {
   const classes = styles();
-  const isAdding = employee === null;
+  const isCreating = !!!employee;
+  const registeredUsers = user.registeredUsers.edges.map(({ node }) => node);
+  const manufacturer = user.manufacturers.edges[0].node;
+  const departments = manufacturer.departments.edges.map(({ node }) => node);
+  const employees = manufacturer.employees.edges.map(({ node }) => node);
 
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
         <Typography component="h1" variant="h5">
-          {isAdding ? t('createEmployee.title') : t('updateEmployee.title')}
+          {isCreating ? t('createEmployee.title') : t('updateEmployee.title')}
         </Typography>
         <form className={classes.form} noValidate autoComplete="off" onSubmit={handleSubmit}>
           <Field
@@ -33,7 +38,7 @@ export const SetEmployeeView = ({ t, handleSubmit, submitting, onCancelButtonCli
             options={registeredUsers.map((registeredUser) => registeredUser.id)}
             getOptionLabel={(id) => registeredUsers.find((registeredUser) => registeredUser.id === id).email}
             component={renderAutocomplete}
-            defaultValue={isAdding ? null : employee.user.id}
+            defaultValue={isCreating ? null : employee.user.id}
           />
           <Field
             id="departmentIds"
@@ -43,7 +48,7 @@ export const SetEmployeeView = ({ t, handleSubmit, submitting, onCancelButtonCli
             options={departments.map((department) => department.id)}
             getOptionLabel={(id) => departments.find((department) => department.id === id).name}
             component={renderAutocomplete}
-            defaultValue={isAdding ? [] : employee.departments.map((department) => department.id)}
+            defaultValue={isCreating ? [] : employee.departments.map((department) => department.id)}
             multiple
             limitTags={2}
           />
@@ -55,7 +60,7 @@ export const SetEmployeeView = ({ t, handleSubmit, submitting, onCancelButtonCli
             margin="normal"
             fullWidth
             component={renderTextField}
-            defaultValue={isAdding ? null : employee.employeeReference}
+            defaultValue={isCreating ? null : employee.employeeReference}
           />
           <Field
             id="position"
@@ -65,7 +70,7 @@ export const SetEmployeeView = ({ t, handleSubmit, submitting, onCancelButtonCli
             margin="normal"
             fullWidth
             component={renderTextField}
-            defaultValue={isAdding ? null : employee.position}
+            defaultValue={isCreating ? null : employee.position}
           />
           <Field
             id="mobile"
@@ -75,7 +80,7 @@ export const SetEmployeeView = ({ t, handleSubmit, submitting, onCancelButtonCli
             margin="normal"
             fullWidth
             component={renderTextField}
-            defaultValue={isAdding ? null : employee.mobile}
+            defaultValue={isCreating ? null : employee.mobile}
           />
           <Field
             id="reportingToEmployeeId"
@@ -85,10 +90,10 @@ export const SetEmployeeView = ({ t, handleSubmit, submitting, onCancelButtonCli
             getOptionLabel={(id) => employees.find((employee) => employee.id === id).user.email}
             fullWidth
             component={renderAutocomplete}
-            defaultValue={isAdding || !employee.reportingToEmployee ? null : employee.reportingToEmployee.id}
+            defaultValue={isCreating || !employee.reportingToEmployee ? null : employee.reportingToEmployee.id}
           />
           <Button type="submit" variant="contained" color="primary" className={classes.submit} disabled={submitting}>
-            {isAdding ? t('create.button') : t('update.button')}
+            {isCreating ? t('create.button') : t('update.button')}
           </Button>
           <Button type="button" variant="contained" color="secondary" className={classes.submit} disabled={submitting} onClick={onCancelButtonClick}>
             {t('cancel.button')}
@@ -102,11 +107,74 @@ export const SetEmployeeView = ({ t, handleSubmit, submitting, onCancelButtonCli
 SetEmployeeView.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
   onCancelButtonClick: PropTypes.func.isRequired,
-  registeredUsers: registeredUsersProp.isRequired,
-  departments: departmentsProp.isRequired,
 };
 
-export default reduxForm({
-  form: 'SetEmployeeForm',
-  validate,
-})(withTranslation()(SetEmployeeView));
+export const FormName = 'SetEmployeeForm';
+
+export default createFragmentContainer(
+  reduxForm({
+    form: FormName,
+    validate,
+  })(withTranslation()(SetEmployeeView)),
+  {
+    user: graphql`
+      fragment SetEmployeeView_user on User {
+        registeredUsers(first: 1000) @connection(key: "User_registeredUsers") {
+          edges {
+            node {
+              id
+              email
+            }
+          }
+        }
+        manufacturers(first: 1) @connection(key: "User_manufacturers") {
+          edges {
+            node {
+              id
+              departments(first: 1000) @connection(key: "User_departments") {
+                edges {
+                  node {
+                    id
+                    name
+                  }
+                }
+              }
+              employees(first: 1000) @connection(key: "User_employees") {
+                edges {
+                  node {
+                    id
+                    user {
+                      email
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    `,
+    employee: graphql`
+      fragment SetEmployeeView_employee on Employee {
+        id
+        employeeReference
+        position
+        mobile
+        reportingToEmployee {
+          id
+          user {
+            email
+          }
+        }
+        user {
+          id
+          email
+        }
+        departments {
+          id
+          name
+        }
+      }
+    `,
+  },
+);

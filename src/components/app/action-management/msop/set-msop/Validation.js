@@ -5,10 +5,10 @@ const validate = (values) => {
     'meetingName',
     'durationId',
     'frequencyId',
+    'meetingDayIds',
     'departmentId',
     'chairPersonEmployeeId',
     'actionLogSecretaryEmployeeId',
-    'agendas',
   ]);
   const errors = requiredFields.reduce((currentErrors, fieldName) => {
     if (!values[fieldName]) {

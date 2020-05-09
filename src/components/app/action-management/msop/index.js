@@ -1,2 +1,2 @@
 export { default as MSOPs } from './msop-management';
-export { CreateMSOP, UpdateMSOP } from './set-msop';
+export { default as SetMSOP } from './set-msop';

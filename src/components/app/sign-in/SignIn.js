@@ -63,7 +63,9 @@ SignIn.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
 };
 
+export const FormName = 'SignInForm';
+
 export default reduxForm({
-  form: 'SignInForm',
+  form: FormName,
   validate,
 })(withTranslation()(SignIn));

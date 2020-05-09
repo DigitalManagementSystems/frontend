@@ -1,18 +1,26 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import graphql from 'babel-plugin-relay/macro';
+import { createFragmentContainer } from 'react-relay';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
-import SetDepartmentView from './SetDepartmentView';
-import { RelayEnvironment } from '../../../../../framework/relay';
+import { CreateDepartmentView, UpdateDepartmentView } from './SetDepartmentView';
 import { CreateDepartment, UpdateDepartment } from '../../../../../framework/relay/mutations';
 import { NotificationType } from '../../../../../framework/redux/notification';
 import * as notificationActions from '../../../../../framework/redux/notification/Actions';
 
 export class SetDepartmentContainer extends Component {
   setDepartment = ({ name, description }) => {
-    const { history, environment, createDepartment, updateDepartment, notificationActions, user } = this.props;
+    const {
+      history,
+      relay: { environment },
+      createDepartment,
+      updateDepartment,
+      notificationActions,
+      user,
+    } = this.props;
     const manufacturer = this.getManufacturer();
 
     if (manufacturer.department) {
@@ -68,13 +76,11 @@ export class SetDepartmentContainer extends Component {
   render = () => {
     const manufacturer = this.getManufacturer();
 
-    return (
-      <SetDepartmentView
-        department={manufacturer.department ? manufacturer.department : null}
-        onSubmit={this.setDepartment}
-        onCancelButtonClick={this.cancel}
-      />
-    );
+    if (manufacturer.department) {
+      return <UpdateDepartmentView department={manufacturer.department} onSubmit={this.setDepartment} onCancelButtonClick={this.cancel} />;
+    }
+
+    return <CreateDepartmentView onSubmit={this.setDepartment} onCancelButtonClick={this.cancel} />;
   };
 }
 
@@ -83,7 +89,6 @@ SetDepartmentContainer.propTypes = {
 };
 
 const mapStateToProps = () => ({
-  environment: RelayEnvironment,
   createDepartment: CreateDepartment,
   updateDepartment: UpdateDepartment,
 });
@@ -92,4 +97,21 @@ const mapDispatchToProps = (dispatch) => ({
   notificationActions: bindActionCreators(notificationActions, dispatch),
 });
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(SetDepartmentContainer));
+export default createFragmentContainer(withRouter(connect(mapStateToProps, mapDispatchToProps)(SetDepartmentContainer)), {
+  user: graphql`
+    fragment SetDepartmentContainer_user on User {
+      id
+      manufacturers(first: 1) @connection(key: "User_manufacturers") {
+        edges {
+          node {
+            id
+            department(id: $departmentId) @include(if: $isUpdating) {
+              id
+              ...SetDepartmentView_department
+            }
+          }
+        }
+      }
+    }
+  `,
+});

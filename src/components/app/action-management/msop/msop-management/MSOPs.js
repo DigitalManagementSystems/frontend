@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import graphql from 'babel-plugin-relay/macro';
 import { QueryRenderer } from 'react-relay';
 
@@ -6,8 +6,8 @@ import { RelayEnvironment } from '../../../../../framework/relay';
 import MSOPManagementContainer from './MSOPManagementContainer';
 import { LoadingContainer, GenericErrorContainer } from '../../../../common';
 
-class MSOPs extends Component {
-  renderRelayComponent = ({ props, error }) => {
+export default () => {
+  const renderRelayComponent = ({ props, error }) => {
     if (props && props.user) {
       return <MSOPManagementContainer user={props.user} />;
     } else if (error) {
@@ -17,22 +17,18 @@ class MSOPs extends Component {
     return <LoadingContainer />;
   };
 
-  render = () => {
-    return (
-      <QueryRenderer
-        environment={RelayEnvironment}
-        query={graphql`
-          query MSOPsQuery {
-            user {
-              ...MSOPManagementContainer_user
-            }
+  return (
+    <QueryRenderer
+      environment={RelayEnvironment}
+      query={graphql`
+        query MSOPsQuery {
+          user {
+            ...MSOPManagementContainer_user
           }
-        `}
-        variables={{}}
-        render={this.renderRelayComponent}
-      />
-    );
-  };
-}
-
-export default MSOPs;
+        }
+      `}
+      variables={{}}
+      render={renderRelayComponent}
+    />
+  );
+};
