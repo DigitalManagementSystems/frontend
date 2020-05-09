@@ -1,15 +1,20 @@
 import React from 'react';
 import graphql from 'babel-plugin-relay/macro';
 import { QueryRenderer } from 'react-relay';
+import { withRouter } from 'react-router-dom';
 
 import { RelayEnvironment } from '../../../../../framework/relay';
+import SetDepartmentContainer from './SetDepartmentContainer';
 import { LoadingContainer, GenericErrorContainer } from '../../../../common';
-import DepartmentManagementContainer from './DepartmentManagementContainer';
 
-export default () => {
+const SetDepartment = ({
+  match: {
+    params: { departmentId },
+  },
+}) => {
   const renderRelayComponent = ({ props, error }) => {
     if (props && props.user) {
-      return <DepartmentManagementContainer user={props.user} />;
+      return <SetDepartmentContainer user={props.user} />;
     } else if (error) {
       return <GenericErrorContainer message={error.message} />;
     }
@@ -21,14 +26,19 @@ export default () => {
     <QueryRenderer
       environment={RelayEnvironment}
       query={graphql`
-        query DepartmentsQuery {
+        query SetDepartmentQuery($departmentId: ID!, $isUpdating: Boolean!) {
           user {
-            ...DepartmentManagementContainer_user
+            ...SetDepartmentContainer_user
           }
         }
       `}
-      variables={{}}
+      variables={{
+        departmentId: departmentId ? departmentId : 'No ID',
+        isUpdating: !!departmentId,
+      }}
       render={renderRelayComponent}
     />
   );
 };
+
+export default withRouter(SetDepartment);

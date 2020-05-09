@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import graphql from 'babel-plugin-relay/macro';
 import { QueryRenderer } from 'react-relay';
 
@@ -6,8 +6,8 @@ import { RelayEnvironment } from '../../../../../framework/relay';
 import EmployeeManagementContainer from './EmployeeManagementContainer';
 import { LoadingContainer, GenericErrorContainer } from '../../../../common';
 
-class Employees extends Component {
-  renderRelayComponent = ({ props, error }) => {
+export default () => {
+  const renderRelayComponent = ({ props, error }) => {
     if (props && props.user) {
       return <EmployeeManagementContainer user={props.user} />;
     } else if (error) {
@@ -17,22 +17,18 @@ class Employees extends Component {
     return <LoadingContainer />;
   };
 
-  render = () => {
-    return (
-      <QueryRenderer
-        environment={RelayEnvironment}
-        query={graphql`
-          query EmployeesQuery {
-            user {
-              ...EmployeeManagementContainer_user
-            }
+  return (
+    <QueryRenderer
+      environment={RelayEnvironment}
+      query={graphql`
+        query EmployeesQuery {
+          user {
+            ...EmployeeManagementContainer_user
           }
-        `}
-        variables={{}}
-        render={this.renderRelayComponent}
-      />
-    );
-  };
-}
-
-export default Employees;
+        }
+      `}
+      variables={{}}
+      render={renderRelayComponent}
+    />
+  );
+};

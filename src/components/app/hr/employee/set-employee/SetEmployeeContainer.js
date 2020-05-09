@@ -1,18 +1,26 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import graphql from 'babel-plugin-relay/macro';
+import { createFragmentContainer } from 'react-relay';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
 import SetEmployeeView from './SetEmployeeView';
-import { RelayEnvironment } from '../../../../../framework/relay';
 import { CreateEmployee, UpdateEmployee } from '../../../../../framework/relay/mutations';
 import { NotificationType } from '../../../../../framework/redux/notification';
 import * as notificationActions from '../../../../../framework/redux/notification/Actions';
 
 export class SetEmployeeContainer extends Component {
-  createEmployee = ({ userId, departmentIds, employeeReference, position, mobile, reportingToEmployeeId }) => {
-    const { history, environment, createEmployee, updateEmployee, user, notificationActions } = this.props;
+  setEmployee = ({ userId, departmentIds, employeeReference, position, mobile, reportingToEmployeeId }) => {
+    const {
+      history,
+      relay: { environment },
+      createEmployee,
+      updateEmployee,
+      user,
+      notificationActions,
+    } = this.props;
     const manufacturer = this.getManufacturer();
 
     if (manufacturer.employee) {
@@ -74,18 +82,10 @@ export class SetEmployeeContainer extends Component {
   getManufacturer = () => this.props.user.manufacturers.edges[0].node;
 
   render = () => {
+    const { user } = this.props;
     const manufacturer = this.getManufacturer();
 
-    return (
-      <SetEmployeeView
-        registeredUsers={this.props.user.registeredUsers.edges.map((edge) => edge.node)}
-        departments={manufacturer.departments.edges.map((edge) => edge.node)}
-        employees={manufacturer.employees.edges.map((edge) => edge.node)}
-        employee={manufacturer.employee ? manufacturer.employee : null}
-        onSubmit={this.createEmployee}
-        onCancelButtonClick={this.cancel}
-      />
-    );
+    return <SetEmployeeView user={user} employee={manufacturer.employee} onSubmit={this.setEmployee} onCancelButtonClick={this.cancel} />;
   };
 }
 
@@ -94,7 +94,6 @@ SetEmployeeContainer.propTypes = {
 };
 
 const mapStateToProps = () => ({
-  environment: RelayEnvironment,
   createEmployee: CreateEmployee,
   updateEmployee: UpdateEmployee,
 });
@@ -103,4 +102,22 @@ const mapDispatchToProps = (dispatch) => ({
   notificationActions: bindActionCreators(notificationActions, dispatch),
 });
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(SetEmployeeContainer));
+export default createFragmentContainer(withRouter(connect(mapStateToProps, mapDispatchToProps)(SetEmployeeContainer)), {
+  user: graphql`
+    fragment SetEmployeeContainer_user on User {
+      id
+      ...SetEmployeeView_user
+      manufacturers(first: 1) @connection(key: "User_manufacturers") {
+        edges {
+          node {
+            id
+            employee(id: $employeeId) @include(if: $isUpdating) {
+              id
+              ...SetEmployeeView_employee
+            }
+          }
+        }
+      }
+    }
+  `,
+});
