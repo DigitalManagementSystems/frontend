@@ -46,7 +46,6 @@ MSOPsView.propTypes = {
 export default createFragmentContainer(MSOPsView, {
   user: graphql`
     fragment MSOPsView_user on User {
-      id
       manufacturers(first: 1) @connection(key: "User_manufacturers") {
         edges {
           node {

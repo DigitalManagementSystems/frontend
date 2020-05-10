@@ -27,7 +27,6 @@ MSOPsContainer.propTypes = {};
 export default createFragmentContainer(withRouter(MSOPsContainer), {
   user: graphql`
     fragment MSOPManagementContainer_user on User {
-      id
       manufacturers(first: 1) @connection(key: "User_manufacturers") {
         edges {
           node {
