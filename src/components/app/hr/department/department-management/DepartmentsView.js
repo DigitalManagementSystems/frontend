@@ -46,7 +46,6 @@ DepartmentsView.propTypes = {
 export default createFragmentContainer(DepartmentsView, {
   user: graphql`
     fragment DepartmentsView_user on User {
-      id
       manufacturers(first: 1) @connection(key: "User_manufacturers") {
         edges {
           node {

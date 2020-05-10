@@ -13,7 +13,7 @@ import styles from './Styles';
 import { renderTextField } from '../../../../common/redux-form';
 import validate from './Validation';
 
-export const DepartmentView = ({ t, handleSubmit, submitting, onCancelButtonClick, department }) => {
+export const SetDepartmentView = ({ t, handleSubmit, submitting, onCancelButtonClick, department }) => {
   const classes = styles();
   const isCreating = !!!department;
 
@@ -59,7 +59,7 @@ export const DepartmentView = ({ t, handleSubmit, submitting, onCancelButtonClic
   );
 };
 
-DepartmentView.propTypes = {
+SetDepartmentView.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
   onCancelButtonClick: PropTypes.func.isRequired,
 };
@@ -69,7 +69,7 @@ export const FormName = 'SetDepartmentForm';
 export const CreateDepartmentView = reduxForm({
   form: FormName,
   validate,
-})(withTranslation()(DepartmentView));
+})(withTranslation()(SetDepartmentView));
 
 export const UpdateDepartmentView = createFragmentContainer(CreateDepartmentView, {
   department: graphql`

@@ -46,7 +46,6 @@ EmployeesView.propTypes = {
 export default createFragmentContainer(withTranslation()(EmployeesView), {
   user: graphql`
     fragment EmployeesView_user on User {
-      id
       manufacturers(first: 1) @connection(key: "User_manufacturers") {
         edges {
           node {

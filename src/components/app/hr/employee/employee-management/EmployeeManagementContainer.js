@@ -27,7 +27,6 @@ EmployeeManagementContainer.propTypes = {};
 export default createFragmentContainer(withRouter(EmployeeManagementContainer), {
   user: graphql`
     fragment EmployeeManagementContainer_user on User {
-      id
       manufacturers(first: 1) @connection(key: "User_manufacturers") {
         edges {
           node {
