@@ -9,7 +9,7 @@ import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 
 import Styles from './Styles';
-import MSOPsTableHeader from './MSOPsTableHeader';
+import MSOPTableHeader from './MSOPTableHeader';
 import MSOPView from './MSOPView';
 
 export const MSOPsView = ({ user, onCreateMSOPClick, onMSOPClick }) => {
@@ -21,7 +21,7 @@ export const MSOPsView = ({ user, onCreateMSOPClick, onMSOPClick }) => {
       <Paper className={classes.paper}>
         <div className={classes.tableWrapper}>
           <Table className={classes.table} aria-labelledby="tableTitle" size="medium" aria-label="enhanced table">
-            <MSOPsTableHeader />
+            <MSOPTableHeader />
             <TableBody>
               {msops.edges.map(({ node }) => (
                 <MSOPView key={node.id} msop={node} onMSOPClick={onMSOPClick} />

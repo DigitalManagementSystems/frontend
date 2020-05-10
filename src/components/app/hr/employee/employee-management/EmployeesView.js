@@ -10,7 +10,7 @@ import AddIcon from '@material-ui/icons/Add';
 import Paper from '@material-ui/core/Paper';
 
 import Styles from './Styles';
-import EmployeesTableHeader from './EmployeesTableHeader';
+import EmployeeTableHeader from './EmployeeTableHeader';
 import EmployeeView from './EmployeeView';
 
 export const EmployeesView = ({ t, user, onCreateEmployeeClick, onEmployeeClick }) => {
@@ -22,7 +22,7 @@ export const EmployeesView = ({ t, user, onCreateEmployeeClick, onEmployeeClick 
       <Paper className={classes.paper}>
         <div className={classes.tableWrapper}>
           <Table className={classes.table} aria-labelledby="tableTitle" size="medium" aria-label="enhanced table">
-            <EmployeesTableHeader />
+            <EmployeeTableHeader />
             <TableBody>
               {employees.edges.map(({ node }) => (
                 <EmployeeView key={node.id} employee={node} onEmployeeClick={onEmployeeClick} />

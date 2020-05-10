@@ -25,10 +25,8 @@ export class SignInContainer extends Component {
   render = () => <SignIn onSubmit={this.signIn} />;
 }
 
-const mapStateToProps = (state) => {
-  return {
-    userFound: !!state.firebase.auth.uid,
-  };
-};
+const mapStateToProps = (state) => ({
+  userFound: !!state.firebase.auth.uid,
+});
 
 export default withRouter(connect(mapStateToProps)(SignInContainer));

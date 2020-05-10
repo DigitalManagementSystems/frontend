@@ -14,7 +14,7 @@ export class EmployeeManagementContainer extends Component {
 
   handleEmployeeClick = (id) => {
     const { history } = this.props;
-    const linkToEmployee = `/hr/employees/${id}`;
+    const linkToEmployee = `/hr/employee/${id}`;
 
     history.push(linkToEmployee);
   };

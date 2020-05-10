@@ -5,7 +5,7 @@ import TableCell from '@material-ui/core/TableCell';
 import Checkbox from '@material-ui/core/Checkbox';
 import { withTranslation } from 'react-i18next';
 
-const MSOPsTableHeader = ({ t }) => (
+const MSOPTableHeader = ({ t }) => (
   <TableHead>
     <TableRow>
       <TableCell padding="checkbox">
@@ -24,4 +24,4 @@ const MSOPsTableHeader = ({ t }) => (
   </TableHead>
 );
 
-export default withTranslation()(MSOPsTableHeader);
+export default withTranslation()(MSOPTableHeader);

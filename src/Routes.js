@@ -10,6 +10,7 @@ import { NotificationHandlerContainer } from './components/common';
 import { Departments, SetDepartment } from './components/app/hr/department';
 import { Employees, SetEmployee } from './components/app/hr/employee';
 import { MSOPs, SetMSOP } from './components/app/action-management/msop';
+import { Meetings } from './components/app/action-management/meetings';
 
 const Routes = ({ isLoaded, userFound }) => {
   if (!isLoaded) {
@@ -27,15 +28,16 @@ const Routes = ({ isLoaded, userFound }) => {
 
         <RouteWithLayout isSecureRoute={false} exact component={SignUpContainer} layout={PublicMainContainer} path="/signup" />
         <RouteWithLayout isSecureRoute={false} exact component={SignInContainer} layout={PublicMainContainer} path="/signin" />
-        <RouteWithLayout isSecureRoute={true} exact component={Departments} layout={MainContainer} path="/hr/departments" />
+        <RouteWithLayout isSecureRoute={true} exact component={Departments} layout={MainContainer} path="/hr/department" />
         <RouteWithLayout isSecureRoute={true} exact component={SetDepartment} layout={MainContainer} path="/hr/department/create" />
-        <RouteWithLayout isSecureRoute={true} exact component={SetDepartment} layout={MainContainer} path="/hr/departments/:departmentId" />
-        <RouteWithLayout isSecureRoute={true} exact component={Employees} layout={MainContainer} path="/hr/employees" />
-        <RouteWithLayout isSecureRoute={true} exact component={SetEmployee} layout={MainContainer} path="/hr/employees/:employeeId" />
+        <RouteWithLayout isSecureRoute={true} exact component={SetDepartment} layout={MainContainer} path="/hr/department/:departmentId" />
+        <RouteWithLayout isSecureRoute={true} exact component={Employees} layout={MainContainer} path="/hr/employee" />
+        <RouteWithLayout isSecureRoute={true} exact component={SetEmployee} layout={MainContainer} path="/hr/employee/:employeeId" />
         <RouteWithLayout isSecureRoute={true} exact component={SetEmployee} layout={MainContainer} path="/hr/employee/create" />
-        <RouteWithLayout isSecureRoute={true} exact component={MSOPs} layout={MainContainer} path="/action-management/msops" />
+        <RouteWithLayout isSecureRoute={true} exact component={MSOPs} layout={MainContainer} path="/action-management/msop" />
         <RouteWithLayout isSecureRoute={true} exact component={SetMSOP} layout={MainContainer} path="/action-management/msop/create" />
-        <RouteWithLayout isSecureRoute={true} exact component={SetMSOP} layout={MainContainer} path="/action-management/msops/:msopId" />
+        <RouteWithLayout isSecureRoute={true} exact component={SetMSOP} layout={MainContainer} path="/action-management/msop/:msopId" />
+        <RouteWithLayout isSecureRoute={true} exact component={Meetings} layout={MainContainer} path="/action-management/action-point/meeting" />
         <RouteWithLayout
           isSecureRoute={false}
           exact

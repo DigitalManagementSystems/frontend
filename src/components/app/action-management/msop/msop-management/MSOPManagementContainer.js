@@ -14,7 +14,7 @@ export class MSOPsContainer extends Component {
 
   handleMSOPClick = (id) => {
     const { history } = this.props;
-    const linkToMSOP = `/action-management/msops/${id}`;
+    const linkToMSOP = `/action-management/msop/${id}`;
 
     history.push(linkToMSOP);
   };

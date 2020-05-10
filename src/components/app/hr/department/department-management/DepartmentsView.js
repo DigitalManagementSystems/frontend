@@ -9,7 +9,7 @@ import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 
 import Styles from './Styles';
-import DepartmentsTableHeader from './DepartmentsTableHeader';
+import DepartmentTableHeader from './DepartmentTableHeader';
 import DepartmentView from './DepartmentView';
 
 export const DepartmentsView = ({ user, onCreateDepartmentClick, onDepartmentClick }) => {
@@ -21,7 +21,7 @@ export const DepartmentsView = ({ user, onCreateDepartmentClick, onDepartmentCli
       <Paper className={classes.paper}>
         <div className={classes.tableWrapper}>
           <Table className={classes.table} aria-labelledby="tableTitle" size="medium" aria-label="enhanced table">
-            <DepartmentsTableHeader />
+            <DepartmentTableHeader />
             <TableBody>
               {departments.edges.map(({ node }) => (
                 <DepartmentView key={node.id} department={node} onDepartmentClick={onDepartmentClick} />

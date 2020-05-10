@@ -14,7 +14,7 @@ export class DepartmentsContainer extends Component {
 
   handleDepartmentClick = (id) => {
     const { history } = this.props;
-    const linkToDepartment = `/hr/departments/${id}`;
+    const linkToDepartment = `/hr/department/${id}`;
 
     history.push(linkToDepartment);
   };

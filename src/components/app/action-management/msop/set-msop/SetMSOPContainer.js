@@ -57,7 +57,7 @@ export class SetMSOPContainer extends Component {
         {
           onSuccess: () => {
             notificationActions.add('Successfully updated the MSOP', NotificationType.SUCCESS);
-            history.push('/action-management/msops');
+            history.push('/action-management/msop');
           },
           onError: (errorMessage) => notificationActions.add(errorMessage, NotificationType.ERROR),
         },
@@ -81,7 +81,7 @@ export class SetMSOPContainer extends Component {
         {
           onSuccess: () => {
             notificationActions.add('Successfully created the MSOP', NotificationType.SUCCESS);
-            history.push('/action-management/msops');
+            history.push('/action-management/msop');
           },
           onError: (errorMessage) => notificationActions.add(errorMessage, NotificationType.ERROR),
         },
@@ -92,7 +92,7 @@ export class SetMSOPContainer extends Component {
   cancel = () => {
     const { history } = this.props;
 
-    history.push('/action-management/msops');
+    history.push('/action-management/msop');
   };
 
   getManufacturer = () => this.props.user.manufacturers.edges[0].node;
