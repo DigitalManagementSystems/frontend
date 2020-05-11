@@ -40,7 +40,7 @@ export class SetDepartmentContainer extends Component {
         {
           onSuccess: () => {
             notificationActions.add('Successfully updated the department', NotificationType.SUCCESS);
-            history.push('/hr/departments');
+            history.push('/hr/department');
           },
           onError: (errorMessage) => notificationActions.add(errorMessage, NotificationType.ERROR),
         },
@@ -57,7 +57,7 @@ export class SetDepartmentContainer extends Component {
         {
           onSuccess: () => {
             notificationActions.add('Successfully created the department', NotificationType.SUCCESS);
-            history.push('/hr/departments');
+            history.push('/hr/department');
           },
           onError: (errorMessage) => notificationActions.add(errorMessage, NotificationType.ERROR),
         },
@@ -68,7 +68,7 @@ export class SetDepartmentContainer extends Component {
   cancel = () => {
     const { history } = this.props;
 
-    history.push('/hr/departments');
+    history.push('/hr/department');
   };
 
   getManufacturer = () => this.props.user.manufacturers.edges[0].node;

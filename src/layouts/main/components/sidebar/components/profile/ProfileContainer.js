@@ -25,8 +25,6 @@ ProfileContainer.propTypes = {
   className: PropTypes.string,
 };
 
-const mapStateToProps = (state) => {
-  return { email: state.firebase.auth.email };
-};
+const mapStateToProps = (state) => ({ email: state.firebase.auth.email });
 
 export default connect(mapStateToProps)(ProfileContainer);

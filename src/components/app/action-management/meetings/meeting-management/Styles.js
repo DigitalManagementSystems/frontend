@@ -1,6 +1,10 @@
 import { makeStyles } from '@material-ui/core/styles';
 
 const styles = makeStyles((theme) => ({
+  msopSelector: {
+    margin: theme.spacing(1),
+    minWidth: 200,
+  },
   root: {
     backgroundColor: theme.palette.background.paper,
     width: '100%',

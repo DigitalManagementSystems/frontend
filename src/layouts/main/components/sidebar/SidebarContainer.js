@@ -20,15 +20,19 @@ const SidebarContainer = ({ t, history, open, variant, onClose, className }) => 
   };
 
   const departmentManagement = () => {
-    history.push('/hr/departments');
+    history.push('/hr/department');
   };
 
   const employeeManagement = () => {
-    history.push('/hr/employees');
+    history.push('/hr/employee');
   };
 
   const msopManagement = () => {
-    history.push('/action-management/msops');
+    history.push('/action-management/msop');
+  };
+
+  const meetingManagement = () => {
+    history.push('/action-management/action-point/meeting');
   };
 
   const pages = [
@@ -54,6 +58,12 @@ const SidebarContainer = ({ t, history, open, variant, onClose, className }) => 
       key: 'msopManagement',
       title: t('msopManagement.label'),
       onClick: msopManagement,
+      icon: <PermIdentityIcon />,
+    },
+    {
+      key: 'meetingManagement',
+      title: t('meetingManagement.label'),
+      onClick: meetingManagement,
       icon: <PermIdentityIcon />,
     },
   ];

@@ -44,7 +44,7 @@ export class SetEmployeeContainer extends Component {
         {
           onSuccess: () => {
             notificationActions.add('Successfully updated the employee', NotificationType.SUCCESS);
-            history.push('/hr/employees');
+            history.push('/hr/employee');
           },
           onError: (errorMessage) => notificationActions.add(errorMessage, NotificationType.ERROR),
         },
@@ -65,7 +65,7 @@ export class SetEmployeeContainer extends Component {
         {
           onSuccess: () => {
             notificationActions.add('Successfully created the employee', NotificationType.SUCCESS);
-            history.push('/hr/employees');
+            history.push('/hr/employee');
           },
           onError: (errorMessage) => notificationActions.add(errorMessage, NotificationType.ERROR),
         },
@@ -76,7 +76,7 @@ export class SetEmployeeContainer extends Component {
   cancel = () => {
     const { history } = this.props;
 
-    history.push('/hr/employees');
+    history.push('/hr/employee');
   };
 
   getManufacturer = () => this.props.user.manufacturers.edges[0].node;
