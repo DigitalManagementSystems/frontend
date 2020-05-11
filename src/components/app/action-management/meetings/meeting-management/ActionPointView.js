@@ -32,7 +32,7 @@ ActionPointView.propTypes = {
 
 export default createFragmentContainer(ActionPointView, {
   actionPoint: graphql`
-    fragment ActionPointView_actionPoint on ActionPointProperties {
+    fragment ActionPointView_actionPoint on ActionPoint {
       id
       assignedDate
     }
