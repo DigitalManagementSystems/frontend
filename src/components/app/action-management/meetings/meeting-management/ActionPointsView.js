@@ -14,7 +14,7 @@ import ActionPointView from './ActionPointView';
 
 export const ActionPointsView = ({ user, onActionPointClick, onCreateActionPointClick }) => {
   const classes = Styles();
-  const msop = user.manufacturers.edges[0].node.msop;
+  const actionPoints = user.manufacturers.edges[0].node.actionPoints;
 
   return (
     <div className={classes.root}>
@@ -23,10 +23,8 @@ export const ActionPointsView = ({ user, onActionPointClick, onCreateActionPoint
           <Table className={classes.table} aria-labelledby="tableTitle" size="medium" aria-label="enhanced table">
             <ActionPointTableHeader />
             <TableBody>
-              {msop &&
-                msop.actionPoints.edges.map(({ node }) => (
-                  <ActionPointView key={node.id} actionPoint={node} onActionPointClick={onActionPointClick} />
-                ))}
+              {actionPoints &&
+                actionPoints.edges.map(({ node }) => <ActionPointView key={node.id} actionPoint={node} onActionPointClick={onActionPointClick} />)}
             </TableBody>
           </Table>
         </div>
@@ -50,12 +48,10 @@ export default createFragmentContainer(ActionPointsView, {
       manufacturers(first: 1) @connection(key: "User_manufacturers") {
         edges {
           node {
-            msop(id: $selectedMSOPId) @include(if: $isMSOPSelected) {
-              actionPoints(first: 1000) @connection(key: "User_actionPoints") {
-                edges {
-                  node {
-                    ...ActionPointView_actionPoint
-                  }
+            actionPoints(first: 1000, msopId: $selectedMSOPId) @connection(key: "User_actionPoints") @include(if: $isMSOPSelected) {
+              edges {
+                node {
+                  ...ActionPointView_actionPoint
                 }
               }
             }
