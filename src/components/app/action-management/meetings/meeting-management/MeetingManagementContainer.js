@@ -51,13 +51,6 @@ export default createRefetchContainer(
   {
     user: graphql`
       fragment MeetingManagementContainer_user on User {
-        manufacturers(first: 1) @connection(key: "User_manufacturers") {
-          edges {
-            node {
-              id
-            }
-          }
-        }
         ...MSOPSelectorView_user
         ...ActionPointsView_user
       }
