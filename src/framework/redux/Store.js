@@ -1,11 +1,12 @@
 import { createStore, applyMiddleware } from 'redux';
 import createSagaMiddleware from 'redux-saga';
+import { all } from 'redux-saga/effects';
 import { composeWithDevTools } from 'redux-devtools-extension';
 
 import getReducers from './Reducers';
 
 const rootSagas = function* sagas() {
-  yield [];
+  yield all([]);
 };
 
 const composeEnhancers = composeWithDevTools({
